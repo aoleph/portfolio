@@ -43,7 +43,7 @@ export async function onRequestPost(context) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // "from" musi być z domeny zweryfikowanej w Resend.
+        // "from" musi być  z domeny zweryfikowanej w Resend.
         // Dopóki domena nie jest zweryfikowana, użyj: "onboarding@resend.dev"
         from: "Kontaktformular <kontakt@adamolendzki.com>",
         to: "aolendzki.photo@gmail.com",
