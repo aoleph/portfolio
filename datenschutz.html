@@ -3,156 +3,132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Datenschutzerklärung — Adam Olendzki Photographer</title>
+<title>Datenschutzerklärung | Adam Olendzki Photographer</title>
+<meta name="robots" content="noindex, follow">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&family=Inter:wght@300;400;500&family=Oswald:wght@300;400&family=Noto+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;1,300&family=Jost:ital,wght@0,300;0,400;1,300&family=Oswald:wght@100;200;300;400&display=swap" rel="stylesheet">
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-        font-family: 'Noto Sans', sans-serif;
-        font-weight: 400;
-        background-color: #1a1a1a;
-        color: #cccccc;
-        line-height: 1.8;
-        font-size: 18px;
-        letter-spacing: 0.3px;
-    }
-    a { color: #cfcfcf; text-decoration: underline; }
-    a:hover { color: #ffffff; }
-    header {
-        padding: 25px 40px;
-        background-color: #141414;
-        border-bottom: 1px solid #242424;
-    }
-    .logo {
-        font-family: 'Jost', sans-serif;
-        font-size: 20px;
-        font-weight: 200;
-        letter-spacing: 5px;
-        color: #a7a7a7;
-        text-transform: uppercase;
-        text-decoration: none;
-    }
-    main {
-        max-width: 760px;
-        margin: 0 auto;
-        padding: 60px 30px 100px;
-    }
-    h1 {
-        font-family: 'Jost', sans-serif;
-        font-weight: 300;
-        font-size: 36px;
-        letter-spacing: 1px;
-        color: #e6e6e6;
-        margin-bottom: 30px;
-        text-transform: lowercase;
-    }
-    h2 {
-        font-family: 'Jost', sans-serif;
-        font-weight: 300;
-        font-size: 23px;
-        letter-spacing: 0.5px;
-        color: #d6d6d6;
-        margin-top: 40px;
-        margin-bottom: 14px;
-        text-transform: lowercase;
-    }
-    p { margin-bottom: 14px; color: #bdbdbd; }
-    ul { margin: 0 0 14px 22px; color: #bdbdbd; }
-    li { margin-bottom: 6px; }
-    .placeholder {
-        background-color: rgba(255, 200, 80, 0.12);
-        border: 1px dashed rgba(255, 200, 80, 0.5);
-        color: #ffd79a;
-        padding: 2px 6px;
-    }
-    .note-box {
-        margin-top: 50px;
-        padding: 18px 20px;
-        background-color: #202020;
-        border: 1px solid #2c2c2c;
-        font-size: 16px;
-        color: #999999;
-    }
-    footer {
-        padding: 30px 40px;
-        text-align: center;
-        font-size: 12px;
-        color: #777777;
-        border-top: 1px solid #242424;
-    }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #f7f7f5; color: #242422; font-family: 'Inter', sans-serif; font-weight: 300; }
+
+  header { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 22px clamp(24px, 5vw, 60px); background: #141412; }
+  .logo { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 300; letter-spacing: 1.6px; white-space: nowrap; transition: color .35s ease, letter-spacing .35s ease; }
+  .logo a { color: #fff; text-decoration: none; }
+  .logo:hover { color: #d4a820; letter-spacing: 2.4px; }
+  header nav ul { display: flex; gap: 26px; align-items: center; list-style: none; padding: 0; margin: 0; }
+  header nav a { font-family: 'Oswald', sans-serif; font-size: 21.6px; font-weight: 100; letter-spacing: 1.2px; text-transform: lowercase; color: #ffffff; cursor: pointer; transition: color .3s ease; text-decoration: none; }
+  header nav > ul > li > a:hover { color: #d4a820; }
+  header nav .dropdown { position: relative; }
+  header nav .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #141412; box-shadow: 0 8px 16px rgba(0,0,0,.65); padding: 15px 0; min-width: 320px; z-index: 100; border: 1px solid #262624; list-style: none; margin: 0; }
+  header nav .dropdown-menu li a { display: block; padding: 10px 25px; font-family: 'Jost', sans-serif; font-size: 20px; font-weight: 200; letter-spacing: 2px; text-transform: lowercase; color: #bebebe; }
+  header nav .dropdown-menu li a:hover { background: #222220; color: #fff; }
+  header nav .dropdown:hover .dropdown-menu { display: block; }
+
+  main { max-width: 760px; margin: 0 auto; padding: 90px 24px 120px; }
+  h1 { font-family: 'Oswald', sans-serif; font-weight: 300; font-size: clamp(32px, 4vw, 44px); letter-spacing: .5px; color: #1a1a1a; margin: 0 0 34px; text-transform: lowercase; }
+  h2 { font-family: 'Oswald', sans-serif; font-weight: 300; font-size: 22px; letter-spacing: .5px; color: #1a1a1a; margin: 42px 0 14px; text-transform: lowercase; }
+  main p { font-family: 'Jost', sans-serif; font-size: 16px; line-height: 1.85; color: #444442; margin: 0 0 14px; }
+  main ul { font-family: 'Jost', sans-serif; font-size: 16px; line-height: 1.85; color: #444442; margin: 0 0 14px 22px; }
+  main li { margin-bottom: 6px; }
+  main a { color: #b8901a; text-decoration: underline; }
+  main a:hover { color: #d4a820; }
+
+  footer { background: #141412; color: #8f8f89; display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap; padding: 38px; text-align: center; font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: .5px; }
+  footer a { color: #8f8f89; text-decoration: none; }
+  footer a:hover { color: #d4a820; }
 </style>
 </head>
 <body>
 
 <header>
-    <span class="logo">Adam Olendzki Photographer</span>
+  <div class="logo"><a href="/">ADAM OLENDZKI PHOTOGRAPHER</a></div>
+  <nav>
+    <ul>
+      <li><a href="/#about">about</a></li>
+      <li class="dropdown">
+        <a>portfolio &#9662;</a>
+        <ul class="dropdown-menu">
+          <li><a href="/schwangerschaft/">schwangerschaftsfotografie</a></li>
+          <li><a href="/business/">business & image</a></li>
+          <li><a href="/family/">familie & kinder fotografie</a></li>
+          <li><a href="/couples/">paare / couples</a></li>
+          <li><a href="/women-zone/">women zone</a></li>
+        </ul>
+      </li>
+      <li><a href="/#projects">kooperation</a></li>
+      <li><a href="/blog/">blog</a></li>
+      <li><a href="/#contact">kontakt</a></li>
+    </ul>
+  </nav>
 </header>
 
 <main>
-    <h1>Datenschutzerklärung</h1>
+  <h1>Datenschutzerklärung</h1>
 
-    <p>Der Schutz Deiner persönlichen Daten ist mir wichtig. Im Folgenden informiere ich Dich darüber, welche Daten beim Besuch dieser Website erhoben werden, wie sie verwendet werden und welche Rechte Dir dabei zustehen.</p>
+  <p>Der Schutz Deiner persönlichen Daten ist mir wichtig. Im Folgenden informiere ich Dich darüber, welche Daten beim Besuch dieser Website erhoben werden, wie sie verwendet werden und welche Rechte Dir dabei zustehen.</p>
 
-    <h2>1. Verantwortlicher</h2>
-    <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
-    <p>
-        Adam Olendzki<br>
-        E-Mail: aolendzki.photo@gmail.com
-    </p>
+  <h2>1. Verantwortlicher</h2>
+  <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
+  <p>
+      Adam Olendzki<br>
+      E-Mail: aolendzki.photo@gmail.com
+  </p>
 
-    <h2>2. Allgemeines zur Datenverarbeitung</h2>
-    <p>Diese Website verwendet kein Google Analytics, keine Google Maps und keine vergleichbaren Tracking- oder Analysewerkzeuge von Drittanbietern. Es findet keine Erstellung von Nutzerprofilen statt. Personenbezogene Daten werden ausschließlich dann erhoben, wenn Du sie aktiv über das Kontaktformular übermittelst.</p>
+  <h2>2. Allgemeines zur Datenverarbeitung</h2>
+  <p>Diese Website verwendet kein Google Analytics, keine Google Maps und keine vergleichbaren Tracking- oder Analysewerkzeuge von Drittanbietern. Es findet keine Erstellung von Nutzerprofilen statt. Personenbezogene Daten werden ausschließlich dann erhoben, wenn Du sie aktiv über das Kontaktformular übermittelst.</p>
 
-    <h2>3. Hosting und Server-Logfiles</h2>
-    <p>Diese Website wird gehostet bei Cloudflare, Inc. (Cloudflare Pages). Beim Aufruf der Website erhebt der Webserver automatisch technische Zugriffsdaten (sogenannte Server-Logfiles), die Dein Browser übermittelt. Dazu gehören insbesondere:</p>
-    <ul>
-        <li>IP-Adresse</li>
-        <li>Datum und Uhrzeit der Anfrage</li>
-        <li>aufgerufene Seite, Browsertyp und -version, verwendetes Betriebssystem</li>
-        <li>Referrer-URL (zuvor besuchte Seite)</li>
-    </ul>
-    <p>Diese Daten werden ausschließlich zur Sicherstellung eines störungsfreien Betriebs der Website sowie zur Gewährleistung der Systemsicherheit verarbeitet und nicht mit anderen Datenquellen zusammengeführt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem sicheren und stabilen Betrieb der Website).</p>
+  <h2>3. Hosting und Server-Logfiles</h2>
+  <p>Diese Website wird gehostet bei Cloudflare, Inc. (Cloudflare Pages). Beim Aufruf der Website erhebt der Webserver automatisch technische Zugriffsdaten (sogenannte Server-Logfiles), die Dein Browser übermittelt. Dazu gehören insbesondere:</p>
+  <ul>
+      <li>IP-Adresse</li>
+      <li>Datum und Uhrzeit der Anfrage</li>
+      <li>aufgerufene Seite, Browsertyp und -version, verwendetes Betriebssystem</li>
+      <li>Referrer-URL (zuvor besuchte Seite)</li>
+  </ul>
+  <p>Diese Daten werden ausschließlich zur Sicherstellung eines störungsfreien Betriebs der Website sowie zur Gewährleistung der Systemsicherheit verarbeitet und nicht mit anderen Datenquellen zusammengeführt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem sicheren und stabilen Betrieb der Website).</p>
 
-    <h2>4. Kontaktformular</h2>
-    <p>Wenn Du mir über das Kontaktformular eine Anfrage sendest, werden die von Dir im Formular angegebenen Daten – Name, E-Mail-Adresse, gewählte Shooting-Art und Deine Nachricht – bei mir gespeichert, um Deine Anfrage zu bearbeiten und gegebenenfalls Anschlussfragen stellen zu können. Diese Daten gebe ich ohne Deine Einwilligung nicht an Dritte weiter, mit Ausnahme des unten genannten technischen Dienstleisters, der zur Übermittlung des Formulars notwendig ist.</p>
-    <p>Rechtsgrundlage für die Verarbeitung ist Art. 6 Abs. 1 lit. b DSGVO, sofern Deine Anfrage auf den Abschluss eines Vertrages (z. B. Buchung eines Shootings) gerichtet ist, beziehungsweise Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung von Anfragen), wenn kein Vertragsabschluss angestrebt wird.</p>
-    <p>Die im Kontaktformular eingegebenen Daten werden gelöscht, sobald die jeweilige Anfrage abschließend bearbeitet wurde und keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+  <h2>4. Kontaktformular</h2>
+  <p>Wenn Du mir über das Kontaktformular eine Anfrage sendest, werden die von Dir im Formular angegebenen Daten – Name, E-Mail-Adresse, gewählte Shooting-Art und Deine Nachricht – bei mir gespeichert, um Deine Anfrage zu bearbeiten und gegebenenfalls Anschlussfragen stellen zu können. Diese Daten gebe ich ohne Deine Einwilligung nicht an Dritte weiter, mit Ausnahme des unten genannten technischen Dienstleisters, der zur Übermittlung des Formulars notwendig ist.</p>
+  <p>Rechtsgrundlage für die Verarbeitung ist Art. 6 Abs. 1 lit. b DSGVO, sofern Deine Anfrage auf den Abschluss eines Vertrages (z. B. Buchung eines Shootings) gerichtet ist, beziehungsweise Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung von Anfragen), wenn kein Vertragsabschluss angestrebt wird.</p>
+  <p>Die im Kontaktformular eingegebenen Daten werden gelöscht, sobald die jeweilige Anfrage abschließend bearbeitet wurde und keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
 
-    <h2>5. Resend als technischer Dienstleister</h2>
-    <p>Zur technischen Verarbeitung und Zustellung der über das Kontaktformular gesendeten Nachrichten nutze ich den Dienst Resend (Resend, Inc., USA). Die von Dir eingegebenen Formulardaten werden dabei über eine serverseitige Funktion (Cloudflare Pages Functions) verarbeitet und zum Versand der Benachrichtigungs-E-Mail an Server von Resend übermittelt; eine Übermittlung in die USA ist damit nicht ausgeschlossen.</p>
-    <p>Resend stützt sich nach eigenen Angaben für die Datenübermittlung auf die EU-Standardvertragsklauseln (Standard Contractual Clauses, SCC) der Europäischen Kommission als geeignete Garantie im Sinne von Art. 46 DSGVO. Weitere Informationen findest Du in der Datenschutzerklärung von Resend: <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">resend.com/legal/privacy-policy</a>.</p>
+  <h2>5. Resend als technischer Dienstleister</h2>
+  <p>Zur technischen Verarbeitung und Zustellung der über das Kontaktformular gesendeten Nachrichten nutze ich den Dienst Resend (Resend, Inc., USA). Die von Dir eingegebenen Formulardaten werden dabei über eine serverseitige Funktion (Cloudflare Pages Functions) verarbeitet und zum Versand der Benachrichtigungs-E-Mail an Server von Resend übermittelt; eine Übermittlung in die USA ist damit nicht ausgeschlossen.</p>
+  <p>Resend stützt sich nach eigenen Angaben für die Datenübermittlung auf die EU-Standardvertragsklauseln (Standard Contractual Clauses, SCC) der Europäischen Kommission als geeignete Garantie im Sinne von Art. 46 DSGVO. Weitere Informationen findest Du in der Datenschutzerklärung von Resend: <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">resend.com/legal/privacy-policy</a>.</p>
 
-    <h2>6. Cookie-Hinweis und lokale Speicherung</h2>
-    <p>Diese Website setzt keine Tracking- oder Marketing-Cookies. Beim ersten Besuch wird lediglich technisch im lokalen Speicher Deines Browsers (localStorage) vermerkt, dass Du den Hinweis zur Cookie-Nutzung zur Kenntnis genommen hast, damit dieser Hinweis nicht bei jedem erneuten Besuch erneut angezeigt wird. Diese Information verbleibt ausschließlich auf Deinem Gerät und wird nicht an mich oder Dritte übermittelt.</p>
+  <h2>6. Cookie-Hinweis und lokale Speicherung</h2>
+  <p>Diese Website setzt keine Tracking- oder Marketing-Cookies. Beim ersten Besuch wird lediglich technisch im lokalen Speicher Deines Browsers (localStorage) vermerkt, dass Du den Hinweis zur Cookie-Nutzung zur Kenntnis genommen hast, damit dieser Hinweis nicht bei jedem erneuten Besuch erneut angezeigt wird. Diese Information verbleibt ausschließlich auf Deinem Gerät und wird nicht an mich oder Dritte übermittelt.</p>
 
-    <h2>7. Externe Links</h2>
-    <p>Diese Website enthält Links zu externen Plattformen, beispielsweise zu Linktree und darüber verknüpften Social-Media-Profilen. Beim Anklicken dieser Links verlässt Du diese Website; für die Inhalte und die Datenverarbeitung der jeweiligen Anbieter sind ausschließlich diese selbst verantwortlich. Es wird empfohlen, die Datenschutzhinweise der jeweiligen Anbieter zu prüfen.</p>
+  <h2>7. Externe Links</h2>
+  <p>Diese Website enthält Links zu externen Plattformen, beispielsweise zu Linktree und darüber verknüpften Social-Media-Profilen. Beim Anklicken dieser Links verlässt Du diese Website; für die Inhalte und die Datenverarbeitung der jeweiligen Anbieter sind ausschließlich diese selbst verantwortlich. Es wird empfohlen, die Datenschutzhinweise der jeweiligen Anbieter zu prüfen.</p>
 
-    <h2>8. Deine Rechte als betroffene Person</h2>
-    <p>Dir stehen hinsichtlich Deiner personenbezogenen Daten folgende Rechte zu:</p>
-    <ul>
-        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
-        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
-        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
-        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
-        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
-        <li>Recht auf Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
-        <li>Recht auf Widerruf einer erteilten Einwilligung mit Wirkung für die Zukunft (Art. 7 Abs. 3 DSGVO)</li>
-    </ul>
-    <p>Zur Ausübung dieser Rechte kannst Du Dich jederzeit über die oben genannte E-Mail-Adresse an mich wenden.</p>
+  <h2>8. Deine Rechte als betroffene Person</h2>
+  <p>Dir stehen hinsichtlich Deiner personenbezogenen Daten folgende Rechte zu:</p>
+  <ul>
+      <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
+      <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
+      <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+      <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+      <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+      <li>Recht auf Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
+      <li>Recht auf Widerruf einer erteilten Einwilligung mit Wirkung für die Zukunft (Art. 7 Abs. 3 DSGVO)</li>
+  </ul>
+  <p>Zur Ausübung dieser Rechte kannst Du Dich jederzeit über die oben genannte E-Mail-Adresse an mich wenden.</p>
 
-    <h2>9. Beschwerderecht bei einer Aufsichtsbehörde</h2>
-    <p>Du hast das Recht, Dich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung Deiner personenbezogenen Daten zu beschweren. Zuständig ist in der Regel die Aufsichtsbehörde Deines üblichen Aufenthaltsortes oder die für mich zuständige bayerische Aufsichtsbehörde, das Bayerische Landesamt für Datenschutzaufsicht (BayLDA).</p>
+  <h2>9. Beschwerderecht bei einer Aufsichtsbehörde</h2>
+  <p>Du hast das Recht, Dich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung Deiner personenbezogenen Daten zu beschweren. Zuständig ist in der Regel die Aufsichtsbehörde Deines üblichen Aufenthaltsortes oder die für mich zuständige bayerische Aufsichtsbehörde, das Bayerische Landesamt für Datenschutzaufsicht (BayLDA).</p>
 
-    <h2>10. Aktualität dieser Erklärung</h2>
-    <p>Diese Datenschutzerklärung hat den Stand August 2026 und wird bei Änderungen der Website oder der rechtlichen Vorgaben entsprechend angepasst.</p>
-
+  <h2>10. Aktualität dieser Erklärung</h2>
+  <p>Diese Datenschutzerklärung hat den Stand August 2026 und wird bei Änderungen der Website oder der rechtlichen Vorgaben entsprechend angepasst.</p>
 </main>
 
 <footer>
-    &copy; 2026 Adam Olendzki. All rights reserved.
+  <span>© 2026 Adam Olendzki. All rights reserved.</span>
+  <a href="/">&#8592; Zurück zur Startseite</a>
 </footer>
 
 </body>
