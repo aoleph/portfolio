@@ -869,10 +869,10 @@
                 window.scrollTo(0, 0);
                 if (id === 'page-about') triggerAboutShake();
             }
-            function showAbout(e) { if (e) e.preventDefault(); showPage('page-about'); }
-            function showContact(e) { if (e) e.preventDefault(); showPage('page-contact'); }
-            function showProjects(e) { if (e) e.preventDefault(); showPage('page-projects'); }
-            function showHome(e) { if (e) e.preventDefault(); showPage('page-home'); }
+            function showAbout(e) { if (e) e.preventDefault(); showPage('page-about'); history.replaceState(null, '', '#about'); }
+            function showContact(e) { if (e) e.preventDefault(); showPage('page-contact'); history.replaceState(null, '', '#contact'); }
+            function showProjects(e) { if (e) e.preventDefault(); showPage('page-projects'); history.replaceState(null, '', '#projects'); }
+            function showHome(e) { if (e) e.preventDefault(); showPage('page-home'); history.replaceState(null, '', window.location.pathname); }
 
             if (navAbout) navAbout.addEventListener('click', showAbout);
             if (aboutBack) aboutBack.addEventListener('click', showHome);
@@ -892,6 +892,16 @@
                     showPage(el.getAttribute('data-target'));
                 });
             });
+
+            // Otwarcie właściwej sekcji od razu, jeśli w adresie jest #about / #contact / #projects
+            function openFromHash() {
+                var hash = window.location.hash.replace('#', '');
+                if (hash === 'about') showPage('page-about');
+                else if (hash === 'contact') showPage('page-contact');
+                else if (hash === 'projects') showPage('page-projects');
+            }
+            openFromHash();
+            window.addEventListener('hashchange', openFromHash);
 
             var contactForm = document.getElementById('contactForm');
             var contactStatus = document.getElementById('contactStatus');
