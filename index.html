@@ -5,595 +5,818 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adam Olendzki – Fotograf im Landkreis Landshut | Fashion, Portrait, Lifestyle, Familien- und Businessfotografie</title>
-    <meta name="description" content="Portfolio von Adam Olendzki, Fotograf im Landkreis Landshut. Natürliche Fashion-, Portrait-, Lifestyle-, Familien- und Businessfotografie in Rottenburg an der Laaber, Landshut, Regensburg, Mainburg, Kelheim und Abensberg.">
+    <title>Adam Olendzki – Fotograf in Rottenburg an der Laaber</title>
+    <meta name="description" content="Adam Olendzki – Fotograf für Familien-, Schwangerschafts-, Paar- und Businessfotografie im Landkreis Landshut sowie in Regensburg, Mainburg, Kelheim und Abensberg.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&family=Inter:wght@300;400;500&family=Oswald:wght@300;400&family=Noto+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&family=Inter:wght@300;400;500&family=Oswald:wght@100;200;300;400;500;600&family=Noto+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- Homepage concept: extra styles, scoped to this page --- */
+        /* Jasne, niemal białe tło strony */
+        body {
+            background: #f7f7f5;
+            color: #242422;
+        }
+        /* Nagłówek: identyczny blok jak na wszystkich podstronach */
+        #floating-header { min-height: 78px; padding: 22px 42px; box-sizing: border-box; }
+        #floating-header .logo { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 300; letter-spacing: 1.6px; color: #ffffff; white-space: nowrap; transition: color .35s ease, letter-spacing .35s ease; }
+        #floating-header .logo:hover { color: #d4a820; letter-spacing: 2.4px; }
+        #floating-header nav ul { display: flex; gap: 26px; align-items: center; list-style: none; padding: 0; margin: 0; }
+        #floating-header nav a { font-family: 'Oswald', sans-serif; font-size: 21.6px; font-weight: 100; letter-spacing: 1.2px; text-transform: lowercase; color: #ffffff; cursor: pointer; transition: color .3s ease; }
+        #floating-header nav > ul > li > a:hover { color: #d4a820; }
+        #floating-header .dropdown { position: relative; }
+        #floating-header .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #141412; box-shadow: 0 8px 16px rgba(0,0,0,.65); padding: 15px 0; min-width: 320px; z-index: 100; border: 1px solid #262624; }
+        #floating-header .dropdown-menu li a { display: block; padding: 10px 25px; font-family: 'Jost', sans-serif; font-size: 20px; font-weight: 200; letter-spacing: 2px; text-transform: lowercase; color: #bebebe; }
+        #floating-header .dropdown-menu li a:hover { background: #222220; color: #fff; }
+        #floating-header .dropdown:hover .dropdown-menu { display: block; }
+        .hp-hero {
+            position: relative;
+            height: 100vh;
+            min-height: 640px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: #0c0c0a;
+            overflow: hidden;
+        }
+        .hp-hero img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%;
+            opacity: 0;
+            transition: opacity 1.6s ease;
+            will-change: transform, opacity;
+        }
+        .hp-hero img.active {
+            opacity: 0.88;
+        }
+        .hp-hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10,10,9,0.35) 0%, rgba(10,10,9,0.15) 35%, rgba(10,10,9,0.85) 100%);
+        }
+        .hp-hero-eyebrow {
+            position: relative;
+            z-index: 2;
+            font-family: 'Noto Sans', sans-serif;
+            font-weight: 400;
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #D4A820;
+            padding: 0 60px;
+            margin-bottom: 18px;
+            will-change: transform, opacity;
+        }
+        .hp-hero-name {
+            position: relative;
+            z-index: 2;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 300;
+            color: #f2f1ec;
+            font-size: clamp(48px, 9vw, 128px);
+            line-height: 0.95;
+            letter-spacing: 1px;
+            padding: 0 54px;
+            margin: 0;
+            will-change: transform, opacity;
+        }
+        .hp-hero-tagline {
+            position: relative;
+            z-index: 2;
+            font-family: 'Jost', sans-serif;
+            font-weight: 200;
+            font-style: italic;
+            font-size: clamp(16px, 2vw, 22px);
+            color: #cfcdc4;
+            padding: 22px 60px 64px;
+            max-width: 620px;
+            will-change: transform, opacity;
+        }
+        .hp-scroll-cue {
+            position: absolute;
+            z-index: 2;
+            right: 44px;
+            bottom: 40px;
+            writing-mode: vertical-rl;
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hp-scroll-cue::after { content: ""; width: 1px; height: 46px; background: #666; }
+
+        .hp-intro {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            padding: 60px 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #141412;
+        }
+        .hp-intro-photo {
+            aspect-ratio: 1;
+            width: min(100%, 440px);
+            justify-self: start;
+            display: grid;
+            place-items: center;
+            background: #252522;
+            border: 1px solid #3b3b36;
+            color: #9b9a92;
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            overflow: hidden;
+        }
+        .hp-intro-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .8s cubic-bezier(.2,.8,.2,1);
+        }
+        .hp-intro-photo:hover img {
+            transform: scale(1.06);
+        }
+        .hp-intro-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .hp-intro-label {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #D4A820;
+            margin-bottom: 20px;
+        }
+        .hp-intro-text {
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
+            font-size: 26px;
+            line-height: 1.5;
+            color: #e6e5e0;
+        }
+        .hp-intro-sub {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            font-family: 'Noto Sans', sans-serif;
+            font-weight: 300;
+            font-size: 15px;
+            line-height: 1.9;
+            color: #999;
+        }
+        .hp-intro-sub a {
+            display: inline-block;
+            margin-top: 24px;
+            color: #8a6d12;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1px;
+            font-size: 14px;
+            border-bottom: 1px solid #8a6d12;
+            padding-bottom: 4px;
+            width: fit-content;
+        }
+
+        .hp-portfolio-heading {
+            padding: 0 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .hp-portfolio-heading h2 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 300;
+            font-size: clamp(30px, 4vw, 46px);
+            color: #242422;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .hp-portfolio-heading span {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: #5f5f5a;
+            text-transform: uppercase;
+        }
+
+        .hp-grid {
+            max-width: 1300px;
+            margin: 44px auto 140px;
+            padding: 0 60px;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-auto-rows: 90px;
+            gap: 14px;
+        }
+        .hp-card {
+            position: relative;
+            overflow: hidden;
+            display: block;
+            text-decoration: none;
+            background: #1a1a18;
+        }
+        .hp-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.6s ease;
+            filter: grayscale(0%) brightness(1);
+        }
+        .hp-card:hover img { transform: scale(1.06); filter: grayscale(0%) brightness(1.08); }
+        .hp-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.75) 100%);
+        }
+        .hp-card-label {
+            position: absolute;
+            left: 22px;
+            bottom: 18px;
+            z-index: 2;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #f2f1ec;
+        }
+        .hp-card-label small {
+            display: block;
+            font-family: 'Noto Sans', sans-serif;
+            font-weight: 300;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #D4A820;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .hp-card-family    { grid-column: 1 / 4; grid-row: 1 / 8; }
+        .hp-card-women     { grid-column: 4 / 7; grid-row: 1 / 5; }
+        .hp-card-couples   { grid-column: 4 / 6; grid-row: 5 / 8; }
+        .hp-card-business  { grid-column: 6 / 7; grid-row: 5 / 8; }
+        .hp-card-pregnancy { grid-column: 1 / 7; grid-row: 8 / 12; }
+
+        @media (max-width: 900px) {
+            .hp-intro { grid-template-columns: 1fr; padding: 44px 24px; gap: 30px; }
+            .hp-intro-photo { width: min(100%, 360px); }
+            .hp-portfolio-heading, .hp-grid { padding-left: 24px; padding-right: 24px; }
+            .hp-hero-eyebrow, .hp-hero-name, .hp-hero-tagline { padding-left: 24px; padding-right: 24px; }
+            .hp-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 220px; }
+            .hp-card-family    { grid-column: 1 / 3; grid-row: 1 / 3; }
+            .hp-card-women     { grid-column: 1 / 2; grid-row: 3 / 5; }
+            .hp-card-couples   { grid-column: 2 / 3; grid-row: 3 / 4; }
+            .hp-card-business  { grid-column: 2 / 3; grid-row: 4 / 5; }
+            .hp-card-pregnancy { grid-column: 1 / 3; grid-row: 5 / 7; }
+        }
+
+        /* SPA PAGE: ABOUT — osobny "ekran" w tym samym pliku, przełączany JS-em */
+        .spa-page { display: none; padding-top: 78px; min-height: 100vh; background: #f7f7f5; }
+        .spa-back { display: inline-block; padding: 26px 60px 0; font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: 1.5px; color: #74746e; text-transform: lowercase; cursor: pointer; }
+        .spa-back:hover { color: #d4a820; }
+        .about-section { max-width: 1300px; margin: 0 auto; padding: 50px 60px 70px; display: grid; grid-template-columns: minmax(260px, .8fr) 1.2fr; gap: clamp(46px, 8vw, 120px); align-items: center; background: #141412; }
+        .about-section .about-img-wrap { overflow: hidden; }
+        .about-section img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; transition: filter .6s ease, transform .6s ease; }
+        .about-section .about-img-wrap:hover img { filter: grayscale(100%); transform: scale(1.08); }
+        .about-copy .label { margin: 0 0 14px; color: #d4a820; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Oswald', sans-serif; }
+        .about-copy h2 { margin: 0 0 24px; color: #f2f1ec; font-family: 'Oswald', sans-serif; font-size: clamp(32px, 3.6vw, 50px); font-weight: 300; line-height: 1.15; }
+        .about-copy p { margin: 0 0 18px; max-width: 600px; color: #cfcdc4; font-family: 'Jost', sans-serif; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.7; }
+        .about-copy p:last-of-type { margin-bottom: 26px; }
+        .about-quote { font-family: 'Jost', sans-serif; font-style: italic; font-size: 17px; color: #d4a820; line-height: 1.5; border-left: 2px solid #d4a820; padding-left: 18px; }
+        .about-quote span { display: block; margin-top: 8px; font-family: 'Oswald', sans-serif; font-style: normal; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #74746e; }
+
+        @keyframes gentleShake {
+            0%, 100% { transform: translateX(0); }
+            15% { transform: translateX(-7px); }
+            30% { transform: translateX(6px); }
+            45% { transform: translateX(-5px); }
+            60% { transform: translateX(3px); }
+            75% { transform: translateX(-2px); }
+            90% { transform: translateX(1px); }
+        }
+        .about-copy h2.shake-in { animation: gentleShake .6s ease; }
+
+        .faq-section { background: #e8e8e6; padding: 0 0 70px; }
+        .faq-heading { width: 100%; margin: 0 0 40px; padding: 50px 24px; text-align: center; background: #c9c9c4; }
+        .faq-heading h2 { margin: 0 0 10px; font-family: 'Oswald', sans-serif; font-size: clamp(26px, 3vw, 40px); font-weight: 300; color: #1a1a1a; }
+        .faq-heading p { margin: 0; font-family: 'Jost', sans-serif; font-size: 20px; color: #1a1a1a; }
+        .faq-toggle { margin: 28px auto 0; width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(26,26,26,.25); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .3s ease, background .3s ease; }
+        .faq-toggle:hover { border-color: #d4a820; background: rgba(212,168,32,.1); }
+        .faq-toggle svg { width: 18px; height: 18px; color: #1a1a1a; transition: transform .4s cubic-bezier(.16,1,.3,1); }
+        .faq-toggle:hover svg { color: #d4a820; }
+        .faq-toggle.open svg { transform: rotate(180deg); }
+        .faq-list-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s cubic-bezier(.16,1,.3,1); }
+        .faq-list-wrap.open { grid-template-rows: 1fr; }
+        .faq-list-inner { overflow: hidden; }
+        .faq-list { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+        .faq-list details { border-bottom: 1px solid #cfcfc9; padding: 20px 0; }
+        .faq-list summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-family: 'Oswald', sans-serif; font-size: 23px; font-weight: 400; color: #242422; padding: 6px 10px; margin: -6px -10px; border-radius: 3px; transition: background-color .3s ease, padding-left .3s ease; }
+        .faq-list summary:hover { padding-left: 22px; }
+        .faq-list summary::-webkit-details-marker { display: none; }
+        .faq-list summary::after { content: '\25BE'; flex-shrink: 0; font-family: 'Jost', sans-serif; font-size: 22px; color: #242422; transition: transform .3s ease, color .3s ease; }
+        .faq-list summary:hover::after { color: #d4a820; }
+        .faq-list details[open] summary::after { transform: rotate(180deg); color: #d4a820; }
+        .faq-list details > .faq-answer-wrap { display: grid !important; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.16,1,.3,1); }
+        .faq-list details[open] > .faq-answer-wrap { grid-template-rows: 1fr; }
+        .faq-list details > .faq-answer-wrap > .faq-answer-inner { overflow: hidden; }
+        .faq-list details p { margin: 0; padding-top: 16px; font-family: 'Jost', sans-serif; font-size: 19px; line-height: 1.75; color: #4e4e49; }
+
+        /* CONTACT */
+        .contact-section { max-width: 700px; margin: 0 auto; padding: 50px 24px 90px; }
+        .contact-section .label { margin: 0 0 14px; color: #d4a820; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Oswald', sans-serif; text-align: center; }
+        .contact-section h2 { margin: 0 0 14px; font-family: 'Oswald', sans-serif; font-size: clamp(30px, 3.6vw, 46px); font-weight: 300; color: #242422; text-align: center; }
+        .contact-section .contact-intro { margin: 0 0 40px; font-family: 'Jost', sans-serif; font-size: 18px; line-height: 1.6; color: #4e4e49; text-align: center; }
+        .contact-form { display: flex; flex-direction: column; gap: 20px; }
+        .contact-form label { font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #4e4e49; margin-bottom: 8px; display: block; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 14px 16px; font-family: 'Jost', sans-serif; font-size: 16px; border: 1px solid #d0d0ca; background: #fff; color: #242422; }
+        .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: #d4a820; }
+        .contact-form textarea { resize: vertical; min-height: 140px; }
+        .contact-submit { align-self: flex-start; margin-top: 10px; padding: 15px 34px; background: #141412; color: #fff; border: none; font-family: 'Oswald', sans-serif; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: background .3s ease; }
+        .contact-submit:hover { background: #d4a820; }
+        .contact-submit:disabled { opacity: .5; cursor: default; }
+        .contact-status { font-family: 'Jost', sans-serif; font-size: 14px; color: #b23b3b; min-height: 20px; }
+
+        /* PROJEKTE — przestronne kontenery */
+        .proj-intro { max-width: 820px; margin: 0 auto; padding: 60px 24px 70px; text-align: center; }
+        .proj-intro .label { display: block; margin-bottom: 14px; color: #d4a820; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Oswald', sans-serif; }
+        .proj-intro h2 { margin: 0 0 20px; font-family: 'Oswald', sans-serif; font-size: clamp(30px, 3.6vw, 46px); font-weight: 300; color: #1a1a1a; }
+        .proj-intro p { margin: 0; font-family: 'Jost', sans-serif; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.8; color: #4e4e49; }
+
+        .zone-block { display: grid; grid-template-columns: 1.35fr .95fr; gap: clamp(40px, 7vw, 100px); align-items: center; max-width: 1300px; margin: 0 auto 26px; padding: 70px 60px; background: #141412; }
+        .zone-block.reverse { grid-template-columns: .95fr 1.35fr; }
+        .zone-block.reverse .zone-img { order: 2; }
+        .zone-block.reverse .zone-copy { order: 1; }
+        .zone-img { position: relative; overflow: hidden; background: #1c1c19; }
+        .zone-img a { display: block; cursor: pointer; }
+        .zone-img img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; filter: brightness(1); transition: transform .8s cubic-bezier(.2,.8,.2,1), filter .5s ease; }
+        .zone-img a:hover img { filter: brightness(.85); transform: scale(1.05); }
+        .zone-label { margin: 0 0 14px; color: #d4a820; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Oswald', sans-serif; }
+        .zone-copy h2 { margin: 0 0 22px; color: #f2f1ec; font-family: 'Oswald', sans-serif; font-size: clamp(28px, 3.2vw, 42px); font-weight: 300; line-height: 1.15; }
+        .zone-copy p { margin: 0 0 24px; max-width: 500px; color: #cfcdc4; font-family: 'Jost', sans-serif; font-size: clamp(16px, 1.35vw, 18px); line-height: 1.75; }
+        .zone-cta { display: inline-flex; align-items: center; gap: 10px; color: #d4a820; font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: color .3s ease; }
+        .zone-cta svg { width: 15px; height: 15px; transition: transform .3s ease; }
+        .zone-cta:hover { color: #fff; }
+        .zone-cta:hover svg { transform: translateX(6px); }
+
+        /* Jasnoszary wariant co drugiego kontenera */
+        .zone-block.light { background: #efefec; }
+        .zone-block.light .zone-copy h2 { color: #1a1a1a; }
+        .zone-block.light .zone-copy p { color: #4e4e49; }
+        .zone-block.light .zone-cta:hover { color: #1a1a1a; }
+
+        .proj-detail-hero { height: 46vh; min-height: 320px; position: relative; overflow: hidden; background: #141412; display: flex; align-items: flex-end; }
+        .proj-detail-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.55); }
+        .proj-detail-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.6)); }
+        .proj-detail-hero .hero-text { position: relative; z-index: 1; padding: 0 0 44px clamp(24px, 6vw, 90px); }
+        .proj-detail-hero h1 { margin: 0; color: #fff; font-family: 'Oswald', sans-serif; font-size: clamp(32px, 4.6vw, 58px); font-weight: 300; text-transform: uppercase; letter-spacing: 1px; }
+        .proj-detail-hero .hero-sub { margin: 14px 0 0; color: #cfcdc4; font-family: 'Jost', sans-serif; font-style: italic; font-size: 17px; max-width: 620px; }
+        .proj-detail-wrap { max-width: 760px; margin: 0 auto; padding: 50px 24px 20px; }
+        .proj-detail-wrap .article-body { font-family: 'Jost', sans-serif; font-size: 18px; line-height: 1.85; color: #33332f; }
+        .proj-detail-wrap .article-body p { margin: 0 0 22px; }
+
+        /* Ładny kontener na tekst pod coverem — nie na całą szerokość */
+        .proj-text-box { max-width: 640px; margin: -60px auto 50px; padding: 40px 44px; background: #141412; position: relative; z-index: 2; }
+        .proj-text-box.wide { max-width: 960px; padding: 26px 50px; }
+        .proj-text-box .spa-back { color: #9a9a94; margin-bottom: 16px; }
+        .proj-text-box .spa-back:hover { color: #d4a820; }
+        .proj-text-box p { margin: 0 0 18px; font-family: 'Jost', sans-serif; font-size: 16px; line-height: 1.8; color: #cfcdc4; }
+        .proj-text-box p:last-child { margin-bottom: 0; }
+
+        /* PRODUKTE — 5 poziome 3:2 + 3 kwadraty + 1 pionowe, dokładnie jak oryginał */
+        .proj-gallery-produkte { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 1200px; margin: 0 auto 90px; padding: 0 24px; }
+        .proj-gallery-produkte figure { margin: 0; overflow: hidden; background: #d7d7d2; }
+        .proj-gallery-produkte figure img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(.92); transition: transform .6s ease, filter .5s ease; }
+        .proj-gallery-produkte figure:hover img { filter: brightness(1.05); transform: scale(1.05); }
+        .proj-gallery-produkte .p-h { grid-column: span 2; aspect-ratio: 3 / 2; }
+        .proj-gallery-produkte .p-sq { grid-column: span 1; aspect-ratio: 1 / 1; }
+        .proj-gallery-produkte .p-tall { grid-column: span 1; grid-row: span 2; aspect-ratio: 2 / 3; }
+
+        /* IMMOBILIEN — immo-h (3:2, 1 kolumna) / immo-v (pionowe, 2 rzędy), dokładnie jak oryginał */
+        .proj-gallery-immobilien { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 280px; gap: 10px; max-width: 1300px; margin: 0 auto 90px; padding: 0 24px; }
+        .proj-gallery-immobilien figure { margin: 0; overflow: hidden; background: #d7d7d2; }
+        .proj-gallery-immobilien figure img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(.92); transition: transform .6s ease, filter .5s ease; }
+        .proj-gallery-immobilien figure:hover img { filter: brightness(1.05); transform: scale(1.05); }
+        .proj-gallery-immobilien .immo-h { grid-column: span 1; grid-row: span 1; }
+        .proj-gallery-immobilien .immo-v { grid-column: span 1; grid-row: span 2; }
+
+        /* LANDSCHAFT — 24 zdjęcia poziome 3:2, siatka na całą szerokość strony */
+        .proj-gallery-landscape { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 0 0 90px; width: 100%; }
+        .proj-gallery-landscape figure { margin: 0; overflow: hidden; background: #d7d7d2; aspect-ratio: 3 / 2; }
+        .proj-gallery-landscape figure img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(.92); transition: transform .6s ease, filter .5s ease; }
+        .proj-gallery-landscape figure:hover img { filter: brightness(1.05); transform: scale(1.05); }
+
+        @media (max-width: 900px) {
+            .spa-back { padding: 22px 24px 0; }
+            .about-section { grid-template-columns: 1fr; padding: 40px 24px 50px; gap: 36px; }
+            .faq-section { padding: 0 0 50px; }
+            .zone-block, .zone-block.reverse { grid-template-columns: 1fr; padding: 40px 24px; gap: 26px; margin-bottom: 16px; }
+            .zone-block.reverse .zone-img, .zone-block.reverse .zone-copy { order: initial; }
+            .proj-detail-hero { height: 38vh; min-height: 260px; }
+            .proj-text-box { margin: -40px 20px 40px; padding: 28px 24px; max-width: none; }
+            .proj-gallery-produkte { grid-template-columns: repeat(2, 1fr); }
+            .proj-gallery-produkte .p-h { grid-column: span 2; }
+            .proj-gallery-produkte .p-sq, .proj-gallery-produkte .p-tall { grid-column: span 1; }
+            .proj-gallery-immobilien { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+            .proj-gallery-landscape { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+    <style>.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }</style>
 </head>
 <body>
-
     <header id="floating-header">
-        <div class="logo"><a onclick="showPage('home')">ADAM OLENDZKI PHOTOGRAPHER</a></div>
+        <div class="logo"><a href="/">ADAM OLENDZKI PHOTOGRAPHER</a></div>
         <nav>
             <ul>
-                <li><a onclick="showPage('about')">about</a></li>
+                <li><a href="#" id="nav-about">about</a></li>
                 <li class="dropdown">
                     <a>portfolio &#9662;</a>
                     <ul class="dropdown-menu">
-                        <li><a href="family.html">familie & kinder fotografie</a></li>
-                        <li><a href="schwangerschaft.html">schwangerschaftsfotografie</a></li>
-                        <li><a href="couples.html">paare / couples</a></li>
-                        <li><a href="business.html">business & image</a></li>
-                        <li><a href="women-zone.html">women zone</a></li>
+                        <li><a href="/schwangerschaft/">schwangerschaftsfotografie</a></li>
+            <li><a href="/business/">business & image</a></li>
+            <li><a href="/family/">familie & kinder fotografie</a></li>
+            <li><a href="/couples/">paare / couples</a></li>
+            <li><a href="/women-zone/">women zone</a></li>
                     </ul>
                 </li>
-                <li><a onclick="showPage('projects')">projekte</a></li>
-                <li><a href="blog.html">blog</a></li>
-                <li><a onclick="showPage('contact')">kontakt</a></li>
-                
+                <li><a href="#" id="nav-projects">kooperation</a></li>
+                <li><a href="/blog/">blog</a></li>
+                <li><a href="#" id="nav-contact">kontakt</a></li>
             </ul>
         </nav>
     </header>
 
-    <div id="home" class="page-section active">
-        <section class="hero">
-        </section>
+    <!-- HERO -->
+    <div id="page-home">
+    <section class="hp-hero" id="hpHero">
+        <img src="images/home/home-cover-01.webp" alt="Adam Olendzki Fotografie" class="active">
+        <img src="images/home/home-cover-02.webp" alt="Adam Olendzki Fotografie">
+        <img src="images/home/home-cover-03.webp" alt="Adam Olendzki Fotografie">
+        <div class="hp-hero-eyebrow">Fotograf · Rottenburg an der Laaber · Landkreis Landshut</div>
+        <h1 class="hp-hero-name">ADAM<br>OLENDZKI</h1>
+        <div class="hp-hero-tagline">Echte Momente, ruhig eingefangen — Familien, Paare, Business und mehr.</div>
+        <div class="hp-scroll-cue">SCROLL</div>
+    </section>
 
-        <div class="mid-text-bar intro-panel home-text-with-square">
-            <div class="mid-text-bar-content home-text-content">
-                <span class="home-yellow-heading">Authentische Fotografie ohne Kompromisse.</span>
-                Schöne Bilder entstehen nicht durch Zufall. Sie entstehen durch Vertrauen, die richtige Atmosphäre und ein Gespür für den besonderen Moment. Ob im Studio oder unter freiem Himmel – ich nehme mir Zeit für Deine Wünsche und erschaffe Aufnahmen, die nicht nur gut aussehen, sondern echte Gefühle transportieren. Zeitlose Erinnerungen, die auch Jahre später noch berühren.
-            </div>
+    <!-- INTRO -->
+    <section class="hp-intro">
+        <div class="hp-intro-photo"><img src="images/home/home-square-01.webp" alt="Adam Olendzki"></div>
+        <div class="hp-intro-content">
+            <div class="hp-intro-text">Ich glaube, dass jedes Licht seine eigene Geschichte erzählt. Genau danach suche ich – nach Atmosphäre, Emotionen und Momenten, die sich nicht wiederholen lassen. Jedes Shooting ist für mich eine neue Gelegenheit, etwas Einzigartiges entstehen zu lassen.</div>
+            <div class="hp-intro-sub">Ich lade dich ein, durch mein Portfolio zu stöbern und meine Welt der Fotografie zu entdecken. Wenn du Lust hast, wirf auch einen Blick in meinen – bisher noch kleinen – Blog. Dort teile ich von Zeit zu Zeit Gedanken, Inspirationen und Themen, die mich bewegen oder die ich für wert halte, weiterzugeben. Nicht alles wird sich um Fotografie drehen – manchmal geht es einfach um Dinge, die den Blick auf die Welt ein Stück verändern können.</div>
         </div>
+    </section>
 
-        <main class="gallery-container home-gallery-overlap">
-            <div class="grid-gallery-home6">
-                <script>
-                    for(let i=1; i<=3; i++) {
-                        const n = String(i).padStart(2, '0');
-                        document.write(`<div class="home6-item"><img src="images/home/home-vertical-${n}.webp" alt="Foto ${i}"></div>`);
-                    }
-                </script>
-            </div>
-        </main>
-
-        <div class="home-bio-wrapper">
-        <div class="home-bio-block">
-            <div class="home-bio-circle">
-                <img src="images/home/home-square-01.webp" alt="Adam Olendzki">
-            </div>
-            <div class="home-bio-text">
-                <span class="home-bio-heading">Adam Olendzki</span>
-                <p>Ich glaube, dass jedes Licht seine eigene Geschichte erzählt. Genau danach suche ich – nach Atmosphäre, Emotionen und Momenten, die sich nicht wiederholen lassen. Jedes Shooting ist für mich eine neue Gelegenheit, etwas Einzigartiges entstehen zu lassen.</p>
-                <p>Ich lade dich ein, durch mein Portfolio zu stöbern und meine Welt der Fotografie zu entdecken. Wenn du Lust hast, wirf auch einen Blick in meinen – bisher noch kleinen – Blog. Dort teile ich von Zeit zu Zeit Gedanken, Inspirationen und Themen, die mich bewegen oder die ich für wert halte, weiterzugeben. Nicht alles wird sich um Fotografie drehen – manchmal geht es einfach um Dinge, die den Blick auf die Welt ein Stück verändern können.</p>
-            </div>
-        </div>
-        </div>
-
-        <div class="quote-block" style="margin: 0 auto; padding: 30px 0; text-align: center; border: none; width: 100%; max-width: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-    <div class="quote-text" style="color: #1a1a1a; font-style: italic; font-size: 14px; font-family: 'Inter', sans-serif; max-width: 700px; padding: 0 20px; text-align: center;">"Be yourself; everyone else is already taken."</div>
-    <div class="quote-author" style="color: #444; font-size: 12px; margin-top: 10px; letter-spacing: 1px; text-transform: uppercase; text-align: center;">— Oscar Wilde</div>
-</div>
+    <!-- PORTFOLIO -->
+    <div class="hp-portfolio-heading">
+        <h2>Portfolio</h2>
+    </div>
+    <div class="hp-grid">
+        <a class="hp-card hp-card-family" href="/business/">
+            <img src="images/business/business-cover.webp" alt="Businessfotografie">
+            <div class="hp-card-label"><small>Portfolio</small>Business &amp; Image</div>
+        </a>
+        <a class="hp-card hp-card-women" href="/family/">
+            <img src="images/family/family-cover.webp" alt="Familienfotografie">
+            <div class="hp-card-label"><small>Portfolio</small>Familie & Kinder</div>
+        </a>
+        <a class="hp-card hp-card-couples" href="/women-zone/">
+            <img src="images/women-zone/women-zone-cover.webp" alt="Women Zone">
+            <div class="hp-card-label"><small>Portfolio</small>Women Zone</div>
+        </a>
+        <a class="hp-card hp-card-business" href="/couples/">
+            <img src="images/couples/couples-cover.webp" alt="Paare / Couples">
+            <div class="hp-card-label"><small>Portfolio</small>Paare</div>
+        </a>
+        <a class="hp-card hp-card-pregnancy" href="/schwangerschaft/">
+            <img src="images/schwangerschaft/schwangerschaft-cover.webp" alt="Schwangerschaftsfotografie">
+            <div class="hp-card-label"><small>Portfolio</small>Schwangerschaft</div>
+        </a>
     </div>
 
-    <div id="about" class="page-section">
-        <main class="about-container">
-            <div class="about-image-wrap"><img class="about-image" src="images/about/about-vertical-01.webp" alt="Adam Olendzki"></div>
-            <div class="about-content">
-                <h2>Hi :)</h2>
-                <p>Ich bin Adam.</p>
+    <section class="visually-hidden">
+        <h2>Fotograf für Familie, Paare, Business und mehr in Rottenburg an der Laaber</h2>
+        <p>Als Fotograf begleite ich Familien, Paare und Unternehmen bei Fotoshootings in Rottenburg an der Laaber und im gesamten Landkreis Landshut. Auch in Schierling, Abensberg, Kelheim, Straubing, Ingolstadt und Regensburg entstehen bei mir einfühlsame Portraits, Familienfotos, Business-Portraits und Schwangerschaftsfotografie mit Babybauch-Shootings — persönlich, ruhig und mit Blick fürs Wesentliche.</p>
+    </section>
+
+    <div class="quote-block" style="margin: 0 auto; padding: 60px 0; text-align: center; border: none; width: 100%; max-width: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div class="quote-text" style="color: #1a1a1a; font-style: italic; font-weight: 300; font-size: clamp(19px, 2.7vw, 35px); font-family: 'Jost', sans-serif; line-height: 1.25; max-width: 900px; padding: 0 20px; text-align: center;">"Be yourself; everyone else is already taken."</div>
+        <div class="quote-author" style="color: #686862; font-size: 11px; margin-top: 18px; letter-spacing: 2px; text-transform: uppercase; text-align: center;">— Oscar Wilde</div>
+    </div>
+    </div>
+    <!-- /page-home -->
+
+    <!-- SPA PAGE: ABOUT -->
+    <div id="page-about" class="spa-page">
+        <a href="#" id="about-back" class="spa-back">&larr; zurück zur Startseite</a>
+
+        <section class="about-section">
+            <div class="about-img-wrap"><img src="images/about/about-vertical-01.webp" alt="Adam Olendzki"></div>
+            <div class="about-copy">
+                <div class="label">Hi :)</div>
+                <h2>Ich bin Adam.</h2>
                 <p>Ich liebe natürliche, zeitlose Fotografie mit einer klaren und minimalistischen Bildsprache. Besonders faszinieren mich echtes Licht, stimmungsvolle Schatten und kleine Details, die einem Bild Charakter verleihen.</p>
                 <p>Ich probiere gerne neue Ideen aus, experimentiere mit Licht und Perspektiven und verfolge aktuelle Trends in der Fotografie – ohne dabei meinen eigenen Stil aus den Augen zu verlieren.</p>
-                <p>Mir ist wichtig, dass Du Dich vor der Kamera wohlfühlst. So entstehen authentische Bilder, die nicht nur schön aussehen, sondern sich auch echt anfühlen.</p>
-                <p>Ich freue mich darauf, Deine Geschichte in Bildern festzuhalten.</p>
-                <div class="quote-block" style="margin: 40px 0 0 0; text-align: left; padding: 0;">
-                    <div class="quote-text">"Which of my photographs is my favorite? The one I'm going to take tomorrow."</div>
-                    <div class="quote-author">— Imogen Cunningham</div>
-                </div>
+                <p>Mir ist wichtig, dass Du Dich vor der Kamera wohlfühlst. So entstehen authentische Bilder, die nicht nur schön aussehen, sondern sich auch echt anfühlen. Ich freue mich darauf, Deine Geschichte in Bildern festzuhalten.</p>
+                <div class="about-quote">„Which of my photographs is my favorite? The one I'm going to take tomorrow.“<span>Imogen Cunningham</span></div>
             </div>
-        </main>
+        </section>
 
-        <div class="about-bottom-bar">
-            <span class="home-yellow-heading">Wie läuft ein Shooting eigentlich ab?</span>
-            Hier findest Du die wichtigsten Fragen und Antworten, die Dir Deine Entscheidung erleichtern.
-        </div>
-
-        <div class="about-faq">
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Ich kann nicht posen und bin nicht fotogen. Hilfst Du mir?</button>
-                <div class="faq-answer">Natürlich! Die meisten Menschen stehen nicht jeden Tag vor der Kamera. Deshalb leite ich Dich während des gesamten Shootings an, gebe Dir einfache Tipps und zeige Dir die Posen auch selbst. Du musst Dir keine Gedanken machen – eine entspannte Atmosphäre gehört genauso zum Shooting wie schöne Fotos.</div>
+        <section class="faq-section">
+            <div class="faq-heading">
+                <h2>Häufig gestellte Fragen</h2>
+                <p>Wie läuft ein Shooting eigentlich ab? Hier findest Du die wichtigsten Fragen und Antworten.</p>
+                <button class="faq-toggle" id="faqToggle" type="button" aria-expanded="false" aria-controls="faqListWrap" aria-label="Fragen ein-/ausblenden">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
             </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Wie planen wir das Shooting?</button>
-                <div class="faq-answer">Vor jedem Shooting besprechen wir gemeinsam den gewünschten Stil und die Bildwirkung. Dabei stimmen wir Kleidung, Farben und die gesamte Atmosphäre aufeinander ab. Auch Licht, Hintergrund und mögliche Accessoires werden individuell geplant, damit alles harmonisch zu Dir und Deiner Persönlichkeit passt.<br><br>Eine gute Vorbereitung sorgt dafür, dass das Shooting entspannt abläuft und wir uns vor Ort ganz auf die Bilder konzentrieren können.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Wie bereite ich mich auf das Shooting vor?</button>
-                <div class="faq-answer">Komm möglichst entspannt und ausgeschlafen. Trinke am Tag vorher und am Shootingtag ausreichend Wasser und verzichte möglichst auf Solarium, Selbstbräuner oder neue Kosmetikprodukte.<br><br>Bei einem Babybauch-Shooting empfiehlt es sich außerdem, etwa zwei Stunden vorher lockere Kleidung zu tragen, damit keine Abdrücke auf der Haut entstehen.<br><br>Vor jedem Shooting erhältst Du außerdem einen kleinen Guide mit hilfreichen Tipps zur Vorbereitung.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Was soll ich anziehen?</button>
-                <div class="faq-answer">Auch das besprechen wir vor dem Shooting gemeinsam. Die Kleidung sollte nicht nur zu Deinem Stil passen, sondern auch mit dem geplanten Licht, den Farben und dem Hintergrund harmonieren. Schlichte Farben ohne große Logos oder auffällige Muster wirken auf Fotos meist am besten. Bei Paar- oder Familienshootings sehen farblich aufeinander abgestimmte Outfits besonders harmonisch aus.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Wo findet das Shooting statt?</button>
-                <div class="faq-answer">Die meisten Shootings finden in meinem gemütlichen Homestudio statt. Dort erwartet Dich eine entspannte Atmosphäre ohne Hektik oder Zeitdruck. So bleibt genügend Zeit, damit Du Dich wohlfühlst und natürliche Bilder entstehen können.<br><br>Je nach Art des Shootings können wir uns aber auch für eine Outdoor-Location oder eine Homestory bei Dir zu Hause entscheiden.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Wie lange dauert ein Shooting?</button>
-                <div class="faq-answer">Das hängt von der Art des Shootings ab. Plane ungefähr eine Stunde ein. Familien- oder Kinder-Shootings können manchmal etwas länger dauern. Mir ist wichtig, dass wir ohne Zeitdruck arbeiten und genügend Ruhe für natürliche Bilder haben.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Was passiert bei schlechtem Wetter?</button>
-                <div class="faq-answer">Bei starkem Regen oder Sturm verschieben wir den Termin unkompliziert auf einen neuen Tag. Ein bewölkter Himmel ist übrigens oft perfekt für natürliche Porträts.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Wann ist die beste Uhrzeit für ein Outdoor-Shooting?</button>
-                <div class="faq-answer">Besonders schönes Licht gibt es während der Goldenen Stunde – kurz nach Sonnenaufgang oder etwa ein bis zwei Stunden vor Sonnenuntergang. Je nach Location sind aber auch andere Uhrzeiten möglich.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Was passiert, wenn ich oder mein Kind krank werde?</button>
-                <div class="faq-answer">Kein Problem. Gib mir einfach so früh wie möglich Bescheid und wir vereinbaren gemeinsam einen neuen Termin.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Wie wähle ich meine Bilder aus?</button>
-                <div class="faq-answer">Innerhalb weniger Tage nach dem Shooting erhältst Du einen Link zu Deiner passwortgeschützten Online-Galerie. Dort kannst Du Dir alle Vorauswahlen in Ruhe ansehen und Deine Lieblingsbilder bequem von zu Hause aus auswählen.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Wie lange dauert die Bearbeitung?</button>
-                <div class="faq-answer">Nach Deiner Bildauswahl benötige ich bis zu zwei Wochen für die professionelle Bearbeitung und Retusche.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Werden die Bilder bearbeitet? Bekomme ich auch die RAW-Dateien?</button>
-                <div class="faq-answer">Ja, alle ausgewählten Bilder werden professionell bearbeitet und sorgfältig retuschiert. Je nach Shooting gehören dazu unter anderem die Optimierung von Farben, Kontrast, Bildausschnitt sowie die Retusche kleiner Hautunreinheiten.<br><br>Unbearbeitete Fotos oder RAW-Dateien gebe ich grundsätzlich nicht heraus, da die Bildbearbeitung ein wichtiger Bestandteil meines fotografischen Stils ist.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>In welchem Format erhalte ich die Fotos?</button>
-                <div class="faq-answer">Du erhältst Deine Bilder als hochauflösende JPG-Dateien per Download. Sie eignen sich sowohl für Social Media als auch für hochwertige Drucke in nahezu jeder gewünschten Größe.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Darf ich die Bilder auf Instagram oder anderen sozialen Medien veröffentlichen?</button>
-                <div class="faq-answer">Ja, selbstverständlich. Du kannst Deine Bilder gerne privat nutzen und auf Social Media veröffentlichen. Über eine Verlinkung freue ich mich natürlich immer.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Werden meine Fotos veröffentlicht?</button>
-                <div class="faq-answer">Nur wenn Du ausdrücklich zustimmst. Ohne Deine schriftliche Einwilligung bleiben Deine Bilder selbstverständlich privat.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)"><span class="faq-icon">+</span>Kann ich eine Begleitperson mitbringen?</button>
-                <div class="faq-answer">Bei Paar-, Familien- oder Babybauch-Shootings natürlich sehr gerne.<br><br>Bei Einzelshootings ist eine Begleitperson grundsätzlich ebenfalls möglich. Erfahrungsgemäß fühlen sich viele Menschen jedoch wohler und entspannter, wenn nur wir beide beim Shooting anwesend sind. Falls Du jemanden mitbringen möchtest, sprechen wir das einfach vorher kurz ab.</div>
-            </div>
-        </div>
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div id="frauen-sedcards" class="page-section">
-        <div class="portfolio-hero" style="background-image: url('images/sedcards/sedcards-cover.webp');">
-            <div class="hero-text-container">
-                <div class="hero-text">Sedcards</div>
-            </div>
-        </div>
-
-        <div class="fpl-free-text" style="color:#1a1a1a;">
-            <span class="home-yellow-heading">Sedcard & Polaroids: Zeig Dich, wie Du bist</span>
-            Ein starkes Portfolio ist der Schlüssel im Modelbusiness. Neben kreativen Editorials und High-Fashion-Strecken sind es vor allem die unretuschierten, echten Aufnahmen, die über Jobs entscheiden.<br><br>
-            In meinem Studio in Rottenburg an der Laaber kreieren wir professionelle Sedcard-Ergänzungen, ausdrucksstarke Model-Tests und cleane Polaroids (Digitals). Ich lege großen Wert auf ein präzises Lichtsetup, das Deine Facetten, Deine Körperlinien und Deine natürliche Ausstrahlung perfekt betont – ohne ablenkende Effekte oder schweren Retusche-Overkill.<br><br>
-            Lass uns Deine Modelmappe auf das nächste Level bringen.
-        </div>
-
-        <div class="project-intro-text">
-            <a href="women-zone.html" class="back-btn">&#8592; zurück zur women zone</a>
-        </div>
-
-        <div class="gallery-container">
-            <div class="grid-gallery-sedcards-brick">
-                <div class="grid-item" style="grid-column:1; grid-row:3/12;"><img src="images/sedcards/sedcards-vertical-01.webp" alt="Sedcard 1"></div>
-                <div class="grid-item" style="grid-column:2; grid-row:1/10;"><img src="images/sedcards/sedcards-vertical-02.webp" alt="Sedcard 2"></div>
-                <div class="grid-item" style="grid-column:3; grid-row:3/12;"><img src="images/sedcards/sedcards-vertical-03.webp" alt="Sedcard 3"></div>
-                <div class="grid-item" style="grid-column:4; grid-row:1/10;"><img src="images/sedcards/sedcards-vertical-04.webp" alt="Sedcard 4"></div>
-            </div>
-        </div>
-
-        <div class="seo-footprint-container">
-            <div class="seo-text-hidden">
-                sedcard fotograf rottenburg an der laaber / model sedcard landshut / sedcard shooting regensburg / model portfolio ingolstadt / sedcard fotograf kelheim / model fotos abensberg / sedcard mainburg / modelmappe niederbayern
-             / münchen fotograf / fotograf münchen / natürliche fotografie münchen / moderne fotografie münchen / stilvolle fotografie münchen / professionelle portraits münchen / fashion shooting münchen / personal branding münchen / business portrait münchen</div>
-        </div>
-    </div>
-
-    <div id="projects" class="page-section" style="background-color:#E8E8E6 !important; color:#1a1a1a !important;">
-        <div class="padded-container">
-            <h2 class="section-title" style="margin-top:0;">Projekte</h2>
-            
-            <div class="project-intro-text" style="max-width: 850px; margin: 0 auto 40px auto;">
-                <span class="home-yellow-heading" style="display:block; margin-bottom:16px;">Kreativität ohne Grenzen.</span>
-                Hier findest Du verschiedene kreative Projekte und künstlerische Experimente, mit denen ich mich neben der klassischen Fotografie beschäftige.<br><br>
-                Diese Arbeiten entstehen aus purer Leidenschaft – ob thematische Konzept-Shootings, persönliche Projekte oder visuelle Experimente mit Licht und Kulissen. Hier zeige ich nicht nur meine Arbeit, sondern auch ein Stück von mir selbst. Wenn Du beim Betrachten dieser Bilder eine Verbindung spürst und Potenzial für eine gemeinsame kreative Zusammenarbeit siehst, freue ich mich sehr über eine Nachricht. Lass uns gemeinsam schauen, was wir umsetzen können.
-            </div>
-
-            <div class="projects-list">
-                <a onclick="showPage('proj-product')" class="project-link-card">
-                    <img src="images/produkte/produkte-cover.webp" alt="Products">
-                    <div class="project-link-title">Produktfotografie</div>
-                </a>
-                <a onclick="showPage('proj-immobilien')" class="project-link-card">
-                    <img src="images/immobilien/immobilien-cover.webp" alt="Immobilienfotografie">
-                    <div class="project-link-title">Immobilienfotografie</div>
-                </a>
-                <a onclick="showPage('proj-idea')" class="project-link-card">
-                    <img src="images/idea/idea-cover.webp" alt="Deine Idee">
-                    <div class="project-link-title">Deine Idee für ein Fotoshooting</div>
-                </a>
-                <a onclick="showPage('proj-tfp')" class="project-link-card">
-                    <img src="images/tfp/tfp-cover.webp" alt="TFP">
-                    <div class="project-link-title">TFP</div>
-                </a>
-                <a onclick="showPage('proj-landscape')" class="project-link-card">
-                    <img src="images/landscape/landscape-cover.webp" alt="Landscape">
-                    <div class="project-link-title">Landschaftsfotografie</div>
-                </a>
-            </div>
-        </div>
-
-        <div class="seo-footprint-container">
-            <div class="seo-text-hidden" style="color:#ffffff;">
-                fotografische projekte rottenburg an der laaber / kreative fotografie landshut / konzeptfotografie regensburg / kreative shootings ingolstadt / fotoprojekte kelheim / kreative ideen abensberg / fotokunst mainburg
-             / münchen fotograf / fotograf münchen / natürliche fotografie münchen / moderne fotografie münchen / stilvolle fotografie münchen / professionelle portraits münchen / fashion shooting münchen / personal branding münchen / business portrait münchen</div>
-        </div>
-    </div>
-
-    <div id="proj-tfp" class="page-section" style="background-color:#E8E8E6 !important; color:#1a1a1a !important;">
-        <div class="portfolio-hero" style="background-image: url('images/tfp/tfp-cover.webp');">
-            <div class="hero-text-container">
-                <div class="hero-text">TFP</div>
-                <div class="hero-subtitle">Kreativer Austausch auf Augenhöhe in Regensburg, Landshut und Straubing</div>
-            </div>
-        </div>
-        <div class="project-intro-text" style="text-align: left; max-width: 800px;">
-            <a onclick="showPage('projects')" class="back-btn">&#8592; zurück zu projekte</a><br>
-            Hey! 📸 Wenn Du, wie ich, es genießt, Dein Portfolio hin und wieder mit einem weiteren Fotoshooting zu erweitern, oder wenn Du mit dem Modeln anfangen möchtest, weil Du denkst, dass Du dafür perfekt geeignet bist, dann bist Du hier genau richtig! Ich suche Modelle für mein Portfolio in den Bereichen Porträt-, Sinnlich-, Fine-Art- und Fashion-Fotografie in verschiedenen Kombinationen. Es ist nicht nötig, dass Du bereits Dutzende von Shootings hinter Dir hast – was für mich am wichtigsten ist, ist Deine Begeisterung und Deine Natürlichkeit vor der Kamera. Ich habe viele Ideen, die ich gerne mit Dir umsetzen möchte :)<br><br>
-            <strong>Was erwarte ich?</strong><br><br>
-            &bull;&nbsp;&nbsp;Eine positive Einstellung 😊<br>
-            &bull;&nbsp;&nbsp;Offenheit für verschiedene Ideen während des Shootings<br>
-            &bull;&nbsp;&nbsp;Natürlichkeit beim Posen (aber ohne Stress, alles entspannt!)<br>
-            &bull;&nbsp;&nbsp;Bereitschaft zur Zusammenarbeit und Engagement<br><br>
-            Wenn Dir mein Stil gefällt, Du neue Erfahrungen sammeln möchtest, ein paar schöne Fotos bekommen und dabei noch viel Spaß haben möchtest – schreib mir! Gemeinsam schaffen wir etwas Unglaubliches. Bis bald beim Shooting!
-        </div>
-        <div class="gallery-container">
-            <div class="grid-gallery">
-                <script>for(let i=1; i<=16; i++) { document.write(`<div class="grid-item"><img src="images/tfp/tfp-vertical-${n}.webp"></div>`); }</script>
-            </div>
-        </div>
-
-        <div class="seo-footprint-container">
-            <div class="seo-text-hidden">
-                tfp fotograf rottenburg an der laaber / tfp shooting landshut / model gesucht regensburg / tfp projekt ingolstadt / testshooting kelheim / tfp fotografie abensberg / tfp mainburg / kreative zusammenarbeit niederbayern
-             / münchen fotograf / fotograf münchen / natürliche fotografie münchen / moderne fotografie münchen / stilvolle fotografie münchen / professionelle portraits münchen / fashion shooting münchen / personal branding münchen / business portrait münchen</div>
-        </div>
-    </div>
-
-    <div id="proj-product" class="page-section" style="background-color:#E8E8E6 !important; color:#1a1a1a !important;">
-        <div class="portfolio-hero" style="background-image: url('images/produkte/produkte-cover.webp');">
-            <div class="hero-text-container">
-            <div class="hero-text">Produktfotografie</div>
-            <div class="hero-subtitle">Professionelle Produktaufnahmen für Ihren Erfolg.</div>
-        </div>
-    </div>
-
-    <div class="project-intro-text" style="text-align: left; max-width: 800px; margin: 40px auto; padding: 0 20px;">
-        <a onclick="showPage('projects')" class="back-btn">← zurück zu projekte</a>
-        <p style="margin-top: 30px; color: var(--copy-color);">
-            Hochwertige Produktfotos sind der Schlüssel zu mehr Umsatz. Ich zeige Ihre Produkte im besten Licht – ob für den Online-Shop, Kataloge oder Social Media.
-        </p>
-    </div>
-
-    <!-- NOWA SIATKA: 5 poziomych, 3 kwadratowe, 1 pionowe -->
-    <div class="product-grid-custom" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 1200px; margin: 0 auto; padding: 0 20px 40px 20px;">
-        
-        <!-- Zdjęcie 1: POZIOME (3:2) – zajmuje 2 kolumny, 1 rząd -->
-        <div class="grid-item horizontal-rect" style="grid-column: span 2; aspect-ratio: 3/2; overflow: hidden; ">
-            <img src="images/proj-product/product-01.webp" alt="Produkt 1" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        
-        <!-- Zdjęcie 2: POZIOME (3:2) – zajmuje 2 kolumny, 1 rząd -->
-        <div class="grid-item horizontal-rect" style="grid-column: span 2; aspect-ratio: 3/2; overflow: hidden; ">
-            <img src="images/proj-product/product-02.webp" alt="Produkt 2" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        
-        <!-- Zdjęcie 3: POZIOME (3:2) – zajmuje 2 kolumny, 1 rząd -->
-        <div class="grid-item horizontal-rect" style="grid-column: span 2; aspect-ratio: 3/2; overflow: hidden; ">
-            <img src="images/proj-product/product-03.webp" alt="Produkt 3" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        
-        <!-- Zdjęcie 4: POZIOME (3:2) – zajmuje 2 kolumny, 1 rząd -->
-        <div class="grid-item horizontal-rect" style="grid-column: span 2; aspect-ratio: 3/2; overflow: hidden; ">
-            <img src="images/proj-product/product-04.webp" alt="Produkt 4" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        
-        <!-- Zdjęcie 5: POZIOME (3:2) – zajmuje 2 kolumny, 1 rząd -->
-        <div class="grid-item horizontal-rect" style="grid-column: span 2; aspect-ratio: 3/2; overflow: hidden; ">
-            <img src="images/proj-product/product-05.webp" alt="Produkt 5" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-
-        <!-- Zdjęcie 6: KWIADRATOWE (1:1) – zajmuje 1 kolumnę, 1 rząd -->
-        <div class="grid-item square" style="grid-column: span 1; aspect-ratio: 1/1; overflow: hidden; ">
-            <img src="images/proj-product/product-06.webp" alt="Produkt 6" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        
-        <!-- Zdjęcie 7: KWIADRATOWE (1:1) – zajmuje 1 kolumnę, 1 rząd -->
-        <div class="grid-item square" style="grid-column: span 1; aspect-ratio: 1/1; overflow: hidden; ">
-            <img src="images/proj-product/product-07.webp" alt="Produkt 7" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        
-        <!-- Zdjęcie 8: KWIADRATOWE (1:1) – zajmuje 1 kolumnę, 1 rząd -->
-        <div class="grid-item square" style="grid-column: span 1; aspect-ratio: 1/1; overflow: hidden; ">
-            <img src="images/proj-product/product-08.webp" alt="Produkt 8" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        
-        <!-- Zdjęcie 9: PIONOWE (2:3) – zajmuje 1 kolumnę, 2 rzędy (wysokie) -->
-        <div class="grid-item tall" style="grid-column: span 1; grid-row: span 2; aspect-ratio: 2/3; overflow: hidden; ">
-            <img src="images/proj-product/product-09.webp" alt="Produkt 9" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-    </div>
-
-    <div class="seo-footprint-container">
-        <div class="seo-text-hidden">
-                produktfotograf rottenburg an der laaber / produktfotografie landshut / produktbilder regensburg / werbefotografie ingolstadt / ecommerce fotografie kelheim / produktshooting abensberg / produktfotograf mainburg / kommerzielle produktfotos niederbayern
-             / münchen fotograf / fotograf münchen / natürliche fotografie münchen / moderne fotografie münchen / stilvolle fotografie münchen / professionelle portraits münchen / fashion shooting münchen / personal branding münchen / business portrait münchen</div>
-        </div>
-    </div>
-
-    <div id="proj-landscape" class="page-section" style="background-color:#E8E8E6 !important; color:#1a1a1a !important;">
-        <div class="portfolio-hero" style="background-image: url('images/landscape/landscape-cover.webp');">
-            <div class="hero-text-container">
-                <div class="hero-text">Landschaftsfotografie</div>
-                <div class="hero-subtitle">Mein persönlicher Rückzugsort — Die Natur in ihrer reinsten Form</div>
-            </div>
-        </div>
-        <div class="mid-text-bar">
-            <div class="mid-text-bar-content">
-                <a onclick="showPage('projects')" class="back-btn">&#8592; zurück zu projekte</a><br>
-                In meinen freien Momenten greife ich immer wieder zur Kamera, um die Schönheit der Landschaft einzufangen – die ersten Sonnenstrahlen über den Feldern Niederbayerns, Nebel über stillen Wäldern oder das warme Licht eines Sommerabends. Die Landschaftsfotografie war über viele Jahre ein sehr wichtiger Teil meines Lebens und meiner fotografischen Entwicklung – sie hat mir damals enorm viel Motivation gegeben, mich stundenlang mit Licht, Geduld und Komposition zu beschäftigen, lange bevor ich mich der Porträtfotografie zugewandt habe. Bis heute ist sie für mich ein Ausgleich zum Alltag: ein Moment der Ruhe, in dem ich die Natur ganz bewusst wahrnehme und versuche, ihre Stimmung und Atmosphäre so festzuhalten, wie ich sie selbst empfinde.
-            </div>
-        </div>
-        <div class="gallery-container">
-            <div class="grid-gallery-horizontal">
-                <script>for(let i=1; i<=24; i++) { const n = String(i).padStart(2,'0'); document.write(`<div class="grid-item"><img src="images/landscape/landscape-horizontal-${n}.webp"></div>`); }</script>
-            </div>
-        </div>
-
-        <div class="seo-footprint-container">
-            <div class="seo-text-hidden">
-                landschaftsfotograf rottenburg an der laaber / naturfotografie landshut / landschaftsfotografie regensburg / landschaftsbilder ingolstadt / naturbilder kelheim / outdoor fotografie abensberg / landschaftsfotograf mainburg
-             / münchen fotograf / fotograf münchen / natürliche fotografie münchen / moderne fotografie münchen / stilvolle fotografie münchen / professionelle portraits münchen / fashion shooting münchen / personal branding münchen / business portrait münchen</div>
-        </div>
-    </div>
-
-    <div id="proj-idea" class="page-section" style="background-color:#E8E8E6 !important; color:#1a1a1a !important;">
-        <div class="portfolio-hero" style="background-image: url('images/idea/idea-cover.webp');">
-            <div class="hero-text-container">
-                <div class="hero-text">Deine Idee für ein Fotoshooting</div>
-                <div class="hero-subtitle">Lass uns gemeinsam etwas Außergewöhnliches erschaffen</div>
-            </div>
-        </div>
-        <div class="project-intro-text">
-            <a onclick="showPage('projects')" class="back-btn">&#8592; zurück zu projekte</a><br>
-            Du hast eine ganz bestimmte Vorstellung im Kopf, findest aber nirgends ein passendes Angebot dafür? Genau solche Projekte reizen mich am meisten. Ich übernehme gerne ausgefallene und individuelle Konzepte – ganz unabhängig davon, wie ungewöhnlich die Idee zunächst klingt.<br><br>
-            Ob ein Shooting mit Deinem Auto oder Motorrad, eine inszenierte Szene in der Küche beim Kochen, ein Porträt mit Deinem Haustier, eine Aufnahme in Deiner Werkstatt oder Garage, ein Sport- oder Tanzshooting in Bewegung, ein nostalgisches Setting mit altem Equipment oder Fahrzeugen, ein Konzept rund um Dein Hobby oder Handwerk, oder ein storytelling-artiges Shooting, das eine kleine Geschichte erzählt – ich freue mich auf jede kreative Herausforderung.<br><br>
-            Schreib mir einfach über das Kontaktformular, erzähl mir von Deiner Idee, und wir besprechen gemeinsam, wie wir sie am besten umsetzen können.
-        </div>
-
-        <div class="seo-footprint-container">
-            <div class="seo-text-hidden">
-                individuelles fotoshooting rottenburg an der laaber / kreative fotoshooting ideen landshut / konzept shooting regensburg / außergewöhnliches fotoshooting ingolstadt / kreative fotografie kelheim / fotoshooting abensberg / fotoshooting mainburg
-             / münchen fotograf / fotograf münchen / natürliche fotografie münchen / moderne fotografie münchen / stilvolle fotografie münchen / professionelle portraits münchen / fashion shooting münchen / personal branding münchen / business portrait münchen</div>
-        </div>
-    </div>
-
-    <div id="proj-immobilien" class="page-section" style="background-color:#E8E8E6 !important; color:#1a1a1a !important;">
-        <div class="portfolio-hero" style="background-image: url('images/immobilien/immobilien-cover.webp');">
-            <div class="hero-text-container">
-                <div class="hero-text">Immobilienfotografie</div>
-                <div class="hero-subtitle">Räume, die Käufer überzeugen</div>
-            </div>
-        </div>
-        <div class="project-intro-text">
-            <a onclick="showPage('projects')" class="back-btn">&#8592; zurück zu projekte</a><br>
-            Der erste Eindruck entscheidet – das gilt online noch mehr als in der Realität. Käufer und Mieter verbringen oft nur wenige Sekunden mit einem Exposé, bevor sie entscheiden, ob ein Objekt überhaupt einen Besichtigungstermin wert ist. Genau in diesen Sekunden zählt jedes Detail des Bildes.<br><br>
-            Ich kenne die Tricks, mit denen Räume größer, heller und einladender wirken: die richtige Perspektive, präzise Linienführung, durchdachtes Licht und ein Blick für die Details, die einen Raum lebendig machen. Schiefe Linien, dunkle Ecken oder ein unvorteilhafter Bildausschnitt können den Eindruck eines ganzen Objekts verschlechtern – und genau das verhindere ich.<br><br>
-            Professionelle Immobilienfotos verkürzen die Vermarktungsdauer, erhöhen die Anzahl ernsthafter Anfragen und rechtfertigen oft sogar einen besseren Preis, weil das Objekt von Anfang an hochwertiger wahrgenommen wird. Egal ob Wohnung, Haus, Gewerbeobjekt oder Ferienimmobilie – ich sorge dafür, dass jeder Raum sein volles Potenzial zeigt.
-        </div>
-        <div class="gallery-container">
-            <div class="immo-grid">
-                <!-- RZĄD 1: poziome(2kol) + pionowe(1kol) -->
-                <div class="immo-h"><img src="images/immobilien/immobilien-horizontal-01.webp"></div>
-                <div class="immo-v"><img src="images/immobilien/immobilien-vertical-01.webp"></div>
-
-                <!-- poziome(1kol) + poziome(1kol) -->
-                <div class="immo-h"><img src="images/immobilien/immobilien-horizontal-02.webp"></div>
-                <div class="immo-h"><img src="images/immobilien/immobilien-horizontal-03.webp"></div>
-
-                <!-- RZĄD 2: pionowe(1kol) + poziome(2kol) -->
-                <div class="immo-v"><img src="images/immobilien/immobilien-vertical-02.webp"></div>
-                <div class="immo-h"><img src="images/immobilien/immobilien-horizontal-04.webp"></div>
-                <div class="immo-h"><img src="images/immobilien/immobilien-horizontal-05.webp"></div>
-
-                <!-- RZĄD 3: poziome(2kol) + pionowe(1kol) -->
-                <div class="immo-h"><img src="images/immobilien/immobilien-horizontal-06.webp"></div>
-                <div class="immo-v"><img src="images/immobilien/immobilien-vertical-03.webp"></div>
-
-                <!-- poziome(1kol) + poziome(1kol) -->
-                <div class="immo-h"><img src="images/immobilien/immobilien-horizontal-07.webp"></div>
-                <div class="immo-h"><img src="images/immobilien/immobilien-horizontal-08.webp"></div>
-
-                <!-- RZĄD 4: pionowe(1kol) + poziome(2kol) -->
-                <div class="immo-v"><img src="images/immobilien/immobilien-vertical-04.webp"></div>
-                <div class="immo-h"><img src="images/immobilien/immobilien-horizontal-07.webp"></div>
-                <div class="immo-h"><img src="images/immobilien/immobilien-horizontal-08.webp"></div>
-            </div>
-        </div>
-
-        <div class="seo-footprint-container">
-            <div class="seo-text-hidden">
-                immobilienfotograf rottenburg an der laaber / immobilienfotografie landshut / immobilienfotos regensburg / hausfotografie ingolstadt / immobilienbilder kelheim / immobilienfotograf abensberg / immobilienfotograf mainburg / immobilienverkauf fotos niederbayern
-             / münchen fotograf / fotograf münchen / natürliche fotografie münchen / moderne fotografie münchen / stilvolle fotografie münchen / professionelle portraits münchen / fashion shooting münchen / personal branding münchen / business portrait münchen</div>
-        </div>
-    </div>
-
-
-    <div id="contact" class="page-section">
-        <div class="contact-bg-photo"></div>
-
-        <div class="contact-light-bg">
-            <div class="padded-container">
-                <div class="contact-top-text">
-                    <span class="home-yellow-heading" style="margin-bottom: 24px;">Kontakt</span>
-                    Wenn Du Fragen jeglicher Art hast – manchmal ist ein individueller Ansatz genau die richtige Lösung. Ich freue mich darauf, Deine Erwartungen, Wünsche und kreativen Ideen kennenzulernen. Ich bin absolut offen für neue Herausforderungen und gemeinsame kreative Erfahrungen!
-                </div>
-
-                <div class="contact-top-text">
-                    Möchtest Du wissen, wie Du Dich optimal auf ein Shooting vorbereitest und welche Fehler Du unbedingt vermeiden solltest? Wähle einfach das entsprechende Thema unten im Formular aus, und Du erhältst einen vollständigen Leitfaden direkt in Dein E-Mail-Postfach.
-
-                    <div class="social-invite-box">
-                        Möchtest Du einen Blick hinter die Kulissen werfen, aktuelle Projekte sehen oder Dich einfach vernetzen? Ich würde mich riesig freuen, wenn Du mich auf meinen Social-Media-Kanälen begleitest. Lass uns in Kontakt bleiben! Klick hier für alle Plattformen: <a href="https://linktr.ee/aole.ph" target="_blank" class="social-link-anchor">follow my creative journey</a>. Ich freue mich auf Deinen Besuch und jeden neuen Eindruck!
+            <div class="faq-list-wrap" id="faqListWrap">
+                <div class="faq-list-inner">
+                    <div class="faq-list">
+                <details><summary>Ich kann nicht posen / Ich bin nicht fotogen. Hilfst Du mir?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Auf jeden Fall! Das ist die größte Sorge fast aller Kunden, aber Du musst absolut kein Model sein. Ich werde Dich während des gesamten Shootings anleiten, Dir Tipps geben und dafür sorgen, dass Du Dich wohlfühlst. Die schönsten Bilder entstehen ohnehin, wenn Du Dich bewegst, lachst und einfach Du selbst bist.</p></div></div></details>
+                <details><summary>Wie sollte ich mich auf das Shooting vorbereiten?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Komm am besten ausgeruht und entspannt. Achte darauf, vor dem Shooting genug zu trinken, damit Deine Haut frisch aussieht. Wenn Du ein Babybauch-Shooting machst, ziehe bitte ca. 2 Stunden vor dem Termin lockere Kleidung an, um unschöne Abdrücke von Socken oder engen Hosen auf der Haut zu vermeiden.</p></div></div></details>
+                <details><summary>Was sollte ich zum Shooting anziehen?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Das Wichtigste: Du musst Dich darin wohlfühlen. Kleidung ohne große Logos oder wilde Muster eignet sich am besten, da diese zu sehr vom Gesicht ablenken. Bei Paar- oder Familienshootings sollten die Outfits stilistisch aufeinander abgestimmt sein.</p></div></div></details>
+                <details><summary>Was sollte ich vor dem Shooting lieber NICHT tun?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Bitte gehe in den Tagen vor dem Shooting nicht mehr ins Solarium und vermeide Experimente mit neuen Kosmetikprodukten oder Selbstbräunern (Gefahr von Flecken oder allergischen Reaktionen). Trinke am Vorabend keinen Alkohol und verzichte kurz vor dem Shooting auf zu eng anliegende Kleidung.</p></div></div></details>
+                <details><summary>Wer darf zum Shooting mitkommen?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Bei Familien-, Paar- oder Babybauch-Shootings sind Dein Partner, Deine Kinder oder auch Dein Haustier herzlich willkommen! Wenn Du ein Einzelporträt machst, bringe bitte nur dann eine Begleitperson mit, wenn sie Dir Sicherheit gibt und Dich nicht nervös macht.</p></div></div></details>
+                <details><summary>Wann und wie kann ich meine Bilder nach dem Shooting sehen?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Innerhalb von 3–5 Tagen nach dem Shooting sende ich Dir einen Link zu einer passwortgeschützten Online-Galerie. Dort siehst Du die vorausgewählten, grundoptimierten Bilder als Vorschau und kannst in aller Ruhe Deine Favoriten auswählen.</p></div></div></details>
+                <details><summary>Wie läuft die Bildauswahl genau ab?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Ganz entspannt von zu Hause aus! Du loggst Dich in Deine Online-Galerie ein und markierst Deine Lieblingsbilder mit einem Herz-Symbol. Sobald Du Deine Auswahl getroffen hast, gibst Du mir Bescheid, und ich beginne mit der professionellen High-End-Retusche.</p></div></div></details>
+                <details><summary>Bekomme ich auch die unbearbeiteten Raw-Dateien?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Nein, ich gebe keine unbearbeiteten Fotos oder RAW-Dateien heraus. Die Bearbeitung und Retusche machen einen großen Teil meines künstlerischen Stils aus. Ein unfertiges Bild repräsentiert meine Arbeit nicht vollständig.</p></div></div></details>
+                <details><summary>Wie lange dauert es, bis ich die fertigen Bilder bekomme?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Nach Deiner finalen Bildauswahl benötige ich maximal zwei Wochen für die detaillierte Retusche und Fertigstellung der Bilder. Qualität braucht etwas Zeit, und ich möchte, dass jedes Bild perfekt wird.</p></div></div></details>
+                <details><summary>In welcher Form erhalte ich die Fotos?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Du erhältst die fertig retuschierten Bilder als hochauflösende JPG-Dateien per digitalem Download über Deine Online-Galerie. Die Bilder sind perfekt für den Druck optimiert.</p></div></div></details>
+                <details><summary>Darf ich die Fotos auf Instagram, Facebook etc. posten?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Ja, sehr gerne! Du erhältst die privaten Nutzungsrechte für alle gekauften Bilder. Ich freue mich natürlich riesig, wenn Du mich bei Veröffentlichungen auf Social Media verlinkst oder nennst.</p></div></div></details>
+                <details><summary>Veröffentlichst Du meine Bilder auf Deiner Website oder Social Media?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Nur mit Deiner ausdrücklichen Einwilligung! Ich respektiere Deine Privatsphäre absolut. Vor einer eventuellen Veröffentlichung frage ich Dich immer um Erlaubnis, und Du musst dafür eine schriftliche Einverständniserklärung unterschreiben. Wenn Du das nicht möchtest, bleiben die Bilder ganz privat.</p></div></div></details>
+                <details><summary>Wo findet das Shooting statt?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Das hängt ganz von Deinen Wünschen und dem Stil des Shootings ab. Wir können im Studio arbeiten, eine coole Outdoor-Location nutzen (z. B. Natur, Park, urbane Kulissen) oder ein gemütliches Homestory-Shooting bei Dir zu Hause machen.</p></div></div></details>
+                <details><summary>Was passiert, wenn es am Tag des Outdoor-Shootings regnet?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Bei schlechtem Wetter (starker Regen, Sturm) verschieben wir das Shooting auf einen Ersatztermin. Ein bewölkter Himmel ist übrigens kein Problem – das Licht ist dann sogar besonders weich und schmeichelhaft für Porträts!</p></div></div></details>
+                <details><summary>Zu welcher Uhrzeit finden Outdoor-Shootings statt?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Die beste Zeit für Outdoor-Aufnahmen ist die sogenannte „Goldene Stunde" kurz nach Sonnenaufgang oder ca. 1–2 Stunden vor Sonnenuntergang, da das Licht dann magisch warm und weich ist. Generell sind Shootings aber den ganzen Tag über möglich, sofern die Location es zulässt und das Licht vor Ort vorteilhaft ist.</p></div></div></details>
+                <details><summary>Was passiert, wenn ich oder mein Kind am Shooting-Tag krank werden?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Das kann immer passieren, besonders mit Kindern! Bitte gib mir so früh wie möglich Bescheid. In diesem Fall verschieben wir den Termin völlig unkompliziert auf den nächstmöglichen freien Tag. Gesundheit geht vor.</p></div></div></details>
+                <details><summary>Kann ich vorab ein paar Tipps zur Vorbereitung bekommen?</summary><div class="faq-answer-wrap"><div class="faq-answer-inner"><p>Klar, gerne! Auf Wunsch schicke ich Dir vorab ein paar Tipps zur Vorbereitung.</p></div></div></details>
                     </div>
                 </div>
+            </div>
+        </section>
+    </div>
+    <!-- /page-about -->
 
-                <div class="contact-form-container">
-                    <form action="https://formspree.io/f/xaqzvlrp" method="POST">
-                        <input type="hidden" name="_next" value="https://adamolendzki.com/danke.html" />
-                        <div class="form-group">
-                            <label>name</label>
-                            <input type="text" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label>e-mail-adresse</label>
-                            <input type="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Thema (optional)</label>
-                            <select name="thema">
-                                <option value="">Bitte wählen...</option>
-                                <option value="guide_preparation">Ratgeber: Wie bereite ich mich auf ein Shooting vor? (E-Mail Anleitung)</option>
-                                <option value="family">family (familie & kinder)</option>
-                                <option value="pregnancy">schwangerschaftsfotografie</option>
-                                <option value="couples">paare / couples</option>
-                                <option value="frauen">women zone (portrait/fashion/sensual/sedcards)</option>
-                                <option value="business">business & image</option>
-                                <option value="pass_photo">immobilienfotografie</option>
-                                <option value="pass_photo">produktfotografie</option>
-                                <option value="tfp">TFP Projekt</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Deine nachricht / ideen</label>
-                            <textarea name="nachricht" rows="6" required></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">anfrage senden</button>
-                    </form>
-                </div>
+    <!-- SPA PAGE: PROJEKTE (przegląd) -->
+    <div id="page-projects" class="spa-page">
+        <a href="#" class="spa-back back-to-home">&larr; zurück zur Startseite</a>
+
+        <section class="proj-intro">
+            <span class="label">Projekte</span>
+            <h2>Kreativität ohne Grenzen</h2>
+            <p>Hier findest Du verschiedene kreative Projekte und künstlerische Experimente, mit denen ich mich neben der klassischen Fotografie beschäftige. Diese Arbeiten entstehen aus purer Leidenschaft – ob thematische Konzept-Shootings, persönliche Projekte oder visuelle Experimente mit Licht und Kulissen. Wenn Du beim Betrachten dieser Bilder eine Verbindung spürst und Potenzial für eine gemeinsame kreative Zusammenarbeit siehst, freue ich mich sehr über eine Nachricht.</p>
+        </section>
+
+        <div class="zone-block">
+            <figure class="zone-img"><a data-target="page-project-produkte"><img src="images/produkte/produkte-cover.webp" alt="Produktfotografie" loading="lazy"></a></figure>
+            <div class="zone-copy">
+                <div class="zone-label">Projekt</div>
+                <h2>Produktfotografie</h2>
+                <p>Hochwertige Produktfotos sind der Schlüssel zu mehr Umsatz. Ich zeige Deine Produkte im besten Licht – ob für den Online-Shop, Kataloge oder Social Media.</p>
+                <a class="zone-cta" data-target="page-project-produkte">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
         </div>
-    </div>
 
-    <div id="qa" class="page-section">
-        <div class="qa-bg-photo"></div>
-        <div class="padded-container" style="position: relative; z-index: 1;">
-            <h2 class="section-title" style="margin-top:0;">Häufig gestellte Fragen (Q&A)</h2>
-            <div class="qa-container">
-                <div class="qa-item">
-                    <div class="qa-question">1. Ich kann nicht posen / Ich bin nicht fotogen. Hilfst Du mir?</div>
-                    <div class="qa-answer">Auf jeden Fall! Das ist die größte Sorge fast aller Kunden, aber Du musst absolut kein Model sein. Ich werde Dich während des gesamten Shootings anleiten, Dir Tipps geben und dafür sorgen, dass Du Dich wohlfühlst. Die schönsten Bilder entstehen ohnehin, wenn Du Dich bewegst, lachst und einfach Du selbst bist.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">2. Wie sollte ich mich auf das Shooting vorbereiten?</div>
-                    <div class="qa-answer">Komm am besten ausgeruht und entspannt. Achte darauf, vor dem Shooting genug zu trinken, damit Deine Haut frisch aussieht. Wenn Du ein Babybauch-Shooting machst, ziehe bitte ca. 2 Stunden vor dem Termin lockere Kleidung an, um unschöne Abdrücke von Socken oder engen Hosen auf der Haut zu vermeiden.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">3. Was sollte ich zum Shooting anziehen?</div>
-                    <div class="qa-answer">Das Wichtigste: Du musst Dich darin wohlfühlen. Kleidung ohne große Logos oder wilde Muster eignet sich am besten, da diese zu sehr vom Gesicht ablenken. Bei Paar- oder Familienshootings sollten die Outfits stilistisch aufeinander abgestimmt sein.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">4. Was sollte ich vor dem Shooting lieber NICHT tun?</div>
-                    <div class="qa-answer">Bitte gehe in den Tagen vor dem Shooting nicht mehr ins Solarium und vermeide Experimente mit neuen Kosmetikprodukten oder Selbstbräunern (Gefahr von Flecken oder allergischen Reaktionen). Trinke am Vorabend keinen Alkohol und verzichte kurz vor dem Shooting auf zu eng anliegende Kleidung.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">5. Wer darf zum Shooting mitkommen?</div>
-                    <div class="qa-answer">Bei Familien-, Paar- oder Babybauch-Shootings sind Dein Partner, Deine Kinder oder auch Dein Haustier herzlich willkommen! Wenn Du ein Einzelporträt machst, bringe bitte nur dann eine Begleitperson mit, wenn sie Dir Sicherheit gibt und Dich nicht nervös macht.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">6. Wann und wie kann ich meine Bilder nach dem Shooting sehen?</div>
-                    <div class="qa-answer">Innerhalb von 3-5 Tagen nach dem Shooting sende ich Dir einen Link zu einer passwortgeschützten Online-Galerie. Dort siehst Du die vorausgewählten, grundoptimierten Bilder als Vorschau und kannst in aller Ruhe Deine Favoriten auswählen.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">7. Wie läuft die Bildauswahl genau ab?</div>
-                    <div class="qa-answer">Ganz entspannt von zu Hause aus! Du loggst Dich in Deine Online-Galerie ein und markierst Deine Lieblingsbilder mit einem Herz-Symbol. Sobald Du Deine Auswahl getroffen hast, gibst Du mir Bescheid, und ich beginne mit der professionellen High-End-Retusche.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">8. Bekomme ich auch die unbearbeiteten Raw-Dateien?</div>
-                    <div class="qa-answer">Nein, ich gebe keine unbearbeiteten Fotos oder RAW-Dateien heraus. Die Bearbeitung und Retusche machen einen großen Teil meines künstlerischen Stils aus. Ein unfertiges Bild repräsentiert meine Arbeit nicht vollständig.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">9. Wie lange dauert es, bis ich die fertigen Bilder bekomme?</div>
-                    <div class="qa-answer">Nach Deiner finalen Bildauswahl benötige ich maximal zwei Wochen für die detaillierte Retusche und Fertigstellung der Bilder. Qualität braucht etwas Zeit, und ich möchte, dass jedes Bild perfekt wird.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">10. In welcher Form erhalte ich die Fotos?</div>
-                    <div class="qa-answer">Du erhältst die fertig retuschierten Bilder als hochauflösende JPG-Dateien per digitalem Download über Deine Online-Galerie. Die Bilder sind perfekt für den Druck optimiert.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">11. Darf ich die Fotos auf Instagram, Facebook etc. posten?</div>
-                    <div class="qa-answer">Ja, sehr gerne! Du erhältst die privaten Nutzungsrechte für alle gekauften Bilder. Ich freue mich natürlich riesig, wenn Du mich bei Veröffentlichungen auf Social Media verlinkst oder nennst.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">12. Veröffentlichst Du meine Bilder auf Deiner Website oder Social Media?</div>
-                    <div class="qa-answer">Nur mit Deiner ausdrücklichen Einwilligung! Ich respektiere Deine Privatsphäre absolut. Vor einer eventuellen Veröffentlichung frage ich Dich immer um Erlaubnis, und Du musst dafür eine schriftliche Einverständserklärung unterschreiben. Wenn Du das nicht möchtest, bleiben die Bilder ganz privat.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">13. Wo findet das Shooting statt?</div>
-                    <div class="qa-answer">Das hängt ganz von Deinen Wünschen und dem Stil des Shootings ab. Wir können im Studio arbeiten, eine coole Outdoor-Location nutzen (z.B. Natur, Park, urbane Kulissen) oder ein gemütliches Homestory-Shooting bei Dir zu Hause machen.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">14. Was passiert, wenn es am Tag des Outdoor-Shootings regnet?</div>
-                    <div class="qa-answer">Bei schlechtem Wetter (starker Regen, Sturm) verschieben wir das Shooting auf einen Ersatztermin. Ein bewölkter Himmel ist übrigens kein Problem – das Licht ist dann sogar besonders weich und schmeichelhaft für Porträts!</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">15. Zu welcher Uhrzeit finden Outdoor-Shootings statt?</div>
-                    <div class="qa-answer">Die beste Zeit für Outdoor-Aufnahmen ist die sogenannte "Goldene Stunde" kurz nach Sonnenaufgang oder ca. 1-2 Stunden vor Sonnenuntergang, da das Licht dann magisch warm und weich ist. Generell sind Shootings aber den ganzen Tag über möglich, sofern die Location es zulässt und das Licht vor Ort vorteilhaft ist.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">16. Was passiert, wenn ich oder mein Kind am Shooting-Tag krank werden?</div>
-                    <div class="qa-answer">Das kann immer passieren, besonders mit Kindern! Bitte gib mir so früh wie möglich Bescheid. In diesem Fall verschieben wir den Termin völlig unkompliziert auf den nächstmöglichen freien Tag. Gesundheit geht vor.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">17. Wie lange im Voraus sollte ich einen Termin buchen?</div>
-                    <div class="qa-answer">Um sicherzugehen, dass Dein Wunschtermin frei ist, empfiehlt sich eine Buchung ca. 4-6 Wochen im Voraus. Bei Babybauch-Shootings ist der beste Zeitraum zwischen der 30. und 34. Schwangerschaftswoche – buche daher am besten schon im zweiten Trimester.</div>
-                </div>
-                <div class="qa-item">
-                    <div class="qa-question">18. Gibt es einen detaillierten Leitfaden für mein Shooting?</div>
-                    <div class="qa-answer">Ja! Um Dir die Vorbereitung so einfach wie möglich zu machen, habe ich einen exklusiven Vorbereitungs-Guide mit allen wichtigen Details, Tipps und Tricks für Dich zusammengestellt. Sobald Du Dich für ein Shooting entscheidest, kannst Du diesen Guide ganz einfach über mein Kontaktformular anfordern, und ich schicke ihn Dir umgehend per E-Mail zu.</div>
-                </div>
+        <div class="zone-block reverse light">
+            <figure class="zone-img"><a data-target="page-project-immobilien"><img src="images/immobilien/immobilien-cover.webp" alt="Immobilienfotografie" loading="lazy"></a></figure>
+            <div class="zone-copy">
+                <div class="zone-label">Projekt</div>
+                <h2>Immobilienfotografie</h2>
+                <p>Räume, die Käufer überzeugen. Der erste Eindruck entscheidet – ich sorge dafür, dass jeder Raum sein volles Potenzial zeigt.</p>
+                <a class="zone-cta" data-target="page-project-immobilien">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
         </div>
+
+        <div class="zone-block">
+            <figure class="zone-img"><a data-target="page-project-idea"><img src="images/idea/idea-cover.webp" alt="Deine Idee für ein Fotoshooting" loading="lazy"></a></figure>
+            <div class="zone-copy">
+                <div class="zone-label">Projekt</div>
+                <h2>Deine Idee für ein Fotoshooting</h2>
+                <p>Lass uns gemeinsam etwas Außergewöhnliches erschaffen. Ich übernehme gerne ausgefallene und individuelle Konzepte – ganz unabhängig davon, wie ungewöhnlich die Idee zunächst klingt.</p>
+                <a class="zone-cta" data-target="page-project-idea">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+        </div>
+
+        <div class="zone-block reverse light">
+            <figure class="zone-img"><a data-target="page-project-tfp"><img src="images/tfp/tfp-cover.webp" alt="TFP" loading="lazy"></a></figure>
+            <div class="zone-copy">
+                <div class="zone-label">Projekt</div>
+                <h2>TFP</h2>
+                <p>Kreativer Austausch auf Augenhöhe in Regensburg, Landshut und Straubing. Ich suche Modelle für mein Portfolio in den Bereichen Porträt, Sinnlich, Fine-Art und Fashion.</p>
+                <a class="zone-cta" data-target="page-project-tfp">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+        </div>
+
+        <div class="zone-block">
+            <figure class="zone-img"><a data-target="page-project-landscape"><img src="images/landscape/landscape-cover.webp" alt="Landschaftsfotografie" loading="lazy"></a></figure>
+            <div class="zone-copy">
+                <div class="zone-label">Projekt</div>
+                <h2>Landschaftsfotografie</h2>
+                <p>Mein persönlicher Rückzugsort – die Natur in ihrer reinsten Form. Ein Moment der Ruhe, in dem ich versuche, Stimmung und Atmosphäre so festzuhalten, wie ich sie selbst empfinde.</p>
+                <a class="zone-cta" data-target="page-project-landscape">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+        </div>
+
+        <div class="zone-block reverse light">
+            <figure class="zone-img"><a data-target="page-project-webdesign"><img src="images/webdesign/webdesign-cover.webp" alt="Webdesign" loading="lazy"></a></figure>
+            <div class="zone-copy">
+                <div class="zone-label">Projekt</div>
+                <h2>Webdesign</h2>
+                <p>Neben der Fotografie baue ich auch individuelle Websites für lokale Unternehmen – von Beauty-Studios bis Physiopraxen. Kein Baukasten, sondern ein Design, das zu Dir passt.</p>
+                <a class="zone-cta" data-target="page-project-webdesign">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+        </div>
+
+        <section class="visually-hidden">
+            <h2>Fotografische Projekte in der Region Landshut</h2>
+            <p>Neben klassischen Portraitshootings arbeite ich als Fotograf aus Rottenburg an der Laaber auch an kreativen Projekten wie Produktfotografie, Immobilienfotografie, TFP-Kooperationen und Landschaftsfotografie – für Kundinnen und Kunden aus Landshut, Regensburg, Ingolstadt, Kelheim, Abensberg, Mainburg, Straubing und München.</p>
+        </section>
     </div>
+    <!-- /page-projects -->
+
+    <!-- SPA PAGE: PROJEKT – PRODUKTFOTOGRAFIE -->
+    <div id="page-project-produkte" class="spa-page">
+        <section class="proj-detail-hero">
+            <img src="images/produkte/produkte-cover.webp" alt="Produktfotografie">
+            <div class="hero-text">
+                <h1>Produktfotografie</h1>
+                <p class="hero-sub">Professionelle Produktaufnahmen für Deinen Erfolg</p>
+            </div>
+        </section>
+        <div class="proj-text-box">
+            <a href="#" class="spa-back back-to-projects">&larr; zurück zu Projekte</a>
+            <p>Hochwertige Produktfotos sind der Schlüssel zu mehr Umsatz. Ich zeige Deine Produkte im besten Licht – ob für den Online-Shop, Kataloge oder Social Media.</p>
+        </div>
+        <div class="proj-gallery-produkte">
+            <figure class="p-h"><img src="images/proj-product/product-01.webp" alt="Produktfotografie" loading="lazy"></figure>
+            <figure class="p-h"><img src="images/proj-product/product-02.webp" alt="Produktfotografie" loading="lazy"></figure>
+            <figure class="p-h"><img src="images/proj-product/product-03.webp" alt="Produktfotografie" loading="lazy"></figure>
+            <figure class="p-h"><img src="images/proj-product/product-04.webp" alt="Produktfotografie" loading="lazy"></figure>
+            <figure class="p-h"><img src="images/proj-product/product-05.webp" alt="Produktfotografie" loading="lazy"></figure>
+            <figure class="p-sq"><img src="images/proj-product/product-06.webp" alt="Produktfotografie" loading="lazy"></figure>
+            <figure class="p-sq"><img src="images/proj-product/product-07.webp" alt="Produktfotografie" loading="lazy"></figure>
+            <figure class="p-sq"><img src="images/proj-product/product-08.webp" alt="Produktfotografie" loading="lazy"></figure>
+            <figure class="p-tall"><img src="images/proj-product/product-09.webp" alt="Produktfotografie" loading="lazy"></figure>
+        </div>
+    </div>
+    <!-- /page-project-produkte -->
+
+    <!-- SPA PAGE: PROJEKT – IMMOBILIENFOTOGRAFIE -->
+    <div id="page-project-immobilien" class="spa-page">
+        <section class="proj-detail-hero">
+            <img src="images/immobilien/immobilien-cover.webp" alt="Immobilienfotografie">
+            <div class="hero-text">
+                <h1>Immobilienfotografie</h1>
+                <p class="hero-sub">Räume, die Käufer überzeugen</p>
+            </div>
+        </section>
+        <div class="proj-text-box wide">
+            <a href="#" class="spa-back back-to-projects">&larr; zurück zu Projekte</a>
+            <p>Der erste Eindruck entscheidet – das gilt online noch mehr als in der Realität. Käufer und Mieter verbringen oft nur wenige Sekunden mit einem Exposé, bevor sie entscheiden, ob ein Objekt überhaupt einen Besichtigungstermin wert ist. Genau in diesen Sekunden zählt jedes Detail des Bildes.</p>
+            <p>Ich kenne die Tricks, mit denen Räume größer, heller und einladender wirken: die richtige Perspektive, präzise Linienführung, durchdachtes Licht und ein Blick für die Details, die einen Raum lebendig machen.</p>
+            <p>Professionelle Immobilienfotos verkürzen die Vermarktungsdauer, erhöhen die Anzahl ernsthafter Anfragen und rechtfertigen oft sogar einen besseren Preis. Egal ob Wohnung, Haus, Gewerbeobjekt oder Ferienimmobilie – ich sorge dafür, dass jeder Raum sein volles Potenzial zeigt.</p>
+        </div>
+        <div class="proj-gallery-immobilien">
+            <figure class="immo-h"><img src="images/immobilien/immobilien-horizontal-01.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-v"><img src="images/immobilien/immobilien-vertical-01.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-h"><img src="images/immobilien/immobilien-horizontal-02.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-h"><img src="images/immobilien/immobilien-horizontal-03.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-v"><img src="images/immobilien/immobilien-vertical-02.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-h"><img src="images/immobilien/immobilien-horizontal-04.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-h"><img src="images/immobilien/immobilien-horizontal-05.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-h"><img src="images/immobilien/immobilien-horizontal-06.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-v"><img src="images/immobilien/immobilien-vertical-03.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-h"><img src="images/immobilien/immobilien-horizontal-07.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-h"><img src="images/immobilien/immobilien-horizontal-08.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-v"><img src="images/immobilien/immobilien-vertical-04.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-h"><img src="images/immobilien/immobilien-horizontal-07.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+            <figure class="immo-h"><img src="images/immobilien/immobilien-horizontal-08.webp" alt="Immobilienfotografie" loading="lazy"></figure>
+        </div>
+    </div>
+    <!-- /page-project-immobilien -->
+
+    <!-- SPA PAGE: PROJEKT – DEINE IDEE -->
+    <div id="page-project-idea" class="spa-page">
+        <section class="proj-detail-hero">
+            <img src="images/idea/idea-cover.webp" alt="Deine Idee für ein Fotoshooting">
+            <div class="hero-text">
+                <h1>Deine Idee für ein Fotoshooting</h1>
+                <p class="hero-sub">Lass uns gemeinsam etwas Außergewöhnliches erschaffen</p>
+            </div>
+        </section>
+        <div class="proj-text-box wide">
+            <a href="#" class="spa-back back-to-projects">&larr; zurück zu Projekte</a>
+            <p>Du hast eine ganz bestimmte Vorstellung im Kopf, findest aber nirgends ein passendes Angebot dafür? Genau solche Projekte reizen mich am meisten. Ich übernehme gerne ausgefallene und individuelle Konzepte – ganz unabhängig davon, wie ungewöhnlich die Idee zunächst klingt.</p>
+            <p>Ob ein Shooting mit Deinem Auto oder Motorrad, eine inszenierte Szene in der Küche beim Kochen, ein Porträt mit Deinem Haustier, eine Aufnahme in Deiner Werkstatt oder Garage, ein Sport- oder Tanzshooting in Bewegung, ein nostalgisches Setting mit altem Equipment oder Fahrzeugen, ein Konzept rund um Dein Hobby oder Handwerk, oder ein storytelling-artiges Shooting, das eine kleine Geschichte erzählt – ich freue mich auf jede kreative Herausforderung.</p>
+            <p>Schreib mir einfach über das Kontaktformular, erzähl mir von Deiner Idee, und wir besprechen gemeinsam, wie wir sie am besten umsetzen können.</p>
+        </div>
+    </div>
+    <!-- /page-project-idea -->
+
+    <!-- SPA PAGE: PROJEKT – TFP -->
+    <div id="page-project-tfp" class="spa-page">
+        <section class="proj-detail-hero">
+            <img src="images/tfp/tfp-cover.webp" alt="TFP">
+            <div class="hero-text">
+                <h1>TFP</h1>
+                <p class="hero-sub">Kreativer Austausch auf Augenhöhe in Regensburg, Landshut und Straubing</p>
+            </div>
+        </section>
+        <div class="proj-text-box wide">
+            <a href="#" class="spa-back back-to-projects">&larr; zurück zu Projekte</a>
+            <p>Hey! 📸 Wenn Du, wie ich, es genießt, Dein Portfolio hin und wieder mit einem weiteren Fotoshooting zu erweitern, oder wenn Du mit dem Modeln anfangen möchtest, weil Du denkst, dass Du dafür perfekt geeignet bist, dann bist Du hier genau richtig! Ich suche Modelle für mein Portfolio in den Bereichen Porträt-, Sinnlich-, Fine-Art- und Fashion-Fotografie in verschiedenen Kombinationen.</p>
+            <p>Es ist nicht nötig, dass Du bereits Dutzende von Shootings hinter Dir hast – was für mich am wichtigsten ist, ist Deine Begeisterung und Deine Natürlichkeit vor der Kamera. Ich habe viele Ideen, die ich gerne mit Dir umsetzen möchte :)</p>
+            <p><strong>Was erwarte ich?</strong><br>Eine positive Einstellung 😊 · Offenheit für verschiedene Ideen während des Shootings · Natürlichkeit beim Posen (aber ohne Stress, alles entspannt!) · Bereitschaft zur Zusammenarbeit und Engagement</p>
+            <p>Wenn Dir mein Stil gefällt, Du neue Erfahrungen sammeln möchtest, ein paar schöne Fotos bekommen und dabei noch viel Spaß haben möchtest – schreib mir! Gemeinsam schaffen wir etwas Unglaubliches. Bis bald beim Shooting!</p>
+        </div>
+    </div>
+    <!-- /page-project-tfp -->
+
+    <!-- SPA PAGE: PROJEKT – LANDSCHAFTSFOTOGRAFIE -->
+    <div id="page-project-landscape" class="spa-page">
+        <section class="proj-detail-hero">
+            <img src="images/landscape/landscape-cover.webp" alt="Landschaftsfotografie">
+            <div class="hero-text">
+                <h1>Landschaftsfotografie</h1>
+                <p class="hero-sub">Mein persönlicher Rückzugsort – die Natur in ihrer reinsten Form</p>
+            </div>
+        </section>
+        <div class="proj-text-box wide">
+            <a href="#" class="spa-back back-to-projects">&larr; zurück zu Projekte</a>
+            <p>In meinen freien Momenten greife ich immer wieder zur Kamera, um die Schönheit der Landschaft einzufangen – die ersten Sonnenstrahlen über den Feldern Niederbayerns, Nebel über stillen Wäldern oder das warme Licht eines Sommerabends.</p>
+            <p>Die Landschaftsfotografie war über viele Jahre ein sehr wichtiger Teil meines Lebens und meiner fotografischen Entwicklung – sie hat mir damals enorm viel Motivation gegeben, mich stundenlang mit Licht, Geduld und Komposition zu beschäftigen, lange bevor ich mich der Porträtfotografie zugewandt habe.</p>
+            <p>Bis heute ist sie für mich ein Ausgleich zum Alltag: ein Moment der Ruhe, in dem ich die Natur ganz bewusst wahrnehme und versuche, ihre Stimmung und Atmosphäre so festzuhalten, wie ich sie selbst empfinde.</p>
+        </div>
+        <div class="proj-gallery-landscape" id="landscapeGallery"></div>
+    </div>
+    <!-- /page-project-landscape -->
+
+    <!-- SPA PAGE: PROJEKT – WEBDESIGN -->
+    <div id="page-project-webdesign" class="spa-page">
+        <section class="proj-detail-hero">
+            <img src="images/webdesign/webdesign-cover.webp" alt="Webdesign">
+            <div class="hero-text">
+                <h1>Webdesign</h1>
+                <p class="hero-sub">Individuelle Websites für lokale Unternehmen</p>
+            </div>
+        </section>
+        <div class="proj-text-box wide">
+            <a href="#" class="spa-back back-to-projects">&larr; zurück zu Projekte</a>
+            <p>Neben der Fotografie entwerfe und baue ich Websites – hauptsächlich für kleine, lokale Unternehmen aus Bayern. Kein Baukasten, kein Copy-Paste-Template: Jedes Projekt bekommt ein eigenes Design, abgestimmt auf die Branche und die Zielgruppe.</p>
+            <p>Da ich gleichzeitig Fotograf bin, bringe ich dabei ein Auge für Bildsprache mit – bei Bedarf entstehen die Fotos für Deine Website direkt bei mir im Shooting, nicht aus der Stockdatenbank.</p>
+            <p>Unter <strong>aole.web</strong> zeige ich verschiedene Konzepte für Beauty-Studios, Physiopraxen, Nagelstudios und mehr – als Einblick in meinen Design-Stil und meine Arbeitsweise.</p>
+            <a href="/web/" class="zone-cta" style="margin-top:1rem;">Zu aole.web <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+    </div>
+    <!-- /page-project-webdesign -->
+
+
+    <!-- SPA PAGE: KONTAKT -->
+    <div id="page-contact" class="spa-page">
+        <a href="#" id="contact-back" class="spa-back">&larr; zurück zur Startseite</a>
+
+        <section class="contact-section">
+            <div class="label">Kontakt</div>
+            <h2>Schreib mir</h2>
+            <p class="contact-intro">Wenn Du Fragen jeglicher Art hast – manchmal ist ein individueller Ansatz genau die richtige Lösung. Ich freue mich darauf, Deine Erwartungen, Wünsche und kreativen Ideen kennenzulernen. Ich bin absolut offen für neue Herausforderungen und gemeinsame kreative Erfahrungen!</p>
+            <p class="contact-intro">Möchtest Du wissen, wie Du Dich optimal auf ein Shooting vorbereitest und welche Fehler Du unbedingt vermeiden solltest? Wähle einfach das entsprechende Thema unten im Formular aus, und Du erhältst einen vollständigen Leitfaden direkt in Dein E-Mail-Postfach.</p>
+            <p class="contact-intro">Möchtest Du einen Blick hinter die Kulissen werfen, aktuelle Projekte sehen oder Dich einfach vernetzen? Ich würde mich riesig freuen, wenn Du mich auf meinen Social-Media-Kanälen begleitest. Lass uns in Kontakt bleiben! Klick hier für alle Plattformen: <a href="https://linktr.ee/aole.ph" target="_blank" rel="noopener" style="color: #d4a820;">follow my creative journey</a>. Ich freue mich auf Deinen Besuch und jeden neuen Eindruck!</p>
+
+            <form class="contact-form" id="contactForm">
+                <div>
+                    <label for="cf-name">Name</label>
+                    <input type="text" id="cf-name" name="name" required>
+                </div>
+                <div>
+                    <label for="cf-email">E-Mail-Adresse</label>
+                    <input type="email" id="cf-email" name="email" required>
+                </div>
+                <div>
+                    <label for="cf-message">Nachricht</label>
+                    <textarea id="cf-message" name="message" required></textarea>
+                </div>
+                <div class="contact-status" id="contactStatus"></div>
+                <button type="submit" class="contact-submit" id="contactSubmit">Anfrage senden</button>
+            </form>
+        </section>
+    </div>
+    <!-- /page-contact -->
 
     <div id="cookie-banner" class="cookie-banner">
         <div class="cookie-banner-text">
@@ -602,32 +825,176 @@
         <button class="cookie-banner-btn" onclick="acceptCookies()">verstanden</button>
     </div>
 
-    <footer>
-        <div style="background-color: #1a1a1a; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; font-size: 12px; color: #666; letter-spacing: 0.5px;">
+    <footer style="background: transparent; padding: 0; border-top: none;">
+        <div style="background-color: #1a1a1a; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; font-size: 12px; color: #666; letter-spacing: 0.5px; padding: 40px;">
         <span>© 2026 Adam Olendzki. All rights reserved.</span>
         <a href="datenschutz.html" target="_blank" rel="noopener" style="color: #888; cursor: pointer; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#ccc'" onmouseout="this.style.color='#888'">Datenschutz</a>
     </div>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        (function () {
+            var navAbout = document.getElementById('nav-about');
+            var aboutBack = document.getElementById('about-back');
+            var navContact = document.getElementById('nav-contact');
+            var contactBack = document.getElementById('contact-back');
+            var navProjects = document.getElementById('nav-projects');
+            var pageHome = document.getElementById('page-home');
+            var pageAbout = document.getElementById('page-about');
+            var pageContact = document.getElementById('page-contact');
+            var pageProjects = document.getElementById('page-projects');
+            var projectIds = ['page-project-produkte', 'page-project-immobilien', 'page-project-idea', 'page-project-tfp', 'page-project-landscape'];
+            var allPages = [pageHome, pageAbout, pageContact, pageProjects].concat(
+                projectIds.map(function (id) { return document.getElementById(id); })
+            );
 
+            var reduceMotionAbout = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            function triggerAboutShake() {
+                if (reduceMotionAbout) return;
+                var h2 = document.querySelector('#page-about .about-copy h2');
+                if (!h2) return;
+                h2.classList.remove('shake-in');
+                void h2.offsetWidth;
+                h2.classList.add('shake-in');
+            }
 
+            function hideAll() {
+                allPages.forEach(function (p) { if (p) p.style.display = 'none'; });
+            }
+            function showPage(id) {
+                hideAll();
+                var target = document.getElementById(id);
+                if (target) target.style.display = id === 'page-home' ? '' : 'block';
+                window.scrollTo(0, 0);
+                if (id === 'page-about') triggerAboutShake();
+            }
+            function showAbout(e) { if (e) e.preventDefault(); showPage('page-about'); }
+            function showContact(e) { if (e) e.preventDefault(); showPage('page-contact'); }
+            function showProjects(e) { if (e) e.preventDefault(); showPage('page-projects'); }
+            function showHome(e) { if (e) e.preventDefault(); showPage('page-home'); }
 
+            if (navAbout) navAbout.addEventListener('click', showAbout);
+            if (aboutBack) aboutBack.addEventListener('click', showHome);
+            if (navContact) navContact.addEventListener('click', showContact);
+            if (contactBack) contactBack.addEventListener('click', showHome);
+            if (navProjects) navProjects.addEventListener('click', showProjects);
 
-    <div id="thank-you" class="page-section">
-    <div class="padded-container" style="max-width: 600px; margin: 0 auto; padding-top: 150px; padding-bottom: 100px; text-align: center;">
-        <h2 style="font-family: 'Jost', sans-serif; font-weight: 300; font-size: 32px; color: #ddd; letter-spacing: 2px;">Vielen Dank!</h2>
-        <p style="color: #aaa; font-size: 16px; line-height: 1.8; margin-top: 20px;">
-            Ihr Formular wurde erfolgreich versendet.<br>
-            Ich werde mich schnellstmöglich bei Ihnen melden.
-        </p>
-        <a onclick="showPage('home')" style="display: inline-block; margin-top: 40px; color: #888; text-decoration: underline; cursor: pointer;">← Zurück zur Startseite</a>
-    </div>
-</div>
-<script>
-  document.querySelector('form').addEventListener('submit', function() {
-    window.location.href = 'https://adamolendzki.com/danke.html';
-  });
-</script>
+            document.querySelectorAll('.back-to-home').forEach(function (el) {
+                el.addEventListener('click', showHome);
+            });
+            document.querySelectorAll('.back-to-projects').forEach(function (el) {
+                el.addEventListener('click', showProjects);
+            });
+            document.querySelectorAll('[data-target]').forEach(function (el) {
+                el.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    showPage(el.getAttribute('data-target'));
+                });
+            });
+
+            var contactForm = document.getElementById('contactForm');
+            var contactStatus = document.getElementById('contactStatus');
+            var contactSubmit = document.getElementById('contactSubmit');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    contactStatus.textContent = '';
+                    contactSubmit.disabled = true;
+                    contactSubmit.textContent = 'Sende...';
+
+                    var payload = {
+                        name: document.getElementById('cf-name').value,
+                        email: document.getElementById('cf-email').value,
+                        message: document.getElementById('cf-message').value
+                    };
+
+                    try {
+                        var res = await fetch('/api/contact', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (res.ok) {
+                            window.location.href = 'danke.html';
+                        } else {
+                            contactStatus.textContent = 'Es gab ein Problem beim Senden. Bitte versuch es später nochmal oder schreib mir direkt an aolendzki.photo@gmail.com.';
+                            contactSubmit.disabled = false;
+                            contactSubmit.textContent = 'Anfrage senden';
+                        }
+                    } catch (err) {
+                        contactStatus.textContent = 'Es gab ein Problem beim Senden. Bitte versuch es später nochmal oder schreib mir direkt an aolendzki.photo@gmail.com.';
+                        contactSubmit.disabled = false;
+                        contactSubmit.textContent = 'Anfrage senden';
+                    }
+                });
+            }
+
+            // Cover: rotacja 3 zdjęć na stronie głównej
+            var heroImgs = document.querySelectorAll('#hpHero img');
+            if (heroImgs.length > 1) {
+                var heroIndex = 0;
+                setInterval(function () {
+                    heroImgs[heroIndex].classList.remove('active');
+                    heroIndex = (heroIndex + 1) % heroImgs.length;
+                    heroImgs[heroIndex].classList.add('active');
+                }, 5500);
+            }
+
+            // Landschaft: generowanie 24 zdjęć poziomych 3:2
+            var landscapeGallery = document.getElementById('landscapeGallery');
+            if (landscapeGallery) {
+                var html = '';
+                for (var i = 1; i <= 24; i++) {
+                    var n = String(i).padStart(2, '0');
+                    html += '<figure><img src="images/landscape/landscape-horizontal-' + n + '.webp" alt="Landschaftsfotografie" loading="lazy"></figure>';
+                }
+                landscapeGallery.innerHTML = html;
+            }
+
+            // Cover: efekt paralaksy przy scrollowaniu
+            var hpHero = document.querySelector('.hp-hero');
+            var hpHeroImgs = hpHero ? hpHero.querySelectorAll('img') : [];
+            var hpHeroTextEls = hpHero ? hpHero.querySelectorAll('.hp-hero-eyebrow, .hp-hero-name, .hp-hero-tagline') : [];
+            if (hpHero && hpHeroImgs.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                var hpTicking = false;
+                var updateHpParallax = function () {
+                    var rect = hpHero.getBoundingClientRect();
+                    var scrolled = Math.max(0, -rect.top);
+                    hpHeroImgs.forEach(function (img) {
+                        img.style.transform = 'scale(1.15) translateY(' + (scrolled * 0.32) + 'px)';
+                    });
+                    var fade = Math.max(0, 1 - scrolled / (hpHero.offsetHeight * 0.7));
+                    var textShift = scrolled * -0.18;
+                    hpHeroTextEls.forEach(function (el) {
+                        el.style.opacity = fade;
+                        el.style.transform = 'translateY(' + textShift + 'px)';
+                    });
+                    hpTicking = false;
+                };
+                window.addEventListener('scroll', function () {
+                    if (!hpTicking) {
+                        requestAnimationFrame(updateHpParallax);
+                        hpTicking = true;
+                    }
+                }, { passive: true });
+                updateHpParallax();
+            }
+        })();
+    </script>
+
+    <script>
+        (function () {
+            const toggle = document.getElementById('faqToggle');
+            const wrap = document.getElementById('faqListWrap');
+            if (!toggle || !wrap) return;
+            toggle.addEventListener('click', function () {
+                const isOpen = wrap.classList.toggle('open');
+                toggle.classList.toggle('open', isOpen);
+                toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+        })();
+    </script>
 </body>
 </html>

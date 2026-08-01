@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIEFENGLANZ — Fahrzeugaufbereitung, Cham</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0D0D0F;
+    --ink-2:#1A1A1D;
+    --paper:#F5F5F3;
+    --paper-deep:#E8E8E5;
+    --chrome:#C9CDD3;
+    --chrome-deep:#8B9099;
+    --wine:#7C1F2B;
+    --wine-deep:#5C1620;
+    --ink-soft:#8D8D91;
+    --line:rgba(245,245,243,.13);
+    --line-dark:rgba(13,13,15,.12);
+    --white:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);color:var(--paper);
+    font-family:'Inter',sans-serif;font-weight:300;line-height:1.7;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit;}
+  img{display:block;max-width:100%;}
+  h1,h2,h3,h4{font-family:'Syne',sans-serif;font-weight:700;line-height:1.15;color:var(--paper);letter-spacing:-.01em;}
+  .on-paper h1,.on-paper h2,.on-paper h3,.on-paper h4{color:var(--ink);}
+  .kicker{
+    font-family:'Inter',sans-serif;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--chrome);font-weight:600;display:inline-block;margin-bottom:1.3rem;
+  }
+  .on-paper .kicker{color:var(--wine-deep);}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;padding:1.6rem 3rem;
+    transition:background .3s ease, padding .3s ease, box-shadow .3s ease;
+  }
+  header.scrolled{background:rgba(13,13,15,.94);backdrop-filter:blur(10px);padding:1.1rem 3rem;box-shadow:0 2px 24px rgba(0,0,0,.4);}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:.01em;cursor:pointer;color:var(--paper);display:inline-flex;align-items:center;gap:.6rem;}
+  .logo .mark{width:11px;height:11px;border-radius:50%;background:linear-gradient(135deg,var(--chrome),var(--chrome-deep));flex-shrink:0;}
+  nav.mainnav{display:flex;gap:2.2rem;align-items:center;}
+  nav.mainnav a{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;position:relative;padding-bottom:3px;}
+  nav.mainnav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--chrome);transition:width .3s ease;}
+  nav.mainnav a:hover::after,nav.mainnav a.active::after{width:100%;}
+  nav.mainnav a:hover,nav.mainnav a.active{color:var(--paper);}
+  .nav-cta{background:var(--wine);color:var(--white)!important;padding:.65rem 1.4rem;border-radius:2px;font-weight:600!important;letter-spacing:.05em!important;}
+  .nav-cta:hover{background:var(--wine-deep);}
+  .nav-cta::after{display:none;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .burger span{width:24px;height:1px;background:var(--paper);display:block;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2rem;border-radius:2px;
+    font-family:'Inter',sans-serif;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;cursor:pointer;border:none;
+    transition:transform .3s ease, box-shadow .3s ease, background .3s ease;
+  }
+  .btn-solid{background:var(--wine);color:var(--white);}
+  .btn-solid:hover{transform:translateY(-3px);box-shadow:0 16px 30px -14px rgba(124,31,43,.55);background:var(--wine-deep);}
+  .btn-outline{background:transparent;border:1px solid var(--line);color:var(--paper);}
+  .btn-outline:hover{background:rgba(245,245,243,.06);transform:translateY(-3px);}
+  .on-paper .btn-outline{border:1px solid var(--line-dark);color:var(--ink);}
+  .on-paper .btn-outline:hover{background:rgba(13,13,15,.05);}
+
+  /* ================= HERO ================= */
+  .hero{position:relative;padding:11.5rem 3rem 3rem;overflow:hidden;text-align:center;}
+  .hero::before{
+    content:'';position:absolute;inset:0;z-index:0;
+    background:radial-gradient(ellipse 55% 45% at 50% 0%, rgba(201,205,211,.10), transparent 70%);
+  }
+  .hero-content{position:relative;z-index:2;max-width:720px;margin:0 auto;}
+  .hero-content h1{font-size:clamp(2.6rem,6vw,4.6rem);margin-bottom:1.5rem;}
+  .hero-content h1 em{font-style:italic;color:var(--chrome);}
+  .hero-content p{color:var(--ink-soft);font-size:1.03rem;max-width:540px;margin:0 auto 2.3rem;}
+  .hero-btnrow{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem;}
+
+  /* ================= GLANZMESSUNG (signature) ================= */
+  .gauge-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;padding-bottom:1rem;}
+  .gauge-svg{width:min(300px,80vw);height:auto;}
+  .gauge-bg{fill:none;stroke:#2A2A2E;stroke-width:14;stroke-linecap:round;}
+  .gauge-fill{
+    fill:none;stroke:url(#gaugeGrad);stroke-width:14;stroke-linecap:round;
+    stroke-dasharray:377;stroke-dashoffset:377;
+    animation:gaugeFill 2.4s cubic-bezier(.2,.8,.2,1) forwards .3s;
+  }
+  @keyframes gaugeFill{ to{ stroke-dashoffset:34; } }
+  .gauge-needle{
+    stroke:var(--wine);stroke-width:3;stroke-linecap:round;
+    transform-origin:150px 150px;transform:rotate(-90deg);
+    animation:needleSwing 2.4s cubic-bezier(.2,.8,.2,1) forwards .3s;
+  }
+  @keyframes needleSwing{ to{ transform:rotate(73.8deg); } }
+  .gauge-pivot{fill:var(--chrome);}
+  .gauge-labels{display:flex;gap:2rem;margin-top:.6rem;font-family:'Inter',sans-serif;}
+  .gauge-labels .glabel{text-align:center;}
+  .gauge-labels .gval{font-family:'Syne',sans-serif;font-weight:700;font-size:1.3rem;}
+  .gauge-labels .gval.before{color:var(--ink-soft);}
+  .gauge-labels .gval.after{color:var(--chrome);}
+  .gauge-labels .gtag{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:.2rem;}
+  .gauge-arrow{color:var(--ink-soft);font-size:1.2rem;align-self:center;}
+
+  /* ================= SECTION GENERIC ================= */
+  section{padding:6.5rem 3rem;}
+  .section-inner{max-width:1180px;margin:0 auto;}
+  .sec-head{max-width:600px;margin-bottom:3.4rem;}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .sec-head h2{font-size:clamp(2rem,3.6vw,2.7rem);}
+  .sec-head p{color:var(--ink-soft);margin-top:1rem;}
+  .on-paper .sec-head p{color:#5A5A57;}
+  .on-paper{background:var(--paper);color:var(--ink);}
+
+  /* ================= TRUST STRIP ================= */
+  .trust-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+  .trust-item{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.8rem;text-align:center;}
+  .trust-item .tval{font-family:'Syne',sans-serif;font-weight:700;font-size:1.4rem;color:var(--wine-deep);margin-bottom:.4rem;}
+  .trust-item p{color:#5A5A57;font-size:.84rem;}
+
+  /* ================= SERVICES ================= */
+  .service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;}
+  .service-card{
+    background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:2.2rem 1.6rem;
+    transition:transform .35s ease, border-color .35s ease;
+  }
+  .service-card:hover{transform:translateY(-6px);border-color:var(--chrome-deep);}
+  .service-card .sdot{width:14px;height:14px;border-radius:50%;margin-bottom:1.3rem;background:linear-gradient(135deg,var(--chrome),var(--chrome-deep));}
+  .service-card h3{font-size:1.05rem;margin-bottom:.6rem;}
+  .service-card p{color:#5A5A57;font-size:.85rem;}
+
+  /* ================= GALLERY ================= */
+  .grid-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem;}
+  .shine-card{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:5/4;}
+  .shine-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease, filter .5s ease;filter:contrast(1.08) saturate(1.05);}
+  .shine-card:hover img{transform:scale(1.05);}
+  .shine-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55));z-index:1;pointer-events:none;}
+  .shine-card .tag{position:absolute;left:.9rem;bottom:.8rem;z-index:2;font-family:'Inter',sans-serif;font-size:.72rem;color:var(--paper);letter-spacing:.04em;text-transform:uppercase;font-weight:600;}
+
+  /* ================= TESTIMONIAL ================= */
+  .testimonial{text-align:center;background:var(--ink-2);}
+  .testimonial-inner{max-width:700px;margin:0 auto;}
+  .testimonial blockquote{
+    font-family:'Syne',sans-serif;font-weight:600;font-size:clamp(1.2rem,2.3vw,1.7rem);
+    margin-bottom:1.3rem;line-height:1.4;
+  }
+  .testimonial .cite{font-family:'Inter',sans-serif;font-size:.76rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;}
+
+  /* ================= CTA ================= */
+  .cta-band{background:var(--wine);color:var(--white);text-align:center;padding:5.5rem 2rem;}
+  .cta-band .kicker{color:rgba(255,255,255,.7);}
+  .cta-band h2{color:var(--white);font-size:clamp(1.9rem,3.6vw,2.6rem);max-width:620px;margin:0 auto 2rem;}
+  .cta-band .btn-solid{background:var(--white);color:var(--wine-deep);}
+  .cta-band .btn-solid:hover{background:var(--paper-deep);}
+  .cta-band .btn-outline{border-color:rgba(255,255,255,.5);color:var(--white);}
+
+  /* ================= FOOTER ================= */
+  footer{background:var(--ink);border-top:1px solid var(--line);padding:3.8rem 3rem 2rem;}
+  .footer-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:2.4rem;padding-bottom:2.4rem;border-bottom:1px solid var(--line);}
+  .footer-grid .logo{margin-bottom:1rem;font-size:1.25rem;}
+  .footer-grid p{color:var(--ink-soft);font-size:.86rem;max-width:260px;}
+  .footer-col h4{font-family:'Inter',sans-serif;font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--chrome);margin-bottom:1rem;}
+  .footer-col a,.footer-col p{display:block;color:var(--ink-soft);font-size:.86rem;margin-bottom:.55rem;}
+  .footer-col a:hover{color:var(--paper);}
+  .footer-bottom{max-width:1180px;margin:0 auto;padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.76rem;color:var(--ink-soft);}
+  .footer-legal{display:flex;gap:1.4rem;flex-wrap:wrap;}
+  .footer-bottom a:hover{color:var(--paper);}
+
+  /* ================= PAGE HERO ================= */
+  .page-hero{padding:11rem 3rem 4.5rem;text-align:center;position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 55% 50% at 50% 0%, rgba(201,205,211,.10), transparent 70%);}
+  .page-hero h1{font-size:clamp(2.3rem,5vw,3.4rem);position:relative;z-index:2;}
+  .page-hero .kicker{position:relative;z-index:2;}
+
+  /* ================= ÜBER MICH ================= */
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:center;}
+  .about-img{border-radius:4px;overflow:hidden;aspect-ratio:4/5;}
+  .about-img img{width:100%;height:100%;object-fit:cover;}
+  .about-text p{color:#5A5A57;margin-bottom:1.1rem;max-width:520px;}
+  .cred-list{margin-top:1.8rem;border-top:1px solid var(--line-dark);padding-top:1.4rem;}
+  .cred-row{display:flex;gap:1.2rem;padding:.8rem 0;border-bottom:1px solid var(--line-dark);}
+  .cred-row .yr{font-family:'Inter',sans-serif;font-weight:700;color:var(--wine-deep);min-width:60px;font-size:.82rem;}
+  .cred-row .desc{color:#5A5A57;font-size:.9rem;}
+
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:4.5rem;}
+  .value-item{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.8rem;}
+  .value-item h4{font-size:1.02rem;margin-bottom:.5rem;}
+  .value-item p{color:#5A5A57;font-size:.86rem;}
+
+  /* ================= LEISTUNGEN — price list ================= */
+  .price-group{margin-bottom:3.2rem;}
+  .price-group-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;border-bottom:2px solid var(--wine);padding-bottom:.7rem;}
+  .price-group-head h3{font-size:1.3rem;flex:1;}
+  .price-group-head span{font-family:'Inter',sans-serif;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--wine-deep);}
+  .price-row{display:flex;align-items:baseline;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line-dark);}
+  .price-row:last-child{border-bottom:none;}
+  .price-row .pname{font-weight:600;font-size:1rem;color:var(--ink);}
+  .price-row .pdesc{color:#5A5A57;font-size:.82rem;margin-top:.2rem;}
+  .price-row .dots{flex:1;border-bottom:1px dotted var(--line-dark);transform:translateY(-.4rem);}
+  .price-row .pval{font-family:'Inter',sans-serif;font-weight:700;color:var(--ink);font-size:1rem;white-space:nowrap;}
+  .price-note{color:#5A5A57;font-size:.85rem;text-align:center;margin-top:1rem;}
+
+  /* ================= LEGAL ================= */
+  .legal-body{max-width:750px;margin:0 auto;padding:0 3rem 6rem;}
+  .legal-body h2{font-size:1.3rem;margin:2.3rem 0 .9rem;}
+  .legal-body h2:first-child{margin-top:0;}
+  .legal-body h3{font-family:'Inter',sans-serif;font-weight:700;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;margin:1.5rem 0 .6rem;color:var(--wine-deep);}
+  .legal-body p,.legal-body li{color:#5A5A57;font-size:.95rem;margin-bottom:.9rem;}
+  .legal-body ul{padding-left:1.3rem;margin-bottom:1rem;}
+  .legal-body a.inline-link{color:var(--wine-deep);text-decoration:underline;}
+  .legal-note{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.3rem 1.5rem;font-size:.85rem;color:#5A5A57;margin-bottom:2rem;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  @media(max-width:980px){
+    .trust-strip{grid-template-columns:1fr;}
+    .service-grid{grid-template-columns:repeat(2,1fr);}
+    .grid-gallery{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .values{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:768px){
+    header{padding:1.1rem 1.5rem;}
+    nav.mainnav{
+      position:fixed;top:0;right:0;height:100vh;width:80%;max-width:300px;
+      background:var(--ink-2);flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:1.8rem;padding:3rem;transform:translateX(100%);transition:transform .35s ease;
+      box-shadow:-10px 0 40px rgba(0,0,0,.4);
+    }
+    nav.mainnav.open{transform:translateX(0);}
+    .burger{display:flex;}
+    section{padding:4rem 1.5rem;}
+    .hero{padding:8.5rem 1.5rem 2.5rem;}
+    .page-hero{padding:8.5rem 1.5rem 3.5rem;}
+    .service-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .legal-body{padding:0 1.5rem 4rem;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo" onclick="showPage('home')"><span class="mark"></span>Tiefenglanz</div>
+  <nav class="mainnav" id="mainNav">
+    <a href="../" style="opacity:.7;">← Portfolio</a>
+    <a onclick="showPage('home')" data-page="home">Home</a>
+    <a onclick="showPage('leistungen')" data-page="leistungen">Leistungen</a>
+    <a onclick="showPage('ubermich')" data-page="ubermich">Über mich</a>
+    <a class="nav-cta" href="tel:+499971456789">Termin</a>
+  </nav>
+  <div class="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="kicker">Fahrzeugaufbereitung · Cham</span>
+      <h1>Lack mit<br><em>echter Tiefe</em>.</h1>
+      <p>Lackaufbereitung, Politur und keramische Versiegelung — gemessen, nicht nur behauptet. Jede Politur endet mit einer Glanzmessung, nicht mit einem Gefühl.</p>
+      <div class="hero-btnrow">
+        <a class="btn btn-solid" href="tel:+499971456789">Termin vereinbaren</a>
+        <a class="btn btn-outline" onclick="showPage('leistungen')">Leistungen ansehen</a>
+      </div>
+    </div>
+
+    <div class="gauge-wrap reveal">
+      <svg class="gauge-svg" viewBox="0 0 300 170">
+        <defs>
+          <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#8B9099"/>
+            <stop offset="100%" stop-color="#E8EAED"/>
+          </linearGradient>
+        </defs>
+        <path class="gauge-bg" d="M30,150 A120,120 0 0 1 270,150"/>
+        <path class="gauge-fill" d="M30,150 A120,120 0 0 1 270,150"/>
+        <line class="gauge-needle" x1="150" y1="150" x2="150" y2="55"/>
+        <circle class="gauge-pivot" cx="150" cy="150" r="7"/>
+      </svg>
+      <div class="gauge-labels">
+        <div class="glabel"><div class="gval before">42 GU</div><div class="gtag">Vorher</div></div>
+        <div class="gauge-arrow">→</div>
+        <div class="glabel"><div class="gval after">91 GU</div><div class="gtag">Nachher</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-paper">
+    <div class="section-inner">
+      <div class="trust-strip">
+        <div class="trust-item reveal">
+          <div class="tval">Klimatisierte Halle</div>
+          <p>Staub- und pollenkontrollierte Umgebung für saubere Ergebnisse</p>
+        </div>
+        <div class="trust-item reveal">
+          <div class="tval">Über 300</div>
+          <p>Aufbereitete Fahrzeuge seit 2020</p>
+        </div>
+        <div class="trust-item reveal">
+          <div class="tval">Glanzmessung</div>
+          <p>Vorher-Nachher-Dokumentation mit Messgerät, nicht nur Fotos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Leistungen</span>
+        <h2>Vier Schritte zu echtem Tiefenglanz.</h2>
+        <p>Jede Stufe baut auf der vorherigen auf — Politur ohne Vorbereitung hält nicht.</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Lackaufbereitung &amp; Politur</h3>
+          <p>Ein- bis Dreistufen-Politur, je nach Zustand des Lacks.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Keramikversiegelung</h3>
+          <p>Bis zu zwei Jahre Schutz, hydrophober Effekt, tiefer Glanz.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Lackschutzfolie (PPF)</h3>
+          <p>Unsichtbarer Steinschlagschutz für Front und Kanten.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Felgen &amp; Glasversiegelung</h3>
+          <p>Hitzebeständige Felgenversiegelung, klare Sicht bei Regen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head">
+        <span class="kicker">Ergebnisse</span>
+        <h2>Kein Filter, nur Politur.</h2>
+      </div>
+      <div class="grid-gallery">
+        <div class="shine-card reveal">
+          <img src="https://images.unsplash.com/photo-1594051673969-172a6f721d3c?auto=format&fit=crop&w=900&q=80" alt="Frisch polierter schwarzer Lack in Nahaufnahme">
+          <span class="tag">Nach der Politur</span>
+        </div>
+        <div class="shine-card reveal">
+          <img src="https://images.unsplash.com/photo-1761934657948-708146148588?auto=format&fit=crop&w=900&q=80" alt="Mikrofasertuch auf glänzendem Lack">
+          <span class="tag">Handarbeit</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonial">
+    <div class="testimonial-inner">
+      <blockquote class="reveal">„Ich dachte, mein Lack sei einfach alt. Nach der Politur sah man erst, wie viele Kratzer da eigentlich noch drunter waren — und jetzt nicht mehr.“</blockquote>
+      <div class="cite reveal">— Kunde, Cham</div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Termin</span>
+    <h2 class="reveal">Kostenlose Zustandsbewertung vor jeder Buchung.</h2>
+    <div class="hero-btnrow" style="margin-bottom:0;">
+      <a class="btn btn-solid" href="tel:+499971456789">09971 / 45 67 89</a>
+      <a class="btn btn-outline" href="mailto:termin@tiefenglanz-cham.de">termin@tiefenglanz-cham.de</a>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ ÜBER MICH ============ -->
+<div class="page" id="page-ubermich">
+  <div class="page-hero"><span class="kicker">Über mich</span><h1>Fabian Lechner</h1></div>
+  <section class="on-paper" style="padding-top:1rem;">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-img reveal">
+          <img src="https://images.unsplash.com/photo-1594051673969-172a6f721d3c?auto=format&fit=crop&w=800&q=80" alt="Frisch aufbereiteter Lack bei Tiefenglanz">
+        </div>
+        <div class="about-text">
+          <p class="reveal">Ich habe klein angefangen — Waschen und Wachsen am Wochenende, neben meinem Job als Karosseriebauer. 2020 habe ich TIEFENGLANZ als eigene Halle in Cham eröffnet, mit Fokus auf Lackkorrektur statt einfachem Autowaschen.</p>
+          <p class="reveal">Was mich stört: Viele verkaufen "Politur", ohne den Lack vorher wirklich zu prüfen. Bei mir bekommst du eine Zustandsbewertung mit Glanzmessung, bevor überhaupt eine Maschine angesetzt wird.</p>
+          <div class="cred-list">
+            <div class="cred-row reveal"><span class="yr">2020</span><span class="desc">Gründung von TIEFENGLANZ in Cham</span></div>
+            <div class="cred-row reveal"><span class="yr">2018</span><span class="desc">Fortbildungen bei internationalen Coating-Herstellern, Lackkorrektur &amp; Keramikbeschichtung</span></div>
+            <div class="cred-row reveal"><span class="yr">2012</span><span class="desc">Ausbildung zum Karosseriebauer, Beginn der Laufbahn</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="values">
+        <div class="value-item reveal">
+          <h4>Gemessen, nicht behauptet</h4>
+          <p>Glanzmessung vor und nach jeder größeren Politur, dokumentiert.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Ein Auto, ein Tag</h4>
+          <p>Keine parallelen Fahrzeuge während einer Lackkorrektur.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Ehrliche Einschätzung</h4>
+          <p>Wenn eine Versiegelung den Lack nicht rettet, sage ich das vorher.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ LEISTUNGEN ============ -->
+<div class="page" id="page-leistungen">
+  <div class="page-hero"><span class="kicker">Leistungen</span><h1>Preise &amp; Pakete</h1></div>
+  <section class="on-paper" style="padding-top:1rem;">
+    <div class="section-inner">
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Politur &amp; Lackkorrektur</h3>
+          <span>Basis</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Ein-Stufen-Politur</span><div class="pdesc">Glanzauffrischung, leichte Kratzer</div></div>
+          <div class="dots"></div><div class="pval">ab 189 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Zwei-Stufen-Politur</span><div class="pdesc">Entfernt die meisten Hologramme &amp; Kratzer</div></div>
+          <div class="dots"></div><div class="pval">ab 349 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Drei-Stufen-Korrektur</span><div class="pdesc">Für stark verwitterten oder vernachlässigten Lack</div></div>
+          <div class="dots"></div><div class="pval">ab 549 €</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Versiegelung &amp; Coating</h3>
+          <span>Schutz</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Keramikversiegelung, 1 Jahr</span><div class="pdesc">Nach abgeschlossener Politur</div></div>
+          <div class="dots"></div><div class="pval">ab 249 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Keramikversiegelung, 2 Jahre</span><div class="pdesc">Höherwertige Beschichtung</div></div>
+          <div class="dots"></div><div class="pval">ab 399 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Lackschutzfolie Front</span><div class="pdesc">Stoßstange, Motorhaube, Spiegel</div></div>
+          <div class="dots"></div><div class="pval">ab 690 €</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Zusatzleistungen</h3>
+          <span>Ergänzend</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Felgenversiegelung</span><div class="pdesc">Vier Felgen, hitzebeständig</div></div>
+          <div class="dots"></div><div class="pval">89 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Glasversiegelung</span><div class="pdesc">Frontscheibe, bessere Sicht bei Regen</div></div>
+          <div class="dots"></div><div class="pval">49 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Zustandsbewertung</span><div class="pdesc">Inkl. Glanzmessung, unverbindlich</div></div>
+          <div class="dots"></div><div class="pval">kostenlos</div>
+        </div>
+      </div>
+
+      <p class="price-note">Alle Preise inkl. MwSt. für PKW bis Mittelklasse. SUV, Van und Sonderlacke auf Anfrage.</p>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============ IMPRESSUM ============ -->
+<div class="page" id="page-impressum">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Impressum</h1></div>
+  <section class="on-paper" style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Name, Adresse, Telefonnummer und USt-IdNr. sind Platzhalter-Beispiele für dieses Portfolio-Demo. Bitte vor echter Veröffentlichung durch reale Geschäftsdaten ersetzen.</div>
+
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>TIEFENGLANZ Fahrzeugaufbereitung<br>Fabian Lechner<br>Further Straße 8<br>93413 Cham<br>Deutschland</p>
+
+      <h3>Kontakt</h3>
+      <p>Telefon: <a class="inline-link" href="tel:+499971456789">09971 / 45 67 89</a><br>E-Mail: <a class="inline-link" href="mailto:termin@tiefenglanz-cham.de">termin@tiefenglanz-cham.de</a></p>
+
+      <h3>Umsatzsteuer-ID</h3>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE445678901</p>
+
+      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+      <p>Fabian Lechner, Anschrift wie oben.</p>
+
+      <h3>Streitschlichtung</h3>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="inline-link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Meine E-Mail-Adresse findest du oben. Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+      <h3>Haftung für Inhalte</h3>
+      <p>Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+      <h3>Haftung für Links</h3>
+      <p>Dieses Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+      <h3>Urheberrecht</h3>
+      <p>Die durch mich erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DATENSCHUTZ ============ -->
+<div class="page" id="page-datenschutz">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Datenschutz</h1></div>
+  <section class="on-paper" style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Diese Vorlage deckt gängige Punkte für einen kleinen Fahrzeugaufbereitungs-Betrieb mit Kontaktformular und Google Analytics ab. Bitte fachlich prüfen lassen, bevor sie live geht.</div>
+
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>TIEFENGLANZ Fahrzeugaufbereitung<br>Fabian Lechner<br>Further Straße 8, 93413 Cham<br>Telefon: 09971 / 45 67 89<br>E-Mail: termin@tiefenglanz-cham.de</p>
+
+      <h2>2. Allgemeines zur Datenverarbeitung</h2>
+      <p>Ich verarbeite personenbezogene Daten meiner Nutzer:innen grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie meiner Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt nach Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).</p>
+
+      <h2>3. Hosting</h2>
+      <p>Diese Website wird bei einem externen Hosting-Anbieter gehostet. Personenbezogene Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Der Hoster verarbeitet Daten in meinem Auftrag gemäß Art. 28 DSGVO.</p>
+
+      <h2>4. Kontaktaufnahme &amp; Terminvereinbarung</h2>
+      <p>Wenn du mich per Telefon, E-Mail oder Kontaktformular kontaktierst oder einen Termin vereinbarst, werden deine Angaben (Name, Kontaktdaten, Fahrzeugdaten, Terminwunsch) zum Zweck der Bearbeitung deiner Anfrage bei mir gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung).</p>
+
+      <h2>5. Vorher-Nachher-Dokumentation</h2>
+      <p>Zur Dokumentation der Glanzmessung und des Aufbereitungsergebnisses fertige ich Fotos deines Fahrzeugs an. Diese werden ausschließlich zur internen Qualitätssicherung genutzt und nur mit deiner ausdrücklichen Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO für Marketingzwecke verwendet.</p>
+
+      <h2>6. Google Analytics</h2>
+      <p>Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google"). Google Analytics verwendet Cookies bzw. vergleichbare Technologien, die eine Analyse der Benutzung der Website ermöglichen.</p>
+      <p>Die dabei erzeugten Informationen (z. B. Zugriffszeit, Ort des Zugriffs, Häufigkeit des Seitenbesuchs, gekürzte IP-Adresse) werden an Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert, sodass deine IP-Adresse vor der Übertragung innerhalb der EU/EWR gekürzt wird.</p>
+      <p>Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die du über das Cookie-Banner erteilen oder ablehnen kannst. Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+      <p>Google verarbeitet Daten auch in den USA; hierfür bestehen Standardvertragsklauseln der EU-Kommission als Garantie für ein angemessenes Datenschutzniveau. Weitere Infos: <a class="inline-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.</p>
+      <p>Du kannst die Erfassung verhindern, indem du das Browser-Add-on installierst: <a class="inline-link" href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h2>7. Cookies</h2>
+      <p>Diese Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, alle anderen (z. B. Google Analytics) nur mit deiner Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO.</p>
+
+      <h2>8. Deine Rechte</h2>
+      <ul>
+        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
+        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
+        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
+        <li>Recht auf Widerruf erteilter Einwilligungen</li>
+      </ul>
+      <p>Zudem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, z. B. beim Bayerischen Landesamt für Datenschutzaufsicht.</p>
+
+      <h2>9. Änderungen dieser Datenschutzerklärung</h2>
+      <p>Ich behalte mir vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht. Stand: 2026.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo"><span class="mark"></span>Tiefenglanz</div>
+      <p>Fahrzeugaufbereitung in Cham — Politur, Keramikversiegelung und Lackschutzfolie nach Terminvereinbarung.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a href="tel:+499971456789">09971 / 45 67 89</a>
+      <a href="mailto:termin@tiefenglanz-cham.de">termin@tiefenglanz-cham.de</a>
+      <p>Further Straße 8, 93413 Cham</p>
+    </div>
+    <div class="footer-col">
+      <h4>Seite</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('leistungen')">Leistungen</a>
+      <a onclick="showPage('ubermich')">Über mich</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 TIEFENGLANZ Fahrzeugaufbereitung</span>
+    <div class="footer-legal">
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY>40);
+  });
+  function toggleNav(){document.getElementById('mainNav').classList.toggle('open');}
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    document.querySelectorAll('nav.mainnav a[data-page]').forEach(a=>{
+      a.classList.toggle('active', a.dataset.page===name);
+    });
+    document.getElementById('mainNav').classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant'});
+    initReveal();
+  }
+
+  function initReveal(){
+    const els = document.querySelectorAll('.reveal:not(.in)');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} });
+    },{threshold:.15});
+    els.forEach(el=>obs.observe(el));
+  }
+  initReveal();
+</script>
+
+</body>
+</html>

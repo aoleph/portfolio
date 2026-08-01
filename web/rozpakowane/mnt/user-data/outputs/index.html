@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>aole.web — Webdesign für lokale Unternehmen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF8;
+    --panel:#F1F0EC;
+    --ink:#171613;
+    --ink-soft:#6B6960;
+    --line:rgba(23,22,19,.12);
+    --accent:#2B2A6B;
+    --accent-soft:#EDEBFA;
+    --white:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:'Inter',sans-serif;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{text-decoration:none;color:inherit;}
+  h1,h2,h3,h4{font-family:'Sora',sans-serif;font-weight:700;line-height:1.1;letter-spacing:-.01em;}
+  .kicker{
+    font-family:'Inter',sans-serif;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.2rem;
+  }
+  .kicker::before{content:'';width:18px;height:1px;background:var(--accent);}
+
+  header{
+    position:sticky;top:0;z-index:1000;background:rgba(250,250,248,.9);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;padding:1.3rem 3rem;
+  }
+  .logo{font-family:'Sora',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-.02em;}
+  .logo span{
+    color:#1B8A52;font-style:italic;font-weight:700;
+    display:inline-block;transform:skewX(-8deg);margin-left:1px;
+  }
+  nav{display:flex;gap:2rem;align-items:center;}
+  nav a{font-size:.88rem;font-weight:500;color:var(--ink-soft);cursor:pointer;}
+  nav a:hover{color:var(--ink);}
+  .nav-cta{
+    background:var(--ink);color:var(--white);padding:.65rem 1.4rem;border-radius:8px;font-weight:600;
+  }
+  .nav-cta:hover{background:var(--accent);}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .burger span{width:22px;height:2px;background:var(--ink);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:6rem 3rem 5rem;max-width:1200px;margin:0 auto;}
+  .hero h1{font-size:clamp(2.4rem,5.5vw,4.4rem);max-width:780px;}
+  .hero h1 .grad{color:var(--accent);}
+  .hero p{color:var(--ink-soft);font-size:1.08rem;max-width:560px;margin:1.6rem 0 2.2rem;}
+  .hero-row{display:flex;gap:1rem;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    padding:.9rem 1.7rem;border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;
+    border:1px solid var(--ink);
+  }
+  .btn-solid{background:var(--ink);color:var(--white);}
+  .btn-solid:hover{background:var(--accent);border-color:var(--accent);}
+  .btn-outline{background:transparent;color:var(--ink);}
+  .btn-outline:hover{background:var(--panel);}
+
+  .hero-tags{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:2.6rem;}
+  .hero-tag{
+    font-size:.78rem;color:var(--ink-soft);background:var(--panel);
+    padding:.45rem .9rem;border-radius:100px;
+  }
+
+  /* ---------- BENEFITS ---------- */
+  .benefits{max-width:1200px;margin:0 auto;padding:1rem 3rem 5rem;}
+  .benefits-inner{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;
+    border-top:1px solid var(--line);padding-top:3rem;
+  }
+  .benefit{padding:0;}
+  .benefit h4{font-family:'Sora',sans-serif;font-size:1.05rem;margin-bottom:.5rem;}
+  .benefit p{color:var(--ink-soft);font-size:.87rem;}
+
+  /* ---------- FILTER ---------- */
+  .filter-section{max-width:1200px;margin:0 auto;padding:0 3rem 1rem;}
+  .filter-bar{display:flex;gap:.7rem;flex-wrap:wrap;padding:1rem 0 2.5rem;border-top:1px solid var(--line);margin-top:1rem;}
+  .filter-btn{
+    font-size:.85rem;font-weight:500;padding:.6rem 1.2rem;border-radius:100px;
+    border:1px solid var(--line);cursor:pointer;color:var(--ink-soft);background:var(--white);
+    transition:all .2s ease;
+  }
+  .filter-btn:hover{border-color:var(--ink);color:var(--ink);}
+  .filter-btn.active{background:var(--ink);color:var(--white);border-color:var(--ink);}
+
+  /* ---------- PROJECT GRID ---------- */
+  .grid-wrap{max-width:1200px;margin:0 auto;padding:0 3rem 6rem;}
+  .project-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;
+  }
+  .pcard{
+    display:block;background:var(--white);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .pcard:hover{transform:translateY(-4px);box-shadow:0 20px 40px -20px rgba(23,22,19,.18);}
+  .pcard.hidden{display:none;}
+
+  .mockup{position:relative;padding:1.4rem 1.2rem 0;}
+  .mockup .bar{display:flex;gap:5px;margin-bottom:.9rem;}
+  .mockup .dot{width:8px;height:8px;border-radius:50%;background:var(--line);}
+  .mockup .screen{
+    border-radius:8px 8px 0 0;height:150px;overflow:hidden;position:relative;
+    display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;
+  }
+  .mockup .screen .stag{
+    font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-bottom:.3rem;
+  }
+  .mockup .screen .sname{font-family:'Sora',sans-serif;font-weight:700;font-size:1.15rem;}
+
+  .pcard-body{padding:1.4rem 1.4rem 1.6rem;}
+  .pcard-tag{
+    font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+    font-weight:600;margin-bottom:.5rem;display:block;
+  }
+  .pcard h3{font-size:1.2rem;margin-bottom:.5rem;}
+  .pcard p{color:var(--ink-soft);font-size:.88rem;margin-bottom:1rem;}
+  .pcard-meta{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--ink-soft);}
+  .status-live{color:#2E7D4F;font-weight:600;}
+  .status-soon{color:#B8763D;font-weight:600;}
+
+  /* placeholder card (coming soon) */
+  .pcard.placeholder .screen{
+    background:repeating-linear-gradient(135deg, #F1F0EC, #F1F0EC 10px, #E8E6E0 10px, #E8E6E0 20px);
+  }
+  .pcard.placeholder .screen .sname{color:var(--ink-soft);}
+
+  /* ---------- ABOUT ---------- */
+  .about{background:var(--panel);padding:6rem 3rem;}
+  .about-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:.9fr 1.1fr;gap:4rem;align-items:center;}
+  .about-visual{
+    aspect-ratio:4/5;border-radius:16px;background:linear-gradient(155deg, var(--accent) 0%, #4B4A9E 60%, #7472C4 100%);
+    position:relative;overflow:hidden;
+  }
+  .about-visual::after{
+    content:'AO';position:absolute;bottom:1.6rem;left:1.6rem;
+    font-family:'Sora',sans-serif;font-weight:800;font-size:3rem;color:rgba(255,255,255,.9);
+  }
+  .about-text h2{font-size:clamp(1.9rem,3.2vw,2.6rem);margin-bottom:1.4rem;}
+  .about-text p{color:var(--ink-soft);margin-bottom:1.1rem;max-width:520px;}
+  .inline-link{color:var(--accent);text-decoration:underline;font-weight:500;}
+  .inline-link:hover{color:#1B8A52;}
+  .skill-tags{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.6rem;}
+  .skill-tag{
+    font-size:.8rem;background:var(--white);border:1px solid var(--line);padding:.5rem 1rem;border-radius:100px;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{padding:6.5rem 3rem;text-align:center;}
+  .contact-inner{max-width:600px;margin:0 auto;}
+  .contact h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1.2rem;}
+  .contact p{color:var(--ink-soft);margin-bottom:2.2rem;}
+  .contact-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+
+  footer{border-top:1px solid var(--line);padding:2.2rem 3rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.82rem;color:var(--ink-soft);}
+  footer a:hover{color:var(--ink);}
+
+  @media(max-width:980px){
+    .project-grid{grid-template-columns:repeat(2,1fr);}
+    .about-inner{grid-template-columns:1fr;}
+    .benefits-inner{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:768px){
+    header{padding:1.1rem 1.5rem;}
+    nav{
+      position:fixed;top:0;right:0;height:100vh;width:78%;max-width:300px;
+      background:var(--bg);flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:1.8rem;padding:3rem;transform:translateX(100%);transition:transform .35s ease;
+      border-left:1px solid var(--line);
+    }
+    nav.open{transform:translateX(0);}
+    .burger{display:flex;}
+    .hero,.filter-section,.grid-wrap,.about,.contact,.benefits{padding-left:1.5rem;padding-right:1.5rem;}
+    .project-grid{grid-template-columns:1fr;}
+    .benefits-inner{grid-template-columns:1fr;}
+    footer{padding:2rem 1.5rem;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">aole<span>.web</span></div>
+  <nav id="mainNav">
+    <a href="#work">Projekte</a>
+    <a href="#about">Über mich</a>
+    <a href="#contact" class="nav-cta">Kontakt</a>
+  </nav>
+  <div class="burger" id="burger" onclick="document.getElementById('mainNav').classList.toggle('open')"><span></span><span></span><span></span></div>
+</header>
+
+<section class="hero">
+  <span class="kicker">Webdesign für lokale Unternehmen</span>
+  <h1>Websites, die zu <span class="grad">deinem</span> Geschäft passen — nicht zu einer Vorlage.</h1>
+  <p>Ich entwickle individuelle Websites für lokale Unternehmen — mit kreativen Ideen und ganz auf deine Bedürfnisse zugeschnitten. Suchmaschinenoptimiert, blitzschnell und über ein weltweites Servernetzwerk ausgeliefert, für stabile Ladezeiten überall.</p>
+  <div class="hero-row">
+    <a class="btn btn-solid" href="#work">Projekte ansehen</a>
+    <a class="btn btn-outline" href="#contact">Projekt anfragen</a>
+  </div>
+  <div class="hero-tags">
+    <span class="hero-tag">Individuelles Design</span>
+    <span class="hero-tag">SEO-optimiert</span>
+    <span class="hero-tag">Weltweites Hosting (CDN)</span>
+    <span class="hero-tag">Schnelle Ladezeiten</span>
+    <span class="hero-tag">Mobile-optimiert</span>
+    <span class="hero-tag">Persönliche Betreuung</span>
+  </div>
+</section>
+
+<section class="benefits">
+  <div class="benefits-inner">
+    <div class="benefit"><h4>Kreative Konzepte</h4><p>Kein Baukasten — jedes Projekt bekommt ein eigenes, durchdachtes Design.</p></div>
+    <div class="benefit"><h4>Individuell zugeschnitten</h4><p>Struktur, Inhalte und Stil richten sich nach deinem Geschäft, nicht umgekehrt.</p></div>
+    <div class="benefit"><h4>SEO-Optimierung</h4><p>Saubere Struktur und Technik, damit du bei Google gefunden wirst.</p></div>
+    <div class="benefit"><h4>Weltweites CDN-Hosting</h4><p>Deine Website läuft auf Servern rund um den Globus — überall schnell erreichbar.</p></div>
+    <div class="benefit"><h4>Hohe Ladegeschwindigkeit</h4><p>Optimierte Bilder und schlanker Code für kurze Ladezeiten.</p></div>
+    <div class="benefit"><h4>Responsive Design</h4><p>Perfekte Darstellung auf Handy, Tablet und Desktop.</p></div>
+  </div>
+</section>
+
+<section class="filter-section" id="work">
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">Alle</button>
+    <button class="filter-btn" data-filter="beauty">Beauty</button>
+    <button class="filter-btn" data-filter="friseure">Friseure</button>
+    <button class="filter-btn" data-filter="physio">Physiotherapie</button>
+    <button class="filter-btn" data-filter="restaurant">Restaurant</button>
+    <button class="filter-btn" data-filter="nagel">Nagelstudio</button>
+    <button class="filter-btn" data-filter="coaching">Coaching</button>
+    <button class="filter-btn" data-filter="yoga">Yoga</button>
+    <button class="filter-btn" data-filter="finanzen">Finanzen</button>
+    <button class="filter-btn" data-filter="kfz">Kfz-Werkstatt</button>
+  </div>
+</section>
+
+<div class="grid-wrap">
+  <div class="project-grid" id="projectGrid">
+
+    <!-- BEAUTY 1 -->
+    <a class="pcard" data-cat="beauty" href="beauty-loft/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#F1D6C6,#3C6E64);color:#fff;">
+          <span class="stag">Kosmetikstudio</span>
+          <span class="sname">Beauty Loft</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Beauty</span>
+        <h3>Beauty Loft Kosmetikstudio</h3>
+        <p>Ruhiges, editoriales Design in Puderrosa &amp; Meergrün. Struktur: Home, Über uns, Leistungen, Studio.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- BEAUTY 2 -->
+    <a class="pcard" data-cat="beauty" href="gloss-haus/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#121110,#FF4A32);color:#fff;">
+          <span class="stag">Kosmetikstudio</span>
+          <span class="sname">Gloss/Haus</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Beauty</span>
+        <h3>Gloss/Haus</h3>
+        <p>Mutiges, edgy Konzept: Dark Mode, Bento-Grid, große Typografie. Für Marken mit klarer Haltung.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- BEAUTY 3 -->
+    <a class="pcard" data-cat="beauty" href="nora-vogt/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#F7F1E9,#8A6A4E);color:#fff;">
+          <span class="stag">Kosmetikstudio</span>
+          <span class="sname">Nora Vogt</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Beauty</span>
+        <h3>Nora Vogt Kosmetikstudio</h3>
+        <p>Minimalistisch, warme Kaffeetöne. Ideal für Einzelunternehmerinnen mit persönlichem Auftritt.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- FRISEURE -->
+    <a class="pcard" data-cat="friseure" href="schnittpunkt/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#141414,#2B4CDB);color:#fff;">
+          <span class="stag">Friseursalon</span>
+          <span class="sname">Schnittpunkt</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Friseure</span>
+        <h3>Schnittpunkt</h3>
+        <p>Für ein Dreier-Team, Damen &amp; Herren gleichwertig: Kobaltblau auf Schwarz statt Beauty-Pastell, jeder Stylist ein eigener "Stuhl".</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- PHYSIO 1 -->
+    <a class="pcard" data-cat="physio" href="physiopunkt/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#F6F3EC,#1F6F64);color:#fff;">
+          <span class="stag">Physiotherapie</span>
+          <span class="sname">PhysioPunkt</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Physiotherapie</span>
+        <h3>PhysioPunkt</h3>
+        <p>Professionell, vertrauensvoll. Meergrün &amp; Amber, mit Statistik-Leiste und Team-Profilen.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- PHYSIO 2 -->
+    <a class="pcard" data-cat="physio" href="physio-hartmann/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#F7F1E6,#7A1620);color:#fff;">
+          <span class="stag">Physiotherapie</span>
+          <span class="sname">Physio Hartmann</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Physiotherapie</span>
+        <h3>Praxis Sabine Hartmann</h3>
+        <p>Warmes Bordeaux &amp; Creme, moderne Layout-Sprache mit Floating Cards. Für Einzelpraxen.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- PHYSIO 3 -->
+    <a class="pcard" data-cat="physio" href="rebound-physio/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#0B1220,#2F6FFF);color:#fff;">
+          <span class="stag">Sportphysiotherapie</span>
+          <span class="sname">Rebound</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Physiotherapie</span>
+        <h3>Rebound Physiotherapie</h3>
+        <p>Dunkles Navy &amp; Neon-Lime, athletisch und energiegeladen. Für Sportreha-Praxen.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- RESTAURANT -->
+    <a class="pcard" data-cat="restaurant" href="zurlinde/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#3B2418,#B5502E);color:#fff;">
+          <span class="stag">Wirtshaus</span>
+          <span class="sname">Zur Linde</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Restaurant</span>
+        <h3>Zur Linde</h3>
+        <p>Erste warme Holzton-Marke im Portfolio: eine "Von unseren Höfen"-Leiste zeigt die tatsächlichen Erzeuger statt generischer Food-Fotografie.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- NAGELSTUDIO -->
+    <a class="pcard" data-cat="nagel" href="aura-nails/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#F3D2E1,#C9A876);color:#fff;">
+          <span class="stag">Nagelstudio</span>
+          <span class="sname">Aura Nails</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Nagelstudio</span>
+        <h3>Aura Nails</h3>
+        <p>Pastellige Holo-Palette, sanfte Shine- &amp; Aura-Effekte. Ästhetisch, ohne zu überladen.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- NAGELSTUDIO 2 -->
+    <a class="pcard" data-cat="nagel" href="lacquerie/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#17110F,#C81D3B);color:#fff;">
+          <span class="stag">Nagelstudio</span>
+          <span class="sname">Lacquerie</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Nagelstudio</span>
+        <h3>Lacquerie</h3>
+        <p>Editorial &amp; dunkel: Lack-Rot auf Espresso-Schwarz, Farbkarte als Leitmotiv statt Pastell.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- COACHING -->
+    <a class="pcard" data-cat="coaching" href="nordpunkt/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#16232B,#B08D4E);color:#fff;">
+          <span class="stag">Coaching</span>
+          <span class="sname">Nordpunkt</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Coaching</span>
+        <h3>Nordpunkt</h3>
+        <p>Kompass-Konzept für persönliche Entwicklung: Navy &amp; Messing statt Wohlfühl-Pastell, vier Kompasspunkte als Leitmotiv.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- FRISEURE 2 -->
+    <a class="pcard" data-cat="friseure" href="blondatelier/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#2B2620,#C9A461);color:#fff;">
+          <span class="stag">Coloration</span>
+          <span class="sname">Blondatelier</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Friseure</span>
+        <h3>Blondatelier</h3>
+        <p>Gedeckte, klassische Töne für eine Blondspezialistin: warmes Champagner-Gold statt kräftiger Salon-Farben, ein Blond-Spektrum als Leitmotiv.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- YOGA -->
+    <a class="pcard" data-cat="yoga" href="atemraum/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#1F1B16,#C98A3B);color:#fff;">
+          <span class="stag">Yoga-Studio</span>
+          <span class="sname">Atemraum</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Yoga-Studio</span>
+        <h3>Atemraum</h3>
+        <p>Atem als Leitmotiv: eine live pulsierende Atemkreis-Animation statt Stock-Zen, warmes Ocker auf dunklem Ton.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- FINANZEN -->
+    <a class="pcard" data-cat="finanzen" href="weitblick/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#132420,#5B7C8D);color:#fff;">
+          <span class="stag">Versicherung &amp; Finanzen</span>
+          <span class="sname">Weitblick</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Finanzen</span>
+        <h3>Weitblick</h3>
+        <p>Erste institutionelle Marke im Portfolio: Tanne &amp; Stahlblau statt Lifestyle-Ton, eine wachsende Horizontlinie als Leitmotiv.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- KFZ-WERKSTATT -->
+    <a class="pcard" data-cat="kfz" href="taktwerk/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#14181B,#1F9E8C);color:#fff;">
+          <span class="stag">Kfz-Werkstatt</span>
+          <span class="sname">Taktwerk</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Kfz-Werkstatt</span>
+        <h3>Taktwerk</h3>
+        <p>Statt Motoröl-Ästhetik: eine live "Diagnose-Ampel" macht Transparenz zum Design-Prinzip, nicht nur zum Werbeversprechen.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- KFZ-WERKSTATT 2 -->
+    <a class="pcard" data-cat="kfz" href="reinraum/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#F7F8F9,#2F80ED);color:#fff;">
+          <span class="stag">Innenraumpflege</span>
+          <span class="sname">Reinraum</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Kfz-Werkstatt</span>
+        <h3>Reinraum</h3>
+        <p>Erste helle Marke im Portfolio: Eisblau auf Weiß statt dunkler Werkstatt-Optik, ein live "Zonen-Check" statt Vorher-Nachher-Klischee.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+
+    <!-- KFZ-WERKSTATT 3 -->
+    <a class="pcard" data-cat="kfz" href="schrottschlag/">
+      <div class="mockup">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="screen" style="background:linear-gradient(160deg,#141414,#C8501F);color:#fff;">
+          <span class="stag">Autoverwertung</span>
+          <span class="sname">Schrott &amp; Schlag</span>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <span class="pcard-tag">Kfz-Werkstatt</span>
+        <h3>Schrott &amp; Schlag</h3>
+        <p>Ausgefallenster Auftrag bisher: Schrottplatz plus zwei Erlebnisse — Auto zertrümmern und Foto-Shooting, beide 150 €. Startseite zeigt den Hof mit Anfahrtskarte, die Erlebnisse leben auf eigener Unterseite.</p>
+        <div class="pcard-meta"><span class="status-live">● Konzept fertig</span><span>Demo ansehen →</span></div>
+      </div>
+    </a>
+    </div>
+
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual"></div>
+    <div class="about-text">
+      <span class="kicker">Über mich</span>
+      <h2>Adam Olendzki</h2>
+      <p>Ich entwerfe und baue Websites für kleine, lokale Unternehmen. Jedes Projekt startet bei null: kein Baukasten, kein Copy-Paste-Template — sondern ein Design, das zu deinem Geschäft und deinen Zielen passt.</p>
+      <p>Als Fotograf bringe ich zusätzlich ein Auge für Bildsprache mit — bei Bedarf entstehen die Fotos für deine Website direkt bei mir im Shooting, nicht aus der Stockdatenbank. Meine Fotografie-Arbeiten findest du unter <a class="inline-link" href="https://adamolendzki.com" target="_blank" rel="noopener">adamolendzki.com</a>.</p>
+      <div class="skill-tags">
+        <span class="skill-tag">HTML / CSS / JS</span>
+        <span class="skill-tag">Responsive Design</span>
+        <span class="skill-tag">Eigene Fotografie</span>
+        <span class="skill-tag">Individuelles Design</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <span class="kicker">Kontakt</span>
+    <h2>Lust auf eine eigene Website?</h2>
+    <p>Schreib mir kurz, worum es geht — ich melde mich mit ersten Ideen zurück.</p>
+    <div class="contact-row">
+      <a class="btn btn-solid" href="mailto:aolendzki.photo@gmail.com">E-Mail schreiben</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Adam Olendzki</span>
+  <a href="mailto:aolendzki.photo@gmail.com">aolendzki.photo@gmail.com</a>
+</footer>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.pcard');
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      buttons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c=>{
+        c.classList.toggle('hidden', f!=='all' && c.dataset.cat!==f);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

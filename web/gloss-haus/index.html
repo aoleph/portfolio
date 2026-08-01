@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLOSS HAUS — Kosmetikstudio Falkenberg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#121110;
+    --bg2:#1A1815;
+    --panel:#1F1C18;
+    --cream:#F4EEE4;
+    --cream-dim:#B8B2A6;
+    --accent:#FF4A32;
+    --accent2:#D8FF3D;
+    --line:rgba(244,238,228,.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Space Grotesk',sans-serif;
+    line-height:1.55;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;filter:grayscale(35%) contrast(1.05) brightness(.96);}
+  ::selection{background:var(--accent);color:var(--bg);}
+
+  /* film grain overlay */
+  body::before{
+    content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1,h2,h3,h4{font-family:'Unbounded',sans-serif;font-weight:800;line-height:1.02;letter-spacing:-.01em;}
+  .mono{font-family:'Space Mono',monospace;}
+  .tag{
+    font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--accent);font-weight:700;
+    display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.4rem;
+  }
+  .tag::before{content:'';width:7px;height:7px;background:var(--accent);border-radius:50%;}
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{
+    background:var(--accent);color:var(--bg);overflow:hidden;white-space:nowrap;
+    padding:.7rem 0;position:relative;z-index:500;
+  }
+  .marquee-track{display:inline-block;animation:scroll-left 22s linear infinite;}
+  .marquee-track span{
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:.95rem;
+    text-transform:uppercase;letter-spacing:.02em;padding:0 2rem;
+  }
+  @keyframes scroll-left{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;top:32px;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.5rem 3rem;
+    transition:background .3s ease, padding .3s ease, top .3s ease;
+  }
+  header.scrolled{
+    background:rgba(18,17,16,.88);backdrop-filter:blur(10px);
+    padding:1.1rem 3rem;border-bottom:1px solid var(--line);
+  }
+  .logo{
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:1.3rem;
+    letter-spacing:-.02em;cursor:pointer;text-transform:uppercase;
+  }
+  .logo span{color:var(--accent);}
+  nav.mainnav{display:flex;gap:2.2rem;align-items:center;}
+  nav.mainnav a{
+    font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.06em;
+    text-transform:uppercase;cursor:pointer;color:var(--cream-dim);
+    transition:color .2s ease;
+  }
+  nav.mainnav a:hover,nav.mainnav a.active{color:var(--cream);}
+  .nav-cta{
+    background:var(--cream);color:var(--bg)!important;
+    padding:.6rem 1.4rem;border-radius:100px;font-weight:700!important;
+  }
+  .nav-cta:hover{background:var(--accent);}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1100;}
+  .burger span{width:26px;height:2px;background:var(--cream);display:block;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;padding:11rem 3rem 4rem;
+    display:grid;grid-template-columns:1.1fr .9fr;gap:2rem;align-items:end;
+    border-bottom:1px solid var(--line);
+    min-height:92vh;
+  }
+  .hero-left h1{
+    font-size:clamp(3.2rem,8vw,7.2rem);
+    text-transform:uppercase;
+  }
+  .hero-left h1 .outline{
+    -webkit-text-stroke:2px var(--cream);color:transparent;
+  }
+  .hero-left p{
+    color:var(--cream-dim);max-width:420px;margin:1.6rem 0 2.2rem;font-size:1rem;
+  }
+  .hero-btnrow{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;
+    background:var(--accent);color:var(--bg);
+    padding:1rem 1.8rem;border-radius:100px;
+    font-family:'Space Mono',monospace;font-weight:700;font-size:.82rem;
+    text-transform:uppercase;letter-spacing:.05em;cursor:pointer;border:none;
+    transition:transform .3s ease, background .3s ease;
+  }
+  .btn:hover{transform:translateY(-3px);background:var(--accent2);}
+  .btn-ghost{
+    background:transparent;border:1px solid var(--line);color:var(--cream);
+  }
+  .btn-ghost:hover{border-color:var(--cream);background:transparent;transform:translateY(-3px);}
+  .hero-right{
+    position:relative;border-radius:18px;overflow:hidden;aspect-ratio:3/4;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.6);
+  }
+  .hero-right img{width:100%;height:100%;object-fit:cover;}
+  .hero-right .duotone{
+    position:absolute;inset:0;background:var(--accent);mix-blend-mode:color;opacity:.5;
+  }
+  .hero-right .chip{
+    position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;
+    background:rgba(18,17,16,.75);backdrop-filter:blur(6px);
+    border:1px solid var(--line);border-radius:12px;
+    padding:1rem 1.2rem;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .chip .mono{font-size:.7rem;color:var(--cream-dim);text-transform:uppercase;letter-spacing:.08em;}
+  .chip strong{font-family:'Unbounded',sans-serif;font-size:1.2rem;}
+
+  /* ---------- STATS ---------- */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-bottom:1px solid var(--line);
+  }
+  .stat{
+    padding:3.2rem 2rem;text-align:center;border-right:1px solid var(--line);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .num{
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:clamp(2.2rem,4vw,3.4rem);
+    color:var(--accent);
+  }
+  .stat .lbl{
+    font-family:'Space Mono',monospace;font-size:.7rem;text-transform:uppercase;
+    letter-spacing:.1em;color:var(--cream-dim);margin-top:.5rem;
+  }
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:6.5rem 3rem;}
+  .section-inner{max-width:1280px;margin:0 auto;}
+  .sec-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:2rem;margin-bottom:3.5rem;flex-wrap:wrap;
+  }
+  .sec-head h2{font-size:clamp(2.2rem,4.4vw,3.6rem);text-transform:uppercase;max-width:640px;}
+  .sec-head p{color:var(--cream-dim);max-width:320px;font-size:.92rem;}
+
+  /* ---------- BENTO SERVICES ---------- */
+  .bento{
+    display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:1.1rem;
+  }
+  .bento-card{
+    position:relative;border-radius:16px;overflow:hidden;
+    border:1px solid var(--line);background:var(--panel);
+    padding:1.6rem;display:flex;flex-direction:column;justify-content:flex-end;
+    transition:border-color .3s ease;
+  }
+  .bento-card:hover{border-color:var(--accent);}
+  .bento-card.img-card{padding:0;}
+  .bento-card.img-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .bento-card.img-card .overlay{
+    position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%, rgba(18,17,16,.92) 100%);
+  }
+  .bento-card.img-card .txt{position:relative;z-index:2;padding:1.6rem;}
+  .bento-card h3{font-size:1.3rem;text-transform:uppercase;margin-bottom:.4rem;}
+  .bento-card .pnum{font-family:'Space Mono',monospace;color:var(--accent);font-size:.78rem;margin-bottom:.8rem;display:block;}
+  .bento-card p{color:var(--cream-dim);font-size:.85rem;}
+  .b1{grid-column:span 2;grid-row:span 2;}
+  .b2{grid-column:span 2;}
+  .b3{grid-column:span 1;}
+  .b4{grid-column:span 1;}
+  .b5{grid-column:span 2;}
+
+  /* ---------- QUOTE / ABOUT TEASER ---------- */
+  .quote-band{
+    border-bottom:1px solid var(--line);
+    display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;
+  }
+  .quote-band .qimg{
+    border-radius:16px;overflow:hidden;aspect-ratio:4/3;position:relative;
+  }
+  .quote-band .qimg img{width:100%;height:100%;object-fit:cover;}
+  .quote-band blockquote{
+    font-family:'Unbounded',sans-serif;font-weight:600;
+    font-size:clamp(1.5rem,2.6vw,2.2rem);line-height:1.25;
+  }
+  .quote-band blockquote span{color:var(--accent);}
+  .quote-band .qcite{margin-top:1.6rem;color:var(--cream-dim);font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;}
+
+  /* ---------- GALLERY MASONRY ---------- */
+  .masonry{columns:4 240px;column-gap:1.1rem;}
+  .masonry figure{
+    margin:0 0 1.1rem;border-radius:14px;overflow:hidden;break-inside:avoid;
+    border:1px solid var(--line);position:relative;
+  }
+  .masonry img{width:100%;display:block;}
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{
+    background:var(--accent);color:var(--bg);text-align:center;padding:6rem 2rem;
+  }
+  .cta-band .tag{color:var(--bg);}
+  .cta-band .tag::before{background:var(--bg);}
+  .cta-band h2{font-size:clamp(2.4rem,5vw,4.2rem);text-transform:uppercase;max-width:800px;margin:0 auto 2rem;}
+  .cta-band .btn{background:var(--bg);color:var(--cream);}
+  .cta-band .btn:hover{background:var(--bg2);}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:5rem 3rem 2rem;}
+  .footer-top{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap;
+    border-bottom:1px solid var(--line);padding-bottom:3rem;margin-bottom:2rem;
+  }
+  .footer-top h2{font-size:clamp(2.4rem,7vw,6rem);text-transform:uppercase;}
+  .footer-cols{display:flex;gap:4rem;flex-wrap:wrap;}
+  .footer-col .mono{color:var(--cream-dim);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem;display:block;}
+  .footer-col a,.footer-col p{display:block;color:var(--cream-dim);font-size:.9rem;margin-bottom:.6rem;}
+  .footer-col a:hover{color:var(--accent);}
+  .footer-bottom{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+    font-family:'Space Mono',monospace;font-size:.75rem;color:var(--cream-dim);
+  }
+  .footer-bottom a{color:var(--cream-dim);}
+  .footer-bottom a:hover{color:var(--accent);}
+  .footer-legal{display:flex;gap:1.4rem;flex-wrap:wrap;}
+
+  /* ---------- PAGE HERO ---------- */
+  .page-hero{padding:10.5rem 3rem 4rem;border-bottom:1px solid var(--line);}
+  .page-hero h1{font-size:clamp(2.6rem,6vw,4.6rem);text-transform:uppercase;max-width:900px;}
+
+  /* ---------- TEAM ---------- */
+  .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;}
+  .team-card{
+    border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--panel);
+  }
+  .team-card .timg{height:320px;overflow:hidden;position:relative;}
+  .team-card .timg img{width:100%;height:100%;object-fit:cover;}
+  .team-card .tbody{padding:1.8rem 2rem 2.2rem;}
+  .team-card h4{font-size:1.5rem;text-transform:uppercase;margin-bottom:.3rem;}
+  .team-role{font-family:'Space Mono',monospace;color:var(--accent);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:1rem;}
+  .team-card p{color:var(--cream-dim);font-size:.9rem;margin-bottom:1rem;}
+  .team-card ul{padding-left:1.1rem;}
+  .team-card li{color:var(--cream-dim);font-size:.84rem;margin-bottom:.4rem;}
+
+  /* ---------- VALUES ---------- */
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:4rem;}
+  .value-item{border:1px solid var(--line);border-radius:16px;padding:2rem;}
+  .value-item .num{font-family:'Unbounded',sans-serif;color:var(--accent);font-size:1.8rem;font-weight:800;}
+  .value-item h4{margin:.7rem 0 .6rem;font-size:1.15rem;text-transform:uppercase;}
+  .value-item p{color:var(--cream-dim);font-size:.87rem;}
+
+  /* ---------- LEISTUNGEN / PRICE MENU ---------- */
+  .price-group{margin-bottom:3.4rem;}
+  .price-group-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--line);padding-bottom:.9rem;margin-bottom:1.4rem;
+  }
+  .price-group-head h3{font-size:1.6rem;text-transform:uppercase;}
+  .price-group-head span{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;}
+  .price-row{
+    display:flex;align-items:baseline;gap:1rem;padding:1.1rem 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .price-row:last-child{border-bottom:none;}
+  .price-row .pname{font-weight:600;font-size:1.02rem;}
+  .price-row .pdesc{color:var(--cream-dim);font-size:.82rem;margin-top:.2rem;}
+  .price-row .dots{flex:1;border-bottom:1px dotted var(--line);transform:translateY(-.4rem);}
+  .price-row .pval{font-family:'Space Mono',monospace;font-weight:700;color:var(--accent);font-size:1.05rem;white-space:nowrap;}
+  .price-note{color:var(--cream-dim);font-size:.85rem;text-align:center;margin-top:1rem;}
+
+  /* ---------- SALON STRIP ---------- */
+  .salon-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:4.5rem;}
+  .strip-item{border:1px solid var(--line);border-radius:16px;padding:2rem;text-align:center;}
+  .strip-item .ic{
+    width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--bg);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;
+    font-family:'Unbounded',sans-serif;font-weight:800;
+  }
+  .strip-item h4{text-transform:uppercase;margin-bottom:.5rem;font-size:1.05rem;}
+  .strip-item p{color:var(--cream-dim);font-size:.87rem;}
+
+  /* ---------- LEGAL ---------- */
+  .legal-body{max-width:760px;margin:0 auto;padding:0 3rem 6rem;}
+  .legal-body h2{font-size:1.4rem;margin:2.4rem 0 .9rem;text-transform:uppercase;}
+  .legal-body h2:first-child{margin-top:0;}
+  .legal-body h3{font-size:1rem;margin:1.5rem 0 .6rem;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;}
+  .legal-body p,.legal-body li{color:var(--cream-dim);font-size:.95rem;margin-bottom:.9rem;}
+  .legal-body ul{padding-left:1.3rem;margin-bottom:1rem;}
+  .legal-body a.inline-link{color:var(--accent);text-decoration:underline;}
+  .legal-note{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:1.3rem 1.5rem;font-size:.85rem;color:var(--cream-dim);margin-bottom:2rem;
+  }
+
+  /* ---------- PAGES SWITCH ---------- */
+  .page{display:none;}
+  .page.active{display:block;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:1080px){
+    .hero{grid-template-columns:1fr;}
+    .hero-right{aspect-ratio:16/9;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .stat:nth-child(2){border-right:none;}
+    .bento{grid-template-columns:repeat(2,1fr);}
+    .b1,.b2,.b3,.b4,.b5{grid-column:span 1;grid-row:span 1;}
+    .quote-band{grid-template-columns:1fr;}
+    .team-grid{grid-template-columns:1fr;}
+    .values{grid-template-columns:1fr;}
+    .salon-strip{grid-template-columns:1fr;}
+  }
+  @media(max-width:768px){
+    .marquee{margin-top:0;}
+    header{top:26px;padding:1.1rem 1.5rem;}
+    nav.mainnav{
+      position:fixed;top:0;right:0;height:100vh;width:80%;max-width:320px;
+      background:var(--bg2);flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:2rem;padding:3rem;transform:translateX(100%);transition:transform .4s ease;
+      border-left:1px solid var(--line);
+    }
+    nav.mainnav.open{transform:translateX(0);}
+    .burger{display:flex;}
+    section{padding:4rem 1.5rem;}
+    .hero{padding:9rem 1.5rem 3rem;}
+    .page-hero{padding:8.5rem 1.5rem 3rem;}
+    .masonry{columns:2 160px;}
+    .legal-body{padding:0 1.5rem 4rem;}
+    .footer-cols{gap:2.4rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="marquee"><div class="marquee-track">
+  <span>BROWS</span><span>★</span><span>LASHES</span><span>★</span><span>FACIALS</span><span>★</span><span>TERMIN ONLINE</span><span>★</span><span>FALKENBERG</span><span>★</span>
+  <span>BROWS</span><span>★</span><span>LASHES</span><span>★</span><span>FACIALS</span><span>★</span><span>TERMIN ONLINE</span><span>★</span><span>FALKENBERG</span><span>★</span>
+</div></div>
+
+<header id="siteHeader">
+  <div class="logo" onclick="showPage('home')">GLOSS<span>/</span>HAUS</div>
+  <nav class="mainnav" id="mainNav">
+    <a href="../" style="opacity:.75;">← Portfolio</a>
+    <a onclick="showPage('home')" data-page="home">Home</a>
+    <a onclick="showPage('ueberuns')" data-page="ueberuns">Über uns</a>
+    <a onclick="showPage('leistungen')" data-page="leistungen">Leistungen</a>
+    <a onclick="showPage('studio')" data-page="studio">Studio</a>
+    <a class="nav-cta" onclick="showPage('home');setTimeout(()=>document.getElementById('kontakt').scrollIntoView({behavior:'smooth'}),50)">Termin buchen</a>
+  </nav>
+  <div class="burger" id="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-left">
+      <span class="tag">Kosmetikstudio · Falkenberg</span>
+      <h1>BEAUTY<br>MIT<br><span class="outline">HALTUNG.</span></h1>
+      <p>Brows, Lashes &amp; Facials für alle, die auf ihre eigene Art strahlen wollen. Kein Filter nötig — nur gutes Handwerk.</p>
+      <div class="hero-btnrow">
+        <a class="btn" onclick="showPage('leistungen')">Preise ansehen</a>
+        <a class="btn btn-ghost" onclick="showPage('studio')">Studio entdecken</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.pexels.com/photos/36170536/pexels-photo-36170536/free-photo-of-portrait-of-a-woman-in-front-of-monstera-plant.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="GLOSS/HAUS Kundin mit gepflegter Haut">
+      <div class="duotone"></div>
+      <div class="chip">
+        <div><span class="mono">Bewertung</span><br><strong>4.9 / 5.0</strong></div>
+        <div><span class="mono">Google</span><br><strong>★★★★★</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><div class="num">6+</div><div class="lbl">Jahre Erfahrung</div></div>
+    <div class="stat"><div class="num">1.900+</div><div class="lbl">Behandlungen</div></div>
+    <div class="stat"><div class="num">4.9</div><div class="lbl">Ø Bewertung</div></div>
+    <div class="stat"><div class="num">2</div><div class="lbl">Spezialistinnen</div></div>
+  </div>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head">
+        <h2>Was wir machen</h2>
+        <p>Drei Kernbereiche, ein Ziel: Ergebnisse, die man dir ansieht — nicht anmerkt.</p>
+      </div>
+      <div class="bento">
+        <div class="bento-card img-card b1">
+          <img src="https://images.unsplash.com/photo-1519415387722-a1c3bbef716c?auto=format&fit=crop&w=900&q=80" alt="Brow Styling">
+          <div class="overlay"></div>
+          <div class="txt">
+            <span class="pnum">01 — BROWS</span>
+            <h3>Brow Styling</h3>
+            <p>Zupfen, Henna, Lamination. Form, die zu deinem Gesicht passt.</p>
+          </div>
+        </div>
+        <div class="bento-card img-card b2">
+          <img src="https://images.unsplash.com/photo-1592999177797-0f96d5617ed3?auto=format&fit=crop&w=900&q=80" alt="Wimpernlifting">
+          <div class="overlay"></div>
+          <div class="txt">
+            <span class="pnum">02 — LASHES</span>
+            <h3>Wimpernlifting</h3>
+            <p>Offener Blick, ganz ohne Extensions — bis zu 8 Wochen.</p>
+          </div>
+        </div>
+        <div class="bento-card b3">
+          <span class="pnum">03</span>
+          <h3>Facials</h3>
+          <p>Tiefenreinigung &amp; Pflege für strahlende Haut.</p>
+        </div>
+        <div class="bento-card b4">
+          <span class="pnum">04</span>
+          <h3>Make-up</h3>
+          <p>Von Tages-Look bis Event.</p>
+        </div>
+        <div class="bento-card img-card b5">
+          <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=900&q=80" alt="Gesichtspflege">
+          <div class="overlay"></div>
+          <div class="txt">
+            <span class="pnum">05 — FACIAL</span>
+            <h3>Anti-Aging Ritual</h3>
+            <p>Straffende Massage, hochwertige Wirkstoffe.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-band">
+    <div class="qimg">
+      <img src="https://images.unsplash.com/photo-1740350631565-6a5081a2f841?auto=format&fit=crop&w=900&q=80" alt="Ruhiger Moment im Studio">
+    </div>
+    <div>
+      <blockquote>„Wir behandeln keine Trends. Wir behandeln <span>dich.</span>"</blockquote>
+      <div class="qcite">— Lena Hofmann, Gründerin GLOSS/HAUS</div>
+      <div class="hero-btnrow" style="margin-top:2rem;">
+        <a class="btn btn-ghost" onclick="showPage('ueberuns')">Team kennenlernen →</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head">
+        <h2>Aus dem Studio</h2>
+        <p>Ein Blick hinter die Kulissen — echte Momente, kein Stockfoto-Gefühl.</p>
+      </div>
+      <div class="masonry">
+        <figure><img src="https://images.unsplash.com/photo-1493673272479-a20888bcee10?auto=format&fit=crop&w=600&q=80" alt="Monstera im Studio"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?auto=format&fit=crop&w=600&q=80" alt="Studio Innenansicht"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80" alt="Kosmetik Produkte"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=600&q=80" alt="Studio Detail"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=600&q=80" alt="Kosmetikpinsel"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" alt="Pflegeprodukte"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="kontakt">
+    <span class="tag">Termin buchen</span>
+    <h2>Bereit für deinen Glow-up?</h2>
+    <a class="btn" href="tel:+498724123456">Anrufen: +49 8724 123456</a>
+  </section>
+
+</div>
+
+<!-- ============ ÜBER UNS ============ -->
+<div class="page" id="page-ueberuns">
+  <div class="page-hero">
+    <span class="tag">Über uns</span>
+    <h1>Zwei Frauen,<br>ein Handwerk.</h1>
+  </div>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head">
+        <h2>Unser Team</h2>
+        <p>Ausbildung, Erfahrung, ständige Weiterbildung — das steckt hinter jeder Behandlung.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="timg"><img src="https://images.unsplash.com/photo-1761718210055-e83ca7e2c9ad?auto=format&fit=crop&w=700&q=80" alt="Lena Hofmann bei der Arbeit"></div>
+          <div class="tbody">
+            <h4>Lena Hofmann</h4>
+            <span class="team-role">Gründerin &amp; Kosmetikerin</span>
+            <p>Lena hat ihre Ausbildung zur staatlich geprüften Kosmetikerin in München abgeschlossen und danach sieben Jahre in Studios in Salzburg und Regensburg gearbeitet, bevor sie 2021 GLOSS/HAUS eröffnet hat.</p>
+            <ul>
+              <li>Zertifizierte Fachkraft für medizinische Gesichtsbehandlungen (IHK)</li>
+              <li>Fortbildung Anti-Aging- &amp; Wirkstoffkosmetik, Wien 2022</li>
+              <li>Über 1.200 Stammkundinnen seit der Eröffnung</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="timg"><img src="https://images.unsplash.com/photo-1761718209852-54ca4210183e?auto=format&fit=crop&w=700&q=80" alt="Marie Lindner bei der Arbeit"></div>
+          <div class="tbody">
+            <h4>Marie Lindner</h4>
+            <span class="team-role">Kosmetikerin &amp; Lash-Spezialistin</span>
+            <p>Marie ist seit 2023 im Team und hat sich auf Augenbrauen- und Wimpernstyling spezialisiert. Ausbildung in Nürnberg, ergänzt durch zahlreiche internationale Zertifikate.</p>
+            <ul>
+              <li>Zertifizierte Wimpernlifting- &amp; Browlamination-Spezialistin</li>
+              <li>Diplom Permanent Make-up, Nürnberg 2023</li>
+              <li>Workshops zu Brow-Trends in Berlin &amp; Mailand</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="values">
+        <div class="value-item"><span class="num">01</span><h4>Ehrliche Beratung</h4><p>Kein Upselling — nur, was wirklich zu deiner Haut passt.</p></div>
+        <div class="value-item"><span class="num">02</span><h4>Sichtbares Ergebnis</h4><p>Wir arbeiten für den Moment danach, nicht fürs Foto davor.</p></div>
+        <div class="value-item"><span class="num">03</span><h4>Ständiges Lernen</h4><p>Neue Techniken, laufend geprüft, bevor sie bei dir landen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="tag">Wir freuen uns auf dich</span>
+    <h2>Lern uns beim ersten Termin kennen</h2>
+    <a class="btn" href="tel:+498724123456">Termin vereinbaren</a>
+  </section>
+</div>
+
+<!-- ============ LEISTUNGEN ============ -->
+<div class="page" id="page-leistungen">
+  <div class="page-hero">
+    <span class="tag">Preise &amp; Leistungen</span>
+    <h1>Klar kalkuliert,<br>keine Überraschungen.</h1>
+  </div>
+
+  <section>
+    <div class="section-inner" style="max-width:820px;">
+
+      <div class="price-group">
+        <div class="price-group-head"><h3>Augenbrauen</h3><span>Brows</span></div>
+        <div class="price-row"><div><div class="pname">Brow Styling</div><div class="pdesc">Zupfen, Form &amp; Färben nach deinem Gesichtstyp</div></div><div class="dots"></div><div class="pval">ab 28 €</div></div>
+        <div class="price-row"><div><div class="pname">Browlamination</div><div class="pdesc">Volle, gebürstete Brauen — hält bis zu 6 Wochen</div></div><div class="dots"></div><div class="pval">45 €</div></div>
+        <div class="price-row"><div><div class="pname">Henna Brows</div><div class="pdesc">Natürliche Farbtiefe, inkl. Styling</div></div><div class="dots"></div><div class="pval">38 €</div></div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head"><h3>Wimpern</h3><span>Lashes</span></div>
+        <div class="price-row"><div><div class="pname">Wimpernlifting</div><div class="pdesc">Geschwungene Wimpern ohne Extensions</div></div><div class="dots"></div><div class="pval">55 €</div></div>
+        <div class="price-row"><div><div class="pname">Wimpernfärben</div><div class="pdesc">Intensive Farbe für einen wachen Blick</div></div><div class="dots"></div><div class="pval">22 €</div></div>
+        <div class="price-row"><div><div class="pname">Lifting + Färben Kombi</div><div class="pdesc">Unsere beliebteste Kombination</div></div><div class="dots"></div><div class="pval">68 €</div></div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head"><h3>Gesichtspflege</h3><span>Facial</span></div>
+        <div class="price-row"><div><div class="pname">Klassische Gesichtsbehandlung</div><div class="pdesc">Reinigung, Peeling, Maske — 60 Min.</div></div><div class="dots"></div><div class="pval">65 €</div></div>
+        <div class="price-row"><div><div class="pname">Tiefenreinigung</div><div class="pdesc">Intensive Reinigung inkl. Ausreinigung</div></div><div class="dots"></div><div class="pval">78 €</div></div>
+        <div class="price-row"><div><div class="pname">Anti-Aging Behandlung</div><div class="pdesc">Straffende Massage &amp; Wirkstoffmaske</div></div><div class="dots"></div><div class="pval">89 €</div></div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head"><h3>Make-up</h3><span>Extras</span></div>
+        <div class="price-row"><div><div class="pname">Tages-Make-up</div><div class="pdesc">Natürlicher Look für Alltag oder Shooting</div></div><div class="dots"></div><div class="pval">40 €</div></div>
+        <div class="price-row"><div><div class="pname">Braut- &amp; Event-Make-up</div><div class="pdesc">Inklusive Beratung und Probe-Termin</div></div><div class="dots"></div><div class="pval">ab 120 €</div></div>
+      </div>
+
+      <p class="price-note">Alle Preise inkl. MwSt. Endpreise können je nach Haar- und Hautbeschaffenheit leicht variieren.</p>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="tag">Bereit?</span>
+    <h2>Wähl deine Behandlung</h2>
+    <a class="btn" href="tel:+498724123456">Termin buchen</a>
+  </section>
+</div>
+
+<!-- ============ STUDIO ============ -->
+<div class="page" id="page-studio">
+  <div class="page-hero">
+    <span class="tag">So sieht's bei uns aus</span>
+    <h1>Ein Blick<br>ins Studio.</h1>
+  </div>
+
+  <section>
+    <div class="section-inner">
+      <p style="color:var(--cream-dim);max-width:640px;margin-bottom:3.5rem;">Helle Räume, viel Grün, kein Klinik-Gefühl. Ein Ort, an dem es leichtfällt, für eine Stunde innezuhalten.</p>
+
+      <div class="masonry">
+        <figure><img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?auto=format&fit=crop&w=600&q=80" alt="Studio 1"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=600&q=80" alt="Studio 2"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1493673272479-a20888bcee10?auto=format&fit=crop&w=600&q=80" alt="Pflanzen im Studio"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1633681926035-ec1ac984418a?auto=format&fit=crop&w=600&q=80" alt="Studio 3"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80" alt="Kosmetikprodukte"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" alt="Details"></figure>
+      </div>
+
+      <div class="salon-strip">
+        <div class="strip-item"><div class="ic">1</div><h4>Privater Raum</h4><p>Wir arbeiten in Ruhe, ohne Hektik, ohne fremde Blicke.</p></div>
+        <div class="strip-item"><div class="ic">2</div><h4>Natürliches Licht</h4><p>Große Fenster — du siehst das Ergebnis genau.</p></div>
+        <div class="strip-item"><div class="ic">3</div><h4>Ruhezone</h4><p>Kurz zur Ruhe kommen, vor oder nach dem Termin.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="tag">Besuch uns</span>
+    <h2>Erlebe das Studio live</h2>
+    <a class="btn" href="tel:+498724123456">Termin buchen</a>
+  </section>
+</div>
+
+<!-- ============ IMPRESSUM ============ -->
+<div class="page" id="page-impressum">
+  <div class="page-hero"><span class="tag">Rechtliches</span><h1>Impressum</h1></div>
+  <section style="padding-top:4rem;">
+    <div class="legal-body">
+      <div class="legal-note">Name, Adresse, Telefonnummer und USt-IdNr. sind hier Platzhalter-Beispiele für dieses Portfolio-Demo. Bitte vor echter Veröffentlichung durch reale Geschäftsdaten ersetzen.</div>
+
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>GLOSS/HAUS Kosmetikstudio<br>Lena Hofmann<br>Lindenweg 9<br>84326 Falkenberg<br>Deutschland</p>
+
+      <h3>Kontakt</h3>
+      <p>Telefon: <a class="inline-link" href="tel:+498724123456">+49 8724 123456</a><br>E-Mail: <a class="inline-link" href="mailto:kontakt@glosshaus-beauty.de">kontakt@glosshaus-beauty.de</a></p>
+
+      <h3>Umsatzsteuer-ID</h3>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE324567891</p>
+
+      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+      <p>Lena Hofmann, Anschrift wie oben.</p>
+
+      <h3>Streitschlichtung</h3>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="inline-link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Unsere E-Mail-Adresse findest du oben. Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+      <h3>Haftung für Inhalte</h3>
+      <p>Als Diensteanbieterin sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieterin jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+      <h3>Haftung für Links</h3>
+      <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+      <h3>Urheberrecht</h3>
+      <p>Die durch die Betreiberin erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DATENSCHUTZ ============ -->
+<div class="page" id="page-datenschutz">
+  <div class="page-hero"><span class="tag">Rechtliches</span><h1>Datenschutz</h1></div>
+  <section style="padding-top:4rem;">
+    <div class="legal-body">
+      <div class="legal-note">Diese Vorlage deckt gängige Punkte für ein kleines Kosmetikstudio mit Kontaktformular und Google Analytics ab. Bitte fachlich prüfen lassen, bevor sie live geht.</div>
+
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>GLOSS/HAUS Kosmetikstudio<br>Lena Hofmann<br>Lindenweg 9, 84326 Falkenberg<br>Telefon: +49 8724 123456<br>E-Mail: kontakt@glosshaus-beauty.de</p>
+
+      <h2>2. Allgemeines zur Datenverarbeitung</h2>
+      <p>Wir verarbeiten personenbezogene Daten unserer Nutzer:innen grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie unserer Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt nach Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).</p>
+
+      <h2>3. Hosting</h2>
+      <p>Diese Website wird bei einem externen Hosting-Anbieter gehostet. Personenbezogene Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Der Hoster verarbeitet Daten in unserem Auftrag gemäß Art. 28 DSGVO.</p>
+
+      <h2>4. Kontaktaufnahme</h2>
+      <p>Wenn du uns per Telefon, E-Mail oder Kontaktformular kontaktierst, werden deine Angaben zur Bearbeitung deiner Anfrage gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO. Die Daten werden gelöscht, sobald sie nicht mehr erforderlich sind.</p>
+
+      <h2>5. Terminbuchung</h2>
+      <p>Bei einer Terminanfrage verarbeiten wir die mitgeteilten Daten (Name, Kontaktdaten, gewünschte Behandlung, Terminwunsch) zur Vorbereitung und Durchführung des Behandlungsvertrags gemäß Art. 6 Abs. 1 lit. b DSGVO.</p>
+
+      <h2>6. Google Analytics</h2>
+      <p>Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google"). Google Analytics verwendet Cookies bzw. vergleichbare Technologien, die eine Analyse der Benutzung der Website ermöglichen.</p>
+      <p>Die erzeugten Informationen (z. B. Zugriffszeit, Ort des Zugriffs, Häufigkeit des Seitenbesuchs, gekürzte IP-Adresse) werden an Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert, sodass deine IP-Adresse vor der Übertragung innerhalb der EU/EWR gekürzt wird.</p>
+      <p>Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die du über unser Cookie-Banner erteilen oder ablehnen kannst. Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+      <p>Google verarbeitet Daten auch in den USA; hierfür bestehen Standardvertragsklauseln der EU-Kommission als Garantie für ein angemessenes Datenschutzniveau. Weitere Infos: <a class="inline-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.</p>
+      <p>Du kannst die Erfassung verhindern, indem du das Browser-Add-on installierst: <a class="inline-link" href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h2>7. Cookies</h2>
+      <p>Unsere Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, alle anderen (z. B. Google Analytics) nur mit deiner Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO.</p>
+
+      <h2>8. Deine Rechte</h2>
+      <ul>
+        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
+        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
+        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
+        <li>Recht auf Widerruf erteilter Einwilligungen</li>
+      </ul>
+      <p>Zudem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, z. B. beim Bayerischen Landesamt für Datenschutzaufsicht.</p>
+
+      <h2>9. Änderungen dieser Datenschutzerklärung</h2>
+      <p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht. Stand: 2026.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <h2>Let's<br>Glow.</h2>
+    <a class="btn" href="tel:+498724123456">Termin buchen</a>
+  </div>
+  <div class="footer-cols">
+    <div class="footer-col">
+      <span class="mono">Kontakt</span>
+      <a href="tel:+498724123456">+49 8724 123456</a>
+      <a href="mailto:kontakt@glosshaus-beauty.de">kontakt@glosshaus-beauty.de</a>
+      <p>Lindenweg 9, 84326 Falkenberg</p>
+    </div>
+    <div class="footer-col">
+      <span class="mono">Seite</span>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('ueberuns')">Über uns</a>
+      <a onclick="showPage('leistungen')">Leistungen</a>
+      <a onclick="showPage('studio')">Studio</a>
+    </div>
+    <div class="footer-col">
+      <span class="mono">Social</span>
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 GLOSS/HAUS Kosmetikstudio</span>
+    <div class="footer-legal">
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY>40);
+  });
+  function toggleNav(){document.getElementById('mainNav').classList.toggle('open');}
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    document.querySelectorAll('nav.mainnav a[data-page]').forEach(a=>{
+      a.classList.toggle('active', a.dataset.page===name);
+    });
+    document.getElementById('mainNav').classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+</script>
+
+</body>
+</html>

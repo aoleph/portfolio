@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Women Zone von Adam Olendzki Photographer: exklusive Frauenfotografie – Portrait, Fashion, Lifestyle, Sensual und Sedcards im Landkreis Landshut.">
+  <title>Women Zone | Adam Olendzki Photographer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;1,300&family=Jost:ital,wght@0,300;0,400;1,300&family=Oswald:wght@100;200;300;400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #f7f7f5; color: #242422; font-family: 'Inter', sans-serif; font-weight: 300; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+
+    /* HEADER */
+    header { position: fixed; inset: 0 0 auto; z-index: 10; min-height: 78px; display: flex; align-items: center; justify-content: space-between; padding: 22px 42px; background: rgba(20,20,18,.92); backdrop-filter: blur(10px); color: #fff; }
+    .logo { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 300; letter-spacing: 1.6px; white-space: nowrap; transition: color .35s ease, letter-spacing .35s ease; }
+    .logo:hover { color: #d4a820; letter-spacing: 2.4px; }
+    nav ul { display: flex; gap: 26px; align-items: center; list-style: none; padding: 0; margin: 0; }
+    nav a { font-family: 'Oswald', sans-serif; font-size: 21.6px; font-weight: 100; letter-spacing: 1.2px; text-transform: lowercase; cursor: pointer; transition: color .3s ease; }
+    nav > ul > li > a:hover { color: #d4a820; }
+    .dropdown { position: relative; }
+    .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #141412; box-shadow: 0 8px 16px rgba(0,0,0,.65); padding: 15px 0; min-width: 320px; z-index: 100; border: 1px solid #262624; }
+    .dropdown-menu li a { display: block; padding: 10px 25px; font-family: 'Jost', sans-serif; font-size: 20px; font-weight: 200; letter-spacing: 2px; text-transform: lowercase; color: #bebebe; }
+    .dropdown-menu li a:hover { background: #222220; color: #fff; }
+    .dropdown:hover .dropdown-menu { display: block; }
+
+    /* HERO */
+    .hero { height: 100svh; min-height: 620px; position: relative; display: flex; align-items: flex-end; justify-content: flex-start; overflow: hidden; background: #141412; }
+    .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.15); will-change: transform; }
+    .hero-img-base { filter: brightness(.9); }
+    .hero-img-bright { display: none; }
+    .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.14), rgba(0,0,0,.6)); }
+    .hero-text { position: relative; z-index: 1; padding: 0 0 clamp(40px, 6vw, 70px) clamp(24px, 6vw, 90px); will-change: transform, opacity; }
+    .hero h1 { margin: 0; display: flex; flex-direction: column; }
+    .hero h1 span { color: #fff; font-family: 'Oswald', sans-serif; font-size: clamp(48px, 9vw, 128px); font-weight: 300; letter-spacing: .6em; opacity: 0; text-transform: uppercase; text-align: left; line-height: .95; transition: letter-spacing 1.3s cubic-bezier(.16,1,.3,1), opacity 1s ease; }
+    .hero h1 span:nth-child(2) { transition-delay: .15s; }
+    .hero.hero-title-visible h1 span { letter-spacing: 1px; opacity: 1; }
+    .hero-sub { margin: 22px 0 0; color: #d4a820; font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; }
+
+    /* INTRO (tekst z żywej strony) */
+    .intro { background: transparent; margin: 0; padding: 60px clamp(24px, 8vw, 120px) 0 24px; }
+    .intro-inner { max-width: 780px; margin: 0 0 -60px auto; background: #e8e8e6; padding: 44px 50px; position: relative; z-index: 2; }
+    .intro h2 { margin: 0 0 18px; font-family: 'Oswald', sans-serif; font-size: clamp(28px, 3.2vw, 42px); font-weight: 300; color: #1a1a1a; }
+    .intro p { margin: 0 0 16px; font-family: 'Jost', sans-serif; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.75; color: #242422; }
+    .intro p:last-child { margin-bottom: 0; }
+
+    /* ZONE BLOCKS — 3 kontenery, klikalne tylko obraz i CTA */
+    .zone-block { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 7vw, 100px); align-items: center; max-width: 1300px; margin: 0 auto; padding: 60px; background: #141412; position: relative; }
+    .zone-block:not(.reverse):not(.compact) { transform: translateX(clamp(-50px, -3.2vw, -20px)); }
+    .zone-block.reverse { transform: translateX(clamp(20px, 3.2vw, 50px)); background: #e8e8e6; }
+    .zone-block.compact { transform: translateX(clamp(-50px, -3.2vw, -20px)); }
+    .zone-block.reverse .zone-img { order: 2; }
+    .zone-block.reverse .zone-copy { order: 1; }
+    .zone-block.reverse .zone-label { color: #b8860b; }
+    .zone-block.reverse .zone-copy h2 { color: #1a1a1a; }
+    .zone-block.reverse .zone-copy p { color: #4e4e49; }
+    .zone-block.reverse .zone-cta { color: #1a1a1a; }
+    .zone-block.reverse .zone-cta:hover { color: #b8860b; }
+    .zone-img { position: relative; overflow: hidden; background: #1c1c19; }
+    .zone-img a { display: block; }
+    .zone-img img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; filter: brightness(1); transition: transform .8s cubic-bezier(.2,.8,.2,1), filter .5s ease; }
+    .zone-img a:hover img { filter: brightness(.85); transform: scale(1.05); }
+    .zone-label { margin: 0 0 14px; color: #d4a820; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Oswald', sans-serif; }
+    .zone-copy h2 { margin: 0 0 22px; color: #f2f1ec; font-family: 'Oswald', sans-serif; font-size: clamp(30px, 3.4vw, 46px); font-weight: 300; line-height: 1.15; }
+    .zone-copy p { margin: 0 0 24px; max-width: 500px; color: #cfcdc4; font-family: 'Jost', sans-serif; font-size: clamp(16px, 1.35vw, 18px); line-height: 1.75; }
+    .zone-cta { display: inline-flex; align-items: center; gap: 10px; color: #d4a820; font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: color .3s ease; }
+    .zone-cta svg { width: 15px; height: 15px; transition: transform .3s ease; }
+    .zone-cta:hover { color: #fff; }
+    .zone-cta:hover svg { transform: translateX(6px); }
+
+    .zone-block.compact { padding: 42px 60px; }
+    .zone-block.compact .zone-img img { aspect-ratio: 16 / 10; }
+    .zone-block.compact .zone-copy h2 { font-size: clamp(24px, 2.6vw, 34px); margin-bottom: 14px; }
+    .zone-block.compact .zone-copy p { font-size: 15px; margin-bottom: 18px; }
+
+    /* QUOTE */
+    .quote { margin: 0; padding: 100px 28px 70px; background: transparent; text-align: center; }
+    .quote p { max-width: 900px; margin: 0 auto 18px; color: #242422; font-family: 'Jost', sans-serif; font-size: clamp(19px, 2.7vw, 35px); font-weight: 300; font-style: italic; line-height: 1.25; }
+    .quote span { color: #686862; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    /* SEDCARDS — ukryta sekcja, widoczna tylko pod #sedcards */
+    .sedcards-section { display: none; background: #141412; padding: 90px 60px; }
+    .sedcards-section:target { display: block; }
+    .sedcards-inner { max-width: 1300px; margin: 0 auto; }
+    .sedcards-back { display: inline-block; margin-bottom: 34px; color: #d4a820; font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: 1.5px; text-transform: lowercase; opacity: .85; transition: opacity .3s ease; }
+    .sedcards-back:hover { opacity: 1; }
+    .sedcards-label { margin: 0 0 14px; color: #d4a820; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Oswald', sans-serif; }
+    .sedcards-inner h2 { margin: 0 0 24px; color: #f2f1ec; font-family: 'Oswald', sans-serif; font-size: clamp(30px, 3.4vw, 46px); font-weight: 300; line-height: 1.15; }
+    .sedcards-inner p { margin: 0 0 20px; max-width: 700px; color: #cfcdc4; font-family: 'Jost', sans-serif; font-size: clamp(16px, 1.35vw, 18px); line-height: 1.75; }
+    .sedcards-cta-line { color: #d4a820; font-style: italic; }
+    .sedcards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 40px; }
+    .sedcards-grid img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; }
+
+    footer { padding: 38px; background: #1a1a18; color: #8f8f89; text-align: center; font-size: 12px; letter-spacing: 1px; }
+
+    @media (max-width: 760px) {
+      header { padding: 18px 20px; min-height: 64px; }
+      .logo { font-size: 17px; }
+      nav { display: none; }
+      .intro { padding: 40px 24px 0; }
+      .intro-inner { max-width: 100%; margin: 0 0 -30px; padding: 30px 24px; }
+      .zone-block, .zone-block.reverse, .zone-block.compact { grid-template-columns: 1fr; padding: 40px 24px; gap: 26px; transform: none; }
+      .zone-block.reverse .zone-img, .zone-block.reverse .zone-copy { order: initial; }
+      .zone-block.compact .zone-img img { aspect-ratio: 4 / 5; }
+      .sedcards-section { padding: 60px 24px; }
+      .sedcards-grid { grid-template-columns: repeat(2, 1fr); }
+      .quote { margin-top: 40px; padding: 72px 24px 40px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><a href="/">ADAM OLENDZKI PHOTOGRAPHER</a></div>
+    <nav>
+      <ul>
+        <li><a href="/#about">about</a></li>
+        <li class="dropdown">
+          <a>portfolio &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="/schwangerschaft/">schwangerschaftsfotografie</a></li>
+            <li><a href="/business/">business & image</a></li>
+            <li><a href="/family/">familie & kinder fotografie</a></li>
+            <li><a href="/couples/">paare / couples</a></li>
+            <li><a href="/women-zone/">women zone</a></li>
+          </ul>
+        </li>
+        <li><a href="/#projects">kooperation</a></li>
+        <li><a href="/blog/">blog</a></li>
+        <li><a href="/#contact">kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img class="hero-img-base" src="images/women-zone/women-zone-cover.webp" alt="Women Zone">
+      <img class="hero-img-bright" src="images/women-zone/women-zone-cover.webp" alt="" aria-hidden="true">
+      <div class="hero-text">
+        <h1><span>Women</span><span>zone</span></h1>
+        <p class="hero-sub">Adam Olendzki – Rottenburg an der Laaber &amp; Landshut</p>
+      </div>
+    </section>
+
+    <section class="intro">
+      <div class="intro-inner">
+        <h2>Dein Moment. Dein Stil.</h2>
+        <p>Dieser Teil meiner Website ist der Frauenfotografie gewidmet – ich bin mir sicher, dass Du hier etwas Inspirierendes und Faszinierendes finden wirst. Im Mittelpunkt steht die Schönheit, Feinheit und innere Stärke von Frauen, die sich auf ganz unterschiedliche Weise zeigen kann.</p>
+        <p>Ein Frauenfotoshooting ist eine wunderbare Gelegenheit, Deine Weiblichkeit hervorzuheben, neue Seiten an Dir zu entdecken und den Moment zu genießen, in dem Du im Mittelpunkt stehst.</p>
+      </div>
+    </section>
+
+    <div class="zone-block">
+      <figure class="zone-img"><a href="/fashion-portrait-lifestyle/"><img src="images/women-zone/women-zone-vertical-01.webp" alt="Portrait, Fashion & Lifestyle" loading="lazy"></a></figure>
+      <div class="zone-copy">
+        <div class="zone-label">Portrait/Fashion/Lifestyle</div>
+        <h2>Dein Stil. Dein Ausdruck. Dein Moment.</h2>
+        <p>Mal klar und reduziert, mal mit modischem Twist, mal einfach nur Du in Deinem Alltag. Diese Kategorie zeigt, wie viele Seiten ein Gesicht, eine Haltung, ein Moment haben kann – kein starres Konzept, sondern Bilder, die sich an Dich anpassen, nicht umgekehrt.</p>
+        <a class="zone-cta" href="/fashion-portrait-lifestyle/">Portfolio ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+
+    <div class="zone-block reverse">
+      <figure class="zone-img"><a href="/sensual/"><img src="images/women-zone/women-zone-vertical-02.webp" alt="Sensual" loading="lazy"></a></figure>
+      <div class="zone-copy">
+        <div class="zone-label">Sensual</div>
+        <h2>Weiblichkeit, wie Du sie fühlst</h2>
+        <p>Sensual-Fotografie ist kein lautes Statement, sondern ein leiser, sehr persönlicher Moment – für Dich allein. Es geht nicht darum, etwas zu zeigen, sondern darum, Dich selbst neu zu sehen: kraftvoll, weich, ungestellt. Diskret, respektvoll und ganz in Deinem Tempo.</p>
+        <a class="zone-cta" href="/sensual/">Portfolio ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+
+    <div class="zone-block compact">
+      <figure class="zone-img"><a href="#sedcards"><img src="images/women-zone/women-zone-vertical-03.webp" alt="Sedcards" loading="lazy"></a></figure>
+      <div class="zone-copy">
+        <div class="zone-label">Sedcards</div>
+        <h2>Fürs Business gemacht</h2>
+        <p>Klare, professionelle Aufnahmen für Modelmappen, Agenturen und Castings – mehrere Looks, unterschiedliche Perspektiven, sofort einsatzbereit.</p>
+        <a class="zone-cta" href="#sedcards">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+
+    <section id="sedcards" class="sedcards-section">
+      <div class="sedcards-inner">
+        <a href="/women-zone/" class="sedcards-back">&#8592; zurück zur women zone</a>
+        <div class="sedcards-label">Sedcards</div>
+        <h2>Sedcard &amp; Polaroids: Zeig Dich, wie Du bist</h2>
+        <p>Ein starkes Portfolio ist der Schlüssel im Modelbusiness. Neben kreativen Editorials und High-Fashion-Strecken sind es vor allem die unretuschierten, echten Aufnahmen, die über Jobs entscheiden.</p>
+        <p>In meinem Studio in Rottenburg an der Laaber kreieren wir professionelle Sedcard-Ergänzungen, ausdrucksstarke Model-Tests und cleane Polaroids (Digitals). Ich lege großen Wert auf ein präzises Lichtsetup, das Deine Facetten, Deine Körperlinien und Deine natürliche Ausstrahlung perfekt betont – ohne ablenkende Effekte oder schweren Retusche-Overkill.</p>
+        <p class="sedcards-cta-line">Lass uns Deine Modelmappe auf das nächste Level bringen.</p>
+        <div class="sedcards-grid">
+          <img src="images/sedcards/sedcards-vertical-01.webp" alt="Sedcard 1" loading="lazy">
+          <img src="images/sedcards/sedcards-vertical-02.webp" alt="Sedcard 2" loading="lazy">
+          <img src="images/sedcards/sedcards-vertical-03.webp" alt="Sedcard 3" loading="lazy">
+          <img src="images/sedcards/sedcards-vertical-04.webp" alt="Sedcard 4" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <section class="visually-hidden">
+      <h2>Frauenfotografie in der Region Landshut und München</h2>
+      <p>Als Fotograf für Frauenfotografie – Portrait, Fashion, Lifestyle, Sensual und Sedcards – bin ich vor allem in Rottenburg an der Laaber und im gesamten Landkreis Landshut unterwegs. Auch in Regensburg, Mainburg, Kelheim, Abensberg und München entstehen bei mir natürliche, moderne und stilvolle Frauenportraits, Beauty-Shootings und professionelle Sedcards für Modelmappen.</p>
+    </section>
+
+    <section class="quote"><p>“Elegance is the only beauty that never fades.”</p><span>Audrey Hepburn</span></section>
+  </main>
+
+  <footer id="kontakt" style="position: relative; display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap;">
+    <span>© 2026 Adam Olendzki. All rights reserved.</span>
+    <a href="datenschutz.html" style="color: #8f8f89;">Datenschutz</a>
+    <div style="position: absolute; right: 38px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 18px;">
+      <a href="https://www.instagram.com/aole.ph/" target="_blank" rel="noopener" aria-label="Instagram" style="color: #8f8f89; transition: color .3s ease;" onmouseover="this.style.color='#d4a820'" onmouseout="this.style.color='#8f8f89'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+      </a>
+      <a href="https://www.facebook.com/aolendzki.photographer" target="_blank" rel="noopener" aria-label="Facebook" style="color: #8f8f89; transition: color .3s ease;" onmouseover="this.style.color='#d4a820'" onmouseout="this.style.color='#8f8f89'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 8h-2a2 2 0 0 0-2 2v12M8 13h5"/><path d="M17 3H7a4 4 0 0 0-4 4v10a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4V7a4 4 0 0 0-4-4z"/></svg>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const hero = document.querySelector('.hero');
+      if (!hero) return;
+
+      const heroImgs = hero.querySelectorAll('img');
+      const heroText = hero.querySelector('.hero-text');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Literówka "magazynowa" na starcie
+      if (reduceMotion) {
+        hero.classList.add('hero-title-visible');
+      } else {
+        requestAnimationFrame(() => {
+          setTimeout(() => { hero.classList.add('hero-title-visible'); }, 200);
+        });
+      }
+
+      // Efekt zasłaniania coveru + zanikanie napisów przy skrolowaniu
+      if (!reduceMotion) {
+        let ticking = false;
+        function update() {
+          const rect = hero.getBoundingClientRect();
+          const scrolled = Math.max(0, -rect.top);
+          heroImgs.forEach(function (img) {
+            img.style.transform = 'scale(1.15) translateY(' + (scrolled * 0.32) + 'px)';
+          });
+          if (heroText) {
+            const fade = Math.max(0, 1 - scrolled / (hero.offsetHeight * 0.7));
+            heroText.style.opacity = fade;
+            heroText.style.transform = 'translateY(' + (scrolled * -0.18) + 'px)';
+          }
+          ticking = false;
+        }
+        function onScroll() {
+          if (!ticking) {
+            requestAnimationFrame(update);
+            ticking = true;
+          }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        update();
+      }
+    })();
+  </script>
+</body>
+</html>

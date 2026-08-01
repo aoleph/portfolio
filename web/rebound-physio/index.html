@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REBOUND Physiotherapie — Ingolstadt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1220;
+    --navy2:#141F33;
+    --cream:#F4F6F8;
+    --accent:#2F6FFF;
+    --lime:#C8FF4D;
+    --ink:#0B1220;
+    --ink-soft:#5B6472;
+    --line:rgba(244,246,248,.12);
+    --line-l:rgba(11,18,32,.12);
+    --white:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);color:var(--ink);
+    font-family:'Work Sans',sans-serif;font-weight:400;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit;}
+  img{display:block;max-width:100%;}
+  h1,h2,h3,h4{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.01em;line-height:1.1;color:var(--navy);}
+  .kicker{
+    font-family:'Oswald',sans-serif;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.1rem;
+  }
+  .kicker::before{content:'';width:22px;height:3px;background:var(--lime);}
+
+  header{
+    position:sticky;top:0;z-index:1000;background:rgba(11,18,32,.94);backdrop-filter:blur(10px);
+    display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;
+  }
+  .logo{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.3rem;color:var(--white);cursor:pointer;text-transform:uppercase;letter-spacing:.02em;}
+  .logo span{color:var(--lime);}
+  nav.mainnav{display:flex;gap:2.1rem;align-items:center;}
+  nav.mainnav a{font-size:.82rem;font-weight:600;color:rgba(244,246,248,.75);cursor:pointer;text-transform:uppercase;letter-spacing:.04em;position:relative;padding-bottom:3px;}
+  nav.mainnav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--lime);transition:width .25s ease;}
+  nav.mainnav a:hover::after,nav.mainnav a.active::after{width:100%;}
+  nav.mainnav a:hover,nav.mainnav a.active{color:var(--white);}
+  .nav-cta{background:var(--accent);color:var(--white)!important;padding:.65rem 1.4rem;border-radius:4px;font-weight:700!important;}
+  .nav-cta:hover{background:#1D56D6;}
+  .nav-cta::after{display:none;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .burger span{width:22px;height:2px;background:var(--white);display:block;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;padding:.95rem 1.9rem;border-radius:4px;
+    font-weight:700;font-size:.85rem;cursor:pointer;border:none;font-family:'Oswald',sans-serif;
+    text-transform:uppercase;letter-spacing:.04em;transition:transform .2s ease, background .2s ease;
+  }
+  .btn-solid{background:var(--accent);color:var(--white);}
+  .btn-solid:hover{background:#1D56D6;transform:translateY(-2px);}
+  .btn-lime{background:var(--lime);color:var(--navy);}
+  .btn-lime:hover{background:#B4EE2E;transform:translateY(-2px);}
+  .btn-outline{background:transparent;border:2px solid var(--white);color:var(--white);}
+  .btn-outline:hover{background:var(--white);color:var(--navy);}
+
+  /* ================= HERO (dark, diagonal) ================= */
+  .hero{
+    background:var(--navy);color:var(--white);position:relative;overflow:hidden;
+    padding:5rem 3rem 7rem;
+    clip-path:polygon(0 0,100% 0,100% 92%,0 100%);
+  }
+  .hero-grid{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;position:relative;z-index:2;}
+  .hero h1{font-size:clamp(2.4rem,5vw,4rem);color:var(--white);margin-bottom:1.3rem;}
+  .hero h1 span{color:var(--lime);}
+  .hero p{color:rgba(244,246,248,.78);max-width:460px;margin-bottom:2rem;font-size:1.02rem;font-family:'Work Sans',sans-serif;text-transform:none;letter-spacing:0;}
+  .hero-btnrow{display:flex;gap:1rem;flex-wrap:wrap;}
+  .hero-img{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:4/5;}
+  .hero-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(15%) contrast(1.05);}
+  .hero-img::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg, rgba(47,111,255,.35), transparent 55%);}
+  .hero-tagbox{
+    position:absolute;top:1.2rem;left:1.2rem;background:var(--lime);color:var(--navy);
+    padding:.6rem 1rem;border-radius:4px;font-family:'Oswald',sans-serif;font-weight:700;font-size:.85rem;text-transform:uppercase;
+  }
+
+  /* ================= STATS STRIP ================= */
+  .stats-strip{
+    background:var(--accent);color:var(--white);
+    display:grid;grid-template-columns:repeat(4,1fr);
+    margin-top:-3.2rem;position:relative;z-index:5;max-width:1220px;margin-left:auto;margin-right:auto;
+    border-radius:8px;box-shadow:0 30px 60px -25px rgba(11,18,32,.5);
+    overflow:hidden;
+  }
+  .stat{padding:2rem 1.2rem;text-align:center;border-right:1px solid rgba(255,255,255,.2);}
+  .stat:last-child{border-right:none;}
+  .stat .num{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.4vw,2.6rem);}
+  .stat .lbl{font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;opacity:.85;margin-top:.3rem;}
+
+  /* ================= SECTION GENERIC ================= */
+  section{padding:6.5rem 3rem;}
+  .section-inner{max-width:1220px;margin:0 auto;}
+  .sec-head{max-width:600px;margin-bottom:3.4rem;}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .sec-head h2{font-size:clamp(2rem,3.6vw,2.8rem);}
+  .sec-head p{color:var(--ink-soft);margin-top:1rem;font-family:'Work Sans',sans-serif;text-transform:none;letter-spacing:0;}
+
+  /* ================= SERVICES: numbered angled cards ================= */
+  .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;}
+  .service-card{
+    background:var(--navy);color:var(--white);border-radius:8px;padding:2.2rem 1.6rem;
+    position:relative;overflow:hidden;transition:transform .3s ease;
+  }
+  .service-card:hover{transform:translateY(-6px);}
+  .service-card::before{
+    content:'';position:absolute;top:0;right:0;width:70px;height:70px;
+    background:var(--lime);clip-path:polygon(100% 0,0 0,100% 100%);opacity:.9;
+  }
+  .service-card .snum{
+    font-family:'Oswald',sans-serif;font-weight:700;font-size:2.2rem;color:var(--accent);display:block;margin-bottom:1rem;
+  }
+  .service-card h3{font-size:1.15rem;color:var(--white);margin-bottom:.6rem;}
+  .service-card p{color:rgba(244,246,248,.7);font-size:.85rem;font-family:'Work Sans',sans-serif;text-transform:none;letter-spacing:0;}
+
+  /* ================= TEAM STRIP ================= */
+  .team-section{background:var(--navy);color:var(--white);}
+  .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;}
+  .team-card{background:var(--navy2);border-radius:10px;overflow:hidden;border:1px solid var(--line);}
+  .team-card .timg{height:280px;overflow:hidden;position:relative;}
+  .team-card .timg img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%);}
+  .team-card .tnum{
+    position:absolute;top:1rem;right:1rem;background:var(--lime);color:var(--navy);
+    width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:'Oswald',sans-serif;font-weight:700;
+  }
+  .team-card .tbody{padding:1.8rem 2rem 2.1rem;}
+  .team-card h4{color:var(--white);font-size:1.3rem;margin-bottom:.3rem;}
+  .team-role{font-family:'Work Sans',sans-serif;text-transform:none;letter-spacing:0;font-size:.85rem;color:var(--lime);font-weight:600;display:block;margin-bottom:1rem;}
+  .team-card p{color:rgba(244,246,248,.72);font-size:.9rem;margin-bottom:1rem;}
+  .team-card ul{padding-left:1.1rem;}
+  .team-card li{color:rgba(244,246,248,.72);font-size:.85rem;margin-bottom:.4rem;}
+
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:4rem;}
+  .value-item{background:var(--navy2);border:1px solid var(--line);border-radius:10px;padding:1.8rem;}
+  .value-item h4{color:var(--white);font-size:1.05rem;margin-bottom:.5rem;}
+  .value-item p{color:rgba(244,246,248,.72);font-size:.87rem;font-family:'Work Sans',sans-serif;text-transform:none;letter-spacing:0;}
+
+  /* ================= GALLERY ================= */
+  .grid-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;}
+  .grid-gallery figure{border-radius:8px;overflow:hidden;aspect-ratio:3/4;margin:0;position:relative;}
+  .grid-gallery img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;filter:grayscale(10%);}
+  .grid-gallery figure:hover img{transform:scale(1.06);}
+
+  /* ================= TESTIMONIAL (angled) ================= */
+  .testimonial{
+    background:var(--accent);color:var(--white);text-align:center;
+    clip-path:polygon(0 4%,100% 0,100% 96%,0 100%);
+  }
+  .testimonial-inner{max-width:740px;margin:0 auto;}
+  .testimonial blockquote{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(1.3rem,2.4vw,1.9rem);margin-bottom:1.3rem;line-height:1.35;text-transform:none;letter-spacing:0;}
+  .testimonial .cite{font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;opacity:.85;}
+
+  /* ================= CTA ================= */
+  .cta-band{background:var(--navy);color:var(--white);text-align:center;padding:5.5rem 2rem;}
+  .cta-band .kicker{color:var(--lime);}
+  .cta-band h2{color:var(--white);font-size:clamp(1.9rem,3.6vw,2.6rem);max-width:640px;margin:0 auto 2rem;}
+
+  /* ================= FOOTER ================= */
+  footer{background:var(--navy);color:var(--white);border-top:1px solid var(--line);padding:3.8rem 3rem 2rem;}
+  .footer-grid{max-width:1220px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:2.4rem;padding-bottom:2.4rem;border-bottom:1px solid var(--line);}
+  .footer-grid .logo{margin-bottom:1rem;}
+  .footer-grid p{color:rgba(244,246,248,.65);font-size:.88rem;max-width:260px;font-family:'Work Sans',sans-serif;}
+  .footer-col h4{font-family:'Oswald',sans-serif;font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--lime);margin-bottom:1rem;}
+  .footer-col a,.footer-col p{display:block;color:rgba(244,246,248,.68);font-size:.88rem;margin-bottom:.55rem;font-family:'Work Sans',sans-serif;}
+  .footer-col a:hover{color:var(--lime);}
+  .footer-bottom{max-width:1220px;margin:0 auto;padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.78rem;color:rgba(244,246,248,.6);font-family:'Work Sans',sans-serif;}
+  .footer-legal{display:flex;gap:1.4rem;flex-wrap:wrap;}
+  .footer-bottom a:hover{color:var(--lime);}
+
+  /* ================= PAGE HERO (subpages, light) ================= */
+  .page-hero{background:var(--navy);color:var(--white);padding:4.2rem 3rem 5.5rem;clip-path:polygon(0 0,100% 0,100% 90%,0 100%);}
+  .page-hero-inner{max-width:1220px;margin:0 auto;}
+  .page-hero h1{color:var(--white);font-size:clamp(2.2rem,4.8vw,3.2rem);max-width:760px;}
+  .page-hero .kicker{margin-bottom:1rem;}
+
+  /* ================= LEISTUNGEN ================= */
+  .info-note{background:var(--white);border:1px solid var(--line-l);border-left:4px solid var(--accent);border-radius:8px;padding:1.4rem 1.6rem;margin-bottom:3rem;font-size:.9rem;color:var(--ink-soft);}
+  .price-groups{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;}
+  .price-card{background:var(--white);border:1px solid var(--line-l);border-radius:10px;padding:1.8rem 2rem;}
+  .price-card-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:3px solid var(--accent);}
+  .price-card-head h3{font-size:1.25rem;}
+  .price-card-head span{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;font-family:'Oswald',sans-serif;}
+  .price-row{display:flex;align-items:baseline;gap:.8rem;padding:.9rem 0;border-bottom:1px solid var(--line-l);}
+  .price-row:last-child{border-bottom:none;}
+  .price-row .pname{font-weight:700;font-size:.94rem;}
+  .price-row .pdesc{color:var(--ink-soft);font-size:.8rem;margin-top:.15rem;}
+  .price-row .dots{flex:1;border-bottom:1px dotted var(--line-l);transform:translateY(-.4rem);}
+  .price-row .pval{font-family:'Oswald',sans-serif;font-weight:700;color:var(--navy);font-size:1rem;white-space:nowrap;}
+  .price-note{color:var(--ink-soft);font-size:.85rem;text-align:center;margin-top:2rem;font-family:'Work Sans',sans-serif;}
+
+  .salon-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:4.5rem;}
+  .strip-item{background:var(--white);border:1px solid var(--line-l);border-radius:10px;padding:1.8rem;border-top:3px solid var(--accent);}
+  .strip-item h4{font-size:1.05rem;margin-bottom:.5rem;}
+  .strip-item p{color:var(--ink-soft);font-size:.87rem;font-family:'Work Sans',sans-serif;}
+
+  /* ================= LEGAL ================= */
+  .legal-body{max-width:750px;margin:0 auto;padding:0 3rem 6rem;}
+  .legal-body h2{font-size:1.3rem;margin:2.3rem 0 .9rem;}
+  .legal-body h2:first-child{margin-top:0;}
+  .legal-body h3{font-family:'Oswald',sans-serif;font-size:.85rem;text-transform:uppercase;letter-spacing:.03em;margin:1.5rem 0 .6rem;color:var(--accent);}
+  .legal-body p,.legal-body li{color:var(--ink-soft);font-size:.95rem;margin-bottom:.9rem;font-family:'Work Sans',sans-serif;}
+  .legal-body ul{padding-left:1.3rem;margin-bottom:1rem;}
+  .legal-body a.inline-link{color:var(--accent);text-decoration:underline;}
+  .legal-note{background:var(--white);border:1px solid var(--line-l);border-left:4px solid var(--accent);border-radius:8px;padding:1.3rem 1.5rem;font-size:.85rem;color:var(--ink-soft);margin-bottom:2rem;font-family:'Work Sans',sans-serif;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  @media(max-width:980px){
+    .hero-grid{grid-template-columns:1fr;}
+    .stats-strip{grid-template-columns:repeat(2,1fr);margin-top:2rem;}
+    .stat:nth-child(2){border-right:none;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .team-grid{grid-template-columns:1fr;}
+    .values{grid-template-columns:1fr;}
+    .grid-gallery{grid-template-columns:repeat(2,1fr);}
+    .price-groups{grid-template-columns:1fr;}
+    .salon-strip{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:768px){
+    header{padding:1.1rem 1.5rem;}
+    nav.mainnav{
+      position:fixed;top:0;right:0;height:100vh;width:80%;max-width:300px;
+      background:var(--navy);flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:1.8rem;padding:3rem;transform:translateX(100%);transition:transform .35s ease;
+      border-left:1px solid var(--line);
+    }
+    nav.mainnav.open{transform:translateX(0);}
+    .burger{display:flex;}
+    section{padding:4rem 1.5rem;}
+    .hero{padding:3.5rem 1.5rem 5rem;}
+    .page-hero{padding:3.5rem 1.5rem 4.5rem;}
+    .services-grid{grid-template-columns:1fr;}
+    .grid-gallery{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .legal-body{padding:0 1.5rem 4rem;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo" onclick="showPage('home')">RE<span>BOUND</span></div>
+  <nav class="mainnav" id="mainNav">
+    <a href="../" style="opacity:.75;">← Portfolio</a>
+    <a onclick="showPage('home')" data-page="home">Home</a>
+    <a onclick="showPage('team')" data-page="team">Team</a>
+    <a onclick="showPage('leistungen')" data-page="leistungen">Leistungen</a>
+    <a onclick="showPage('praxis')" data-page="praxis">Praxis</a>
+    <a class="nav-cta" onclick="showPage('home');setTimeout(()=>document.getElementById('kontakt').scrollIntoView({behavior:'smooth'}),50)">Termin buchen</a>
+  </nav>
+  <div class="burger" id="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="kicker">Sportphysiotherapie · Ingolstadt</span>
+        <h1>Zurück auf<br>die <span>Bahn.</span></h1>
+        <p>Sportphysiotherapie und Reha für alle, die wieder voll durchstarten wollen — vom Wochenend-Läufer bis zum Wettkampfsportler.</p>
+        <div class="hero-btnrow">
+          <a class="btn btn-lime" href="tel:+498417789900">Termin anfragen</a>
+          <a class="btn btn-outline" onclick="showPage('leistungen')">Leistungen ansehen</a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="https://images.unsplash.com/photo-1776710669928-e49471c63af5?auto=format&fit=crop&w=1000&q=80" alt="Trainerin unterstützt Sportlerin bei Übung mit Widerstandsband">
+        <div class="hero-tagbox">Return to Play</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat"><div class="num">10+</div><div class="lbl">Jahre Erfahrung</div></div>
+    <div class="stat"><div class="num">500+</div><div class="lbl">Sportler:innen betreut</div></div>
+    <div class="stat"><div class="num">2</div><div class="lbl">Spezialist:innen</div></div>
+    <div class="stat"><div class="num">Alle Kassen</div><div class="lbl">+ Privatzahler</div></div>
+  </div>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Angebot</span>
+        <h2>Unsere Disziplinen</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card"><span class="snum">01</span><h3>Sportreha</h3><p>Strukturierter Wiederaufbau nach Verletzungen, abgestimmt auf deine Sportart.</p></div>
+        <div class="service-card"><span class="snum">02</span><h3>Manuelle Therapie</h3><p>Gezielte Handgriffe zur Behandlung von Gelenk- und Muskelfunktionsstörungen.</p></div>
+        <div class="service-card"><span class="snum">03</span><h3>Taping</h3><p>Kinesiologisches Tape zur Unterstützung und Entlastung im Training und Alltag.</p></div>
+        <div class="service-card"><span class="snum">04</span><h3>Krankengymnastik</h3><p>Gezielte Übungen zur Mobilisation und Kräftigung — individuell abgestimmt.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="team-section">
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Unser Team</span>
+        <h2>Performance-Team</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="timg">
+            <img src="https://images.unsplash.com/photo-1552226351-1ac7863af926?auto=format&fit=crop&w=700&q=80" alt="Max Brunner bei der Behandlung">
+            <div class="tnum">01</div>
+          </div>
+          <div class="tbody">
+            <h4>Max Brunner</h4>
+            <span class="team-role">Praxisinhaber · Sportphysiotherapeut</span>
+            <p>Max hat seine Ausbildung 2013 in München abgeschlossen und danach mehrere Jahre Amateur- und Halbprofi-Mannschaften in Bayern betreut, bevor er 2020 REBOUND gegründet hat.</p>
+            <ul>
+              <li>Zertifizierte Sportphysiotherapie (DOSB)</li>
+              <li>Fortbildung Return-to-Play-Konzepte, Köln 2019</li>
+              <li>Betreuung regionaler Leichtathletik-Vereine</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="timg">
+            <img src="https://images.unsplash.com/photo-1645318800862-0d343ebd4e6a?auto=format&fit=crop&w=700&q=80" alt="Lea Fischer bei der Behandlung">
+            <div class="tnum">02</div>
+          </div>
+          <div class="tbody">
+            <h4>Lea Fischer</h4>
+            <span class="team-role">Physiotherapeutin · Manuelle Therapie</span>
+            <p>Lea ist seit 2021 im Team und hat sich auf manuelle Therapie und Reha nach Gelenkoperationen spezialisiert. Ausbildung in Augsburg, ergänzt durch mehrere Zusatzqualifikationen.</p>
+            <ul>
+              <li>Zertifikat Manuelle Therapie (OMT)</li>
+              <li>Fortbildung Bewegungsanalyse, Innsbruck 2023</li>
+              <li>Schwerpunkt Knie- und Schulterreha</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="values">
+        <div class="value-item"><h4>Klare Ziele</h4><p>Jede Reha hat einen Fahrplan — messbar, mit klaren Meilensteinen.</p></div>
+        <div class="value-item"><h4>Ausreichend Zeit</h4><p>Feste Behandlungszeiten statt Fließband-Termine.</p></div>
+        <div class="value-item"><h4>Sportnahe Methoden</h4><p>Übungen, die direkt auf deine Sportart übertragbar sind.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Impressionen</span>
+        <h2>Aus der Praxis</h2>
+      </div>
+      <div class="grid-gallery">
+        <figure><img src="https://images.unsplash.com/photo-1634788699029-b26c89ed32b4?auto=format&fit=crop&w=500&q=80" alt="Training im Trainingsbereich"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1594269807754-7b7926246d65?auto=format&fit=crop&w=500&q=80" alt="Übung mit Widerstandsband"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1767404890803-228d5390fcd4?auto=format&fit=crop&w=500&q=80" alt="Trainingsbänder in der Praxis"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1771270786606-f5a0e57db762?auto=format&fit=crop&w=500&q=80" alt="Kleingeräte im Trainingsbereich"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonial">
+    <div class="section-inner testimonial-inner">
+      <blockquote>„Nach meinem Kreuzbandriss war ich dank Rebound schneller wieder auf dem Platz, als ich gedacht hätte."</blockquote>
+      <div class="cite">— Patient, Reha nach Kreuzbandriss</div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="kontakt">
+    <span class="kicker">Termin buchen</span>
+    <h2>Bereit für den nächsten Schritt?</h2>
+    <a class="btn btn-lime" href="tel:+498417789900">Anrufen: 0841 / 77 89 900</a>
+  </section>
+
+</div>
+
+<!-- ============ TEAM ============ -->
+<div class="page" id="page-team">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <span class="kicker">Unser Team</span>
+      <h1>Zwei Spezialist:innen,<br>ein gemeinsames Ziel.</h1>
+    </div>
+  </div>
+
+  <section style="padding-top:2rem;">
+    <div class="section-inner">
+      <div class="team-grid" style="margin-bottom:0;">
+        <div class="team-card" style="background:var(--white);border-color:var(--line-l);">
+          <div class="timg">
+            <img src="https://images.unsplash.com/photo-1552226351-1ac7863af926?auto=format&fit=crop&w=700&q=80" alt="Max Brunner bei der Behandlung">
+            <div class="tnum">01</div>
+          </div>
+          <div class="tbody">
+            <h4 style="color:var(--navy);">Max Brunner</h4>
+            <span class="team-role" style="color:var(--accent);">Praxisinhaber · Sportphysiotherapeut</span>
+            <p style="color:var(--ink-soft);">Max hat seine Ausbildung 2013 in München abgeschlossen und danach mehrere Jahre Amateur- und Halbprofi-Mannschaften in Bayern betreut, bevor er 2020 REBOUND gegründet hat.</p>
+            <ul>
+              <li style="color:var(--ink-soft);">Zertifizierte Sportphysiotherapie (DOSB)</li>
+              <li style="color:var(--ink-soft);">Fortbildung Return-to-Play-Konzepte, Köln 2019</li>
+              <li style="color:var(--ink-soft);">Betreuung regionaler Leichtathletik-Vereine</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-card" style="background:var(--white);border-color:var(--line-l);">
+          <div class="timg">
+            <img src="https://images.unsplash.com/photo-1645318800862-0d343ebd4e6a?auto=format&fit=crop&w=700&q=80" alt="Lea Fischer bei der Behandlung">
+            <div class="tnum">02</div>
+          </div>
+          <div class="tbody">
+            <h4 style="color:var(--navy);">Lea Fischer</h4>
+            <span class="team-role" style="color:var(--accent);">Physiotherapeutin · Manuelle Therapie</span>
+            <p style="color:var(--ink-soft);">Lea ist seit 2021 im Team und hat sich auf manuelle Therapie und Reha nach Gelenkoperationen spezialisiert. Ausbildung in Augsburg, ergänzt durch mehrere Zusatzqualifikationen.</p>
+            <ul>
+              <li style="color:var(--ink-soft);">Zertifikat Manuelle Therapie (OMT)</li>
+              <li style="color:var(--ink-soft);">Fortbildung Bewegungsanalyse, Innsbruck 2023</li>
+              <li style="color:var(--ink-soft);">Schwerpunkt Knie- und Schulterreha</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Termin anfragen</span>
+    <h2>Wir freuen uns auf dich.</h2>
+    <a class="btn btn-lime" href="tel:+498417789900">Termin vereinbaren</a>
+  </section>
+</div>
+
+<!-- ============ LEISTUNGEN ============ -->
+<div class="page" id="page-leistungen">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <span class="kicker">Preise &amp; Leistungen</span>
+      <h1>Kassenleistungen &amp; Selbstzahlerangebote</h1>
+    </div>
+  </div>
+
+  <section style="padding-top:2rem;">
+    <div class="section-inner" style="max-width:960px;">
+      <div class="info-note">Mit gültiger ärztlicher Verordnung rechnen wir direkt mit deiner gesetzlichen oder privaten Krankenkasse ab. Die folgenden Preise gelten für Selbstzahlerleistungen ohne Rezept.</div>
+
+      <div class="price-groups">
+        <div class="price-card">
+          <div class="price-card-head"><h3>Basisbehandlungen</h3><span>Kassenfähig</span></div>
+          <div class="price-row"><div><div class="pname">Krankengymnastik (KG)</div><div class="pdesc">Einzelbehandlung, 20 Minuten</div></div><div class="dots"></div><div class="pval">32 €</div></div>
+          <div class="price-row"><div><div class="pname">Manuelle Therapie</div><div class="pdesc">Gezielte Gelenkmobilisation</div></div><div class="dots"></div><div class="pval">38 €</div></div>
+          <div class="price-row"><div><div class="pname">Klassische Massagetherapie</div><div class="pdesc">20 Min., ganzer Rücken oder Teilbereich</div></div><div class="dots"></div><div class="pval">28 €</div></div>
+        </div>
+        <div class="price-card">
+          <div class="price-card-head"><h3>Sport &amp; Performance</h3><span>Privat</span></div>
+          <div class="price-row"><div><div class="pname">Sportreha-Einheit</div><div class="pdesc">45 Minuten, individueller Trainingsplan</div></div><div class="dots"></div><div class="pval">58 €</div></div>
+          <div class="price-row"><div><div class="pname">Kinesio-Taping</div><div class="pdesc">Inkl. Material</div></div><div class="dots"></div><div class="pval">18 €</div></div>
+          <div class="price-row"><div><div class="pname">Bewegungsanalyse</div><div class="pdesc">Ganzkörper-Check mit Auswertung</div></div><div class="dots"></div><div class="pval">75 €</div></div>
+        </div>
+      </div>
+
+      <p class="price-note">Preise für Kassenleistungen entsprechen den gültigen Verbandssätzen. Endpreise für Selbstzahlerleistungen können je nach Umfang variieren.</p>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Bereit?</span>
+    <h2>Vereinbare deinen ersten Termin.</h2>
+    <a class="btn btn-lime" href="tel:+498417789900">Termin buchen</a>
+  </section>
+</div>
+
+<!-- ============ PRAXIS ============ -->
+<div class="page" id="page-praxis">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <span class="kicker">Unsere Praxis</span>
+      <h1>Ausgestattet für<br>echte Leistung.</h1>
+    </div>
+  </div>
+
+  <section style="padding-top:2rem;">
+    <div class="section-inner">
+      <p style="color:var(--ink-soft);max-width:620px;margin-bottom:3.5rem;">Zwei Behandlungsräume und ein Trainingsbereich mit modernen Kleingeräten — genug Platz für konzentriertes Arbeiten und funktionelles Training.</p>
+
+      <div class="grid-gallery">
+        <figure><img src="https://images.unsplash.com/photo-1771270786606-f5a0e57db762?auto=format&fit=crop&w=500&q=80" alt="Trainingsbereich"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1767404890803-228d5390fcd4?auto=format&fit=crop&w=500&q=80" alt="Trainingsbänder"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1594269807754-7b7926246d65?auto=format&fit=crop&w=500&q=80" alt="Übung im Trainingsbereich"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1634788699029-b26c89ed32b4?auto=format&fit=crop&w=500&q=80" alt="Bewegungstraining"></figure>
+      </div>
+
+      <div class="salon-strip">
+        <div class="strip-item"><h4>Zwei Behandlungsräume</h4><p>Für Einzeltermine mit ausreichend Privatsphäre.</p></div>
+        <div class="strip-item"><h4>Moderner Trainingsbereich</h4><p>Ausgestattet für Kräftigung, Balance und funktionelle Bewegung.</p></div>
+        <div class="strip-item"><h4>Zentral in Ingolstadt</h4><p>Gute Anbindung, Parkplätze direkt vor der Praxis.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Vorbeikommen</span>
+    <h2>Lern die Praxis kennen.</h2>
+    <a class="btn btn-lime" href="tel:+498417789900">Termin buchen</a>
+  </section>
+</div>
+
+<!-- ============ IMPRESSUM ============ -->
+<div class="page" id="page-impressum">
+  <div class="page-hero"><div class="page-hero-inner"><span class="kicker">Rechtliches</span><h1>Impressum</h1></div></div>
+  <section style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Name, Adresse, Telefonnummer und Kammerangaben sind Platzhalter-Beispiele für dieses Portfolio-Demo. Bitte vor echter Veröffentlichung durch reale Praxisdaten ersetzen.</div>
+
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>REBOUND Physiotherapie<br>Max Brunner<br>Sportpark 3<br>85049 Ingolstadt<br>Deutschland</p>
+
+      <h3>Kontakt</h3>
+      <p>Telefon: <a class="inline-link" href="tel:+498417789900">0841 / 77 89 900</a><br>E-Mail: <a class="inline-link" href="mailto:kontakt@rebound-physio.de">kontakt@rebound-physio.de</a></p>
+
+      <h3>Berufsbezeichnung &amp; berufsrechtliche Angaben</h3>
+      <p>Berufsbezeichnung: Physiotherapeut, verliehen in der Bundesrepublik Deutschland. Zuständige Aufsichtsbehörde: Gesundheitsamt Ingolstadt. Es gelten die berufsrechtlichen Regelungen für Physiotherapeut:innen nach dem Masseur- und Physiotherapeutengesetz (MPhG).</p>
+
+      <h3>Umsatzsteuer</h3>
+      <p>Heilbehandlungen im Bereich der Physiotherapie sind gemäß § 4 Nr. 14 Buchst. a UStG von der Umsatzsteuer befreit.</p>
+
+      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+      <p>Max Brunner, Anschrift wie oben.</p>
+
+      <h3>Streitschlichtung</h3>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="inline-link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Unsere E-Mail-Adresse findest du oben. Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+      <h3>Haftung für Inhalte</h3>
+      <p>Als Diensteanbieterin sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieterin jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+      <h3>Haftung für Links</h3>
+      <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+      <h3>Urheberrecht</h3>
+      <p>Die durch die Betreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DATENSCHUTZ ============ -->
+<div class="page" id="page-datenschutz">
+  <div class="page-hero"><div class="page-hero-inner"><span class="kicker">Rechtliches</span><h1>Datenschutz</h1></div></div>
+  <section style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Diese Vorlage deckt gängige Punkte für eine kleine Physiotherapiepraxis mit Kontaktformular und Google Analytics ab. Bitte fachlich prüfen lassen — insbesondere zur Verarbeitung von Gesundheitsdaten — bevor sie live geht.</div>
+
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>REBOUND Physiotherapie<br>Max Brunner<br>Sportpark 3, 85049 Ingolstadt<br>Telefon: 0841 / 77 89 900<br>E-Mail: kontakt@rebound-physio.de</p>
+
+      <h2>2. Allgemeines zur Datenverarbeitung</h2>
+      <p>Wir verarbeiten personenbezogene Daten unserer Nutzer:innen grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie unserer Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt nach Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).</p>
+
+      <h2>3. Gesundheitsdaten</h2>
+      <p>Im Rahmen der Terminvereinbarung und Behandlung verarbeiten wir ggf. Gesundheitsdaten (z. B. Angaben zu Beschwerden, ärztliche Verordnungen). Diese besonderen Kategorien personenbezogener Daten (Art. 9 DSGVO) verarbeiten wir ausschließlich zur Durchführung der Behandlung auf Grundlage von Art. 9 Abs. 2 lit. h DSGVO i. V. m. § 22 Abs. 1 Nr. 1 lit. b BDSG sowie unserer Schweigepflicht.</p>
+
+      <h2>4. Hosting</h2>
+      <p>Diese Website wird bei einem externen Hosting-Anbieter gehostet. Personenbezogene Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Der Hoster verarbeitet Daten in unserem Auftrag gemäß Art. 28 DSGVO.</p>
+
+      <h2>5. Kontaktaufnahme &amp; Terminbuchung</h2>
+      <p>Wenn du uns per Telefon, E-Mail oder Kontaktformular kontaktierst, werden deine Angaben zur Bearbeitung deiner Anfrage bzw. zur Vorbereitung des Behandlungsvertrags gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO. Die Daten werden gelöscht, sobald sie nicht mehr erforderlich sind, unter Beachtung der gesetzlichen Aufbewahrungsfristen für Behandlungsunterlagen.</p>
+
+      <h2>6. Google Analytics</h2>
+      <p>Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google"). Google Analytics verwendet Cookies bzw. vergleichbare Technologien, die eine Analyse der Benutzung der Website ermöglichen.</p>
+      <p>Die erzeugten Informationen (z. B. Zugriffszeit, Ort des Zugriffs, Häufigkeit des Seitenbesuchs, gekürzte IP-Adresse) werden an Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert, sodass deine IP-Adresse vor der Übertragung innerhalb der EU/EWR gekürzt wird.</p>
+      <p>Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die du über unser Cookie-Banner erteilen oder ablehnen kannst. Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+      <p>Google verarbeitet Daten auch in den USA; hierfür bestehen Standardvertragsklauseln der EU-Kommission als Garantie für ein angemessenes Datenschutzniveau. Weitere Infos: <a class="inline-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.</p>
+      <p>Du kannst die Erfassung verhindern, indem du das Browser-Add-on installierst: <a class="inline-link" href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h2>7. Cookies</h2>
+      <p>Diese Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, alle anderen (z. B. Google Analytics) nur mit deiner Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO.</p>
+
+      <h2>8. Deine Rechte</h2>
+      <ul>
+        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
+        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
+        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
+        <li>Recht auf Widerruf erteilter Einwilligungen</li>
+      </ul>
+      <p>Zudem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, z. B. beim Bayerischen Landesamt für Datenschutzaufsicht.</p>
+
+      <h2>9. Änderungen dieser Datenschutzerklärung</h2>
+      <p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht. Stand: 2026.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo">RE<span>BOUND</span></div>
+      <p>Sportphysiotherapie in Ingolstadt. Sportreha, manuelle Therapie, Taping und Krankengymnastik.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a href="tel:+498417789900">0841 / 77 89 900</a>
+      <a href="mailto:kontakt@rebound-physio.de">kontakt@rebound-physio.de</a>
+      <p>Sportpark 3, 85049 Ingolstadt</p>
+    </div>
+    <div class="footer-col">
+      <h4>Seite</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('team')">Team</a>
+      <a onclick="showPage('leistungen')">Leistungen</a>
+      <a onclick="showPage('praxis')">Praxis</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 REBOUND Physiotherapie</span>
+    <div class="footer-legal">
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleNav(){document.getElementById('mainNav').classList.toggle('open');}
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    document.querySelectorAll('nav.mainnav a[data-page]').forEach(a=>{
+      a.classList.toggle('active', a.dataset.page===name);
+    });
+    document.getElementById('mainNav').classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+</script>
+
+</body>
+</html>

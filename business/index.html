@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Business- und Personal-Branding-Fotografie von Adam Olendzki in Rottenburg an der Laaber und Niederbayern.">
+  <title>Business- und Personal-Branding-Fotografie | Adam Olendzki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&family=Oswald:wght@100;200;300;400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #f7f7f5; color: #242422; font-family: 'Inter', sans-serif; font-weight: 300; }
+    a { color: inherit; text-decoration: none; }
+
+    /* HEADER */
+    header { position: fixed; inset: 0 0 auto; z-index: 10; min-height: 78px; display: flex; align-items: center; justify-content: space-between; padding: 22px 42px; background: rgba(20,20,18,.92); backdrop-filter: blur(10px); color: #fff; }
+    .logo { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 300; letter-spacing: 1.6px; white-space: nowrap; transition: color .35s ease, letter-spacing .35s ease; }
+    .logo:hover { color: #d4a820; letter-spacing: 2.4px; }
+    nav ul { display: flex; gap: 26px; align-items: center; list-style: none; padding: 0; margin: 0; }
+    nav a { font-family: 'Oswald', sans-serif; font-size: 21.6px; font-weight: 100; letter-spacing: 1.2px; text-transform: lowercase; cursor: pointer; transition: color .3s ease; }
+    nav > ul > li > a:hover { color: #d4a820; }
+    .dropdown { position: relative; }
+    .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #141412; box-shadow: 0 8px 16px rgba(0,0,0,.65); padding: 15px 0; min-width: 320px; z-index: 100; border: 1px solid #262624; }
+    .dropdown-menu li a { display: block; padding: 10px 25px; font-family: 'Jost', sans-serif; font-size: 20px; font-weight: 200; letter-spacing: 2px; text-transform: lowercase; color: #bebebe; }
+    .dropdown-menu li a:hover { background: #222220; color: #fff; }
+    .dropdown:hover .dropdown-menu { display: block; }
+
+    /* HERO */
+    .hero { height: 100svh; min-height: 620px; position: relative; display: flex; align-items: flex-end; justify-content: flex-start; overflow: hidden; background: #141412; }
+    .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.6); transform: scale(1.08); will-change: transform; }
+    .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.14), rgba(0,0,0,.6)); }
+    .hero-text { position: relative; z-index: 1; padding: 0 0 clamp(40px, 6vw, 70px) clamp(24px, 6vw, 90px); opacity: 0; transform: translateX(-40px); transition: opacity .9s ease, transform .9s cubic-bezier(.16,1,.3,1); will-change: transform, opacity; }
+    .hero-text.hero-text-visible { opacity: 1; transform: translateX(0); }
+    .hero-curtain { position: absolute; inset: 0; background: #0c0c0a; z-index: 5; transform: translateX(0); transition: transform 1.1s cubic-bezier(.76,0,.24,1); }
+    .hero-curtain.hero-curtain-open { transform: translateX(101%); }
+    .hero h1 { margin: 0; display: flex; flex-direction: column; }
+    .hero h1 span { color: #fff; font-family: 'Oswald', sans-serif; font-size: clamp(48px, 9vw, 128px); font-weight: 300; letter-spacing: 1px; text-transform: uppercase; text-align: left; line-height: .95; }
+    .hero-sub { margin: 22px 0 0; color: #d4a820; font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; }
+
+    /* STORY */
+    .story { max-width: 1300px; margin: 0 auto; padding: 70px 60px; display: grid; grid-template-columns: minmax(260px, .8fr) 1.2fr; gap: clamp(46px, 8vw, 120px); align-items: center; background: #141412; }
+    .story-img { position: relative; overflow: hidden; aspect-ratio: 3 / 4; width: 100%; }
+    .story-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+    .story-img:hover img { transform: scale(1.06); }
+    .story-copy h2 { margin: 0 0 28px; color: #f2f1ec; font-family: 'Oswald', sans-serif; font-size: clamp(32px, 3.6vw, 50px); font-weight: 300; line-height: 1.15; }
+    .story-copy p { margin: 0 0 16px; max-width: 620px; color: #cfcdc4; font-family: 'Jost', sans-serif; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.7; }
+    .story-copy p:last-child { margin-bottom: 0; }
+    .label { margin: 0 0 14px; color: #d4a820; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; }
+
+    figure img { display: block; width: 100%; height: 100%; object-fit: cover; filter: brightness(1); transition: transform .8s cubic-bezier(.2,.8,.2,1), filter .5s ease; }
+    figure:hover img { filter: brightness(.82); transform: scale(1.05); }
+
+    /* FÜR WEN — kategorie */
+    .forwhom-section { background: #f7f7f5; padding: 70px 0; }
+    .forwhom-heading { max-width: 1300px; margin: 0 auto 30px; padding: 0 60px; }
+    .forwhom-heading h2 { margin: 0; font-family: 'Oswald', sans-serif; font-size: clamp(17px, 2.25vw, 29px); font-weight: 300; }
+    .forwhom-grid { max-width: 1300px; margin: 0 auto; padding: 0 60px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .forwhom-grid figure { position: relative; margin: 0; aspect-ratio: 3 / 4; overflow: hidden; background: #d7d7d2; }
+    .forwhom-grid figure img { filter: grayscale(100%) contrast(1.05); }
+    .forwhom-grid figure:hover img { filter: grayscale(0%) contrast(1.05) brightness(.9); transform: scale(1.06); }
+    .forwhom-grid figcaption { position: absolute; left: 14px; bottom: 14px; z-index: 1; color: #fff; font-family: 'Oswald', sans-serif; font-size: 13px; letter-spacing: 1.4px; text-transform: uppercase; }
+    .forwhom-grid figure::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.65)); pointer-events: none; }
+
+    /* SPLIT FEATURE */
+    .split-section { background: #141412; }
+    .split-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .split-grid figure { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: #1c1c19; }
+
+    /* ABLAUF / PROCESS */
+    .ablauf-section { background: #e8e8e6; padding: 80px 0; }
+    .ablauf-wrap { max-width: 1100px; margin: 0 auto; padding: 0 60px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; }
+    .ablauf-step .num { font-family: 'Oswald', sans-serif; font-size: 13px; letter-spacing: 2px; color: #d4a820; margin-bottom: 14px; }
+    .ablauf-step h3 { margin: 0 0 12px; font-family: 'Oswald', sans-serif; font-size: 22px; font-weight: 400; }
+    .ablauf-step p { margin: 0; font-family: 'Jost', sans-serif; font-size: 15px; line-height: 1.6; color: #4e4e49; }
+
+    /* BENTO PORTFOLIO */
+    .bento-section { background: #f7f7f5; padding: 70px 0; }
+    .bento-heading { max-width: 1300px; margin: 0 auto 30px; padding: 0 60px; }
+    .bento-heading h2 { margin: 0; font-family: 'Oswald', sans-serif; font-size: clamp(17px, 2.25vw, 29px); font-weight: 300; }
+    .bento-section { overflow: visible; }
+    .bento-grid { max-width: 1300px; margin: 0 auto; padding: 10px 60px 30px; display: flex; flex-wrap: wrap; gap: 44px 14px; }
+    .bento-grid figure { position: relative; margin: 0; flex: 0 0 calc(25% - 11px); aspect-ratio: 3 / 4; overflow: hidden; background: #d7d7d2; z-index: 1; transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s ease, z-index .1s; }
+    .bento-grid figure:nth-child(odd) { margin-top: -34px; }
+    .bento-grid figure:hover { transform: scale(1.1); z-index: 5; box-shadow: 0 24px 48px rgba(0,0,0,.35); }
+    .bento-grid figure:hover img { transform: none; filter: brightness(.92); }
+
+    /* QUOTE */
+    .quote { margin: 0; padding: 100px 28px 70px; background: transparent; text-align: center; }
+    .quote p { max-width: 900px; margin: 0 auto 18px; color: #242422; font-family: 'Jost', sans-serif; font-size: clamp(19px, 2.7vw, 35px); font-weight: 300; font-style: italic; line-height: 1.25; }
+    .quote span { color: #686862; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s cubic-bezier(.16,1,.3,1); }
+    .reveal.reveal-visible { opacity: 1; transform: translateY(0); }
+
+    footer { padding: 38px; background: #1a1a18; color: #8f8f89; text-align: center; font-size: 12px; letter-spacing: 1px; }
+
+    @media (max-width: 760px) {
+      header { padding: 18px 20px; min-height: 64px; }
+      .logo { font-size: 17px; }
+      nav { display: none; }
+      .story { grid-template-columns: 1fr; padding: 50px 24px; gap: 36px; }
+      .story img { max-height: 500px; }
+      .forwhom-section { padding: 50px 0; }
+      .forwhom-heading, .forwhom-grid { padding: 0 24px; }
+      .forwhom-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .forwhom-grid figure:nth-child(5) { grid-column: 1 / 3; }
+      .split-grid { grid-template-columns: 1fr; }
+      .ablauf-section { padding: 54px 0; }
+      .ablauf-wrap { grid-template-columns: 1fr; padding: 0 24px; gap: 32px; }
+      .bento-section { padding: 50px 0; }
+      .bento-heading, .bento-grid { padding: 0 24px; }
+      .bento-grid { gap: 24px 8px; padding: 10px 24px 20px; }
+      .bento-grid figure { flex: 0 0 calc(50% - 4px); }
+      .bento-grid figure:nth-child(odd) { margin-top: -18px; }
+      .quote { margin-top: 40px; padding: 72px 24px 40px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><a href="/">ADAM OLENDZKI PHOTOGRAPHER</a></div>
+    <nav>
+      <ul>
+        <li><a href="/#about">about</a></li>
+        <li class="dropdown">
+          <a>portfolio &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="/schwangerschaft/">schwangerschaftsfotografie</a></li>
+            <li><a href="/business/">business & image</a></li>
+            <li><a href="/family/">familie & kinder fotografie</a></li>
+            <li><a href="/couples/">paare / couples</a></li>
+            <li><a href="/women-zone/">women zone</a></li>
+          </ul>
+        </li>
+        <li><a href="/#projects">kooperation</a></li>
+        <li><a href="/blog/">blog</a></li>
+        <li><a href="/#contact">kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img src="images/business/business-cover.webp" alt="Business- und Personal-Branding-Fotografie">
+      <div class="hero-text">
+        <h1><span>Business</span><span>und</span><span>personal</span><span>branding</span></h1>
+        <p class="hero-sub">Adam Olendzki – Rottenburg an der Laaber &amp; Landshut</p>
+      </div>
+    </section>
+
+    <section class="story">
+      <div class="story-img"><img src="images/business/business-bar-portrait-01.webp" alt="Business-Portrait"></div>
+      <div class="story-copy">
+        <div class="label">Dein Auftritt</div>
+        <h2>Dein Auftritt. Deine Bildsprache. Dein Wiedererkennungswert.</h2>
+        <p>Egal, ob Du Unternehmer, Selbstständiger, Künstler, Musiker oder Freelancer bist – professionelle Bilder helfen Dir dabei, einen starken ersten Eindruck zu hinterlassen. Besonders in sozialen Medien, auf Deiner Website oder in geschäftlichen Netzwerken entscheidet oft das Bild darüber, wie Du wahrgenommen wirst.</p>
+        <p>Gemeinsam entwickeln wir eine Bildsprache, die zu Deiner Persönlichkeit und Deiner Branche passt. Authentisch, modern und individuell. Gerne begleite ich Projekte in ganz Niederbayern und darüber hinaus, um Deinen professionellen Auftritt optimal zu unterstützen.</p>
+      </div>
+    </section>
+
+    <section class="forwhom-section reveal">
+      <div class="forwhom-heading"><h2>Für wen?</h2></div>
+      <div class="forwhom-grid">
+        <figure><img src="images/business/business-vertical-01.webp" alt="Unternehmer" loading="lazy"><figcaption>Unternehmer</figcaption></figure>
+        <figure><img src="images/business/business-vertical-02.webp" alt="Selbstständige" loading="lazy"><figcaption>Selbstständige</figcaption></figure>
+        <figure><img src="images/business/business-vertical-03.webp" alt="Künstler" loading="lazy"><figcaption>Künstler</figcaption></figure>
+        <figure><img src="images/business/business-vertical-04.webp" alt="Musiker" loading="lazy"><figcaption>Musiker</figcaption></figure>
+        <figure><img src="images/business/business-vertical-05.webp" alt="Freelancer" loading="lazy"><figcaption>Freelancer</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="split-section reveal">
+      <div class="split-grid">
+        <figure><img src="images/business/business-vertical-06.webp" alt="Business-Portrait" loading="lazy"></figure>
+        <figure><img src="images/business/business-vertical-07.webp" alt="Arbeitsumgebung" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <section class="ablauf-section reveal">
+      <div class="ablauf-wrap">
+        <div class="ablauf-step">
+          <div class="num">01</div>
+          <h3>Kennenlernen</h3>
+          <p>Ein kurzes Gespräch zu Ziel, Stil und Verwendungszweck der Bilder – ob für Website, Social Media oder Print.</p>
+        </div>
+        <div class="ablauf-step">
+          <div class="num">02</div>
+          <h3>Shooting</h3>
+          <p>Im Studio, in Deinem Büro oder an einem Ort, der zu Dir und Deiner Marke passt. Entspannt, ohne steife Posen.</p>
+        </div>
+        <div class="ablauf-step">
+          <div class="num">03</div>
+          <h3>Ergebnis</h3>
+          <p>Sorgfältig ausgewählte, bearbeitete Bilder, einsatzbereit für Deinen professionellen Auftritt.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bento-section reveal" id="portfolio">
+      <div class="bento-heading"><h2>Portfolio</h2></div>
+      <div class="bento-grid">
+        <figure><img src="images/business/business-vertical-08.webp" alt="Business-Fotografie" loading="lazy"></figure>
+        <figure><img src="images/business/business-vertical-09.webp" alt="Business-Fotografie" loading="lazy"></figure>
+        <figure><img src="images/business/business-vertical-10.webp" alt="Business-Fotografie" loading="lazy"></figure>
+        <figure><img src="images/business/business-vertical-11.webp" alt="Business-Fotografie" loading="lazy"></figure>
+        <figure><img src="images/business/business-vertical-12.webp" alt="Business-Fotografie" loading="lazy"></figure>
+        <figure><img src="images/business/business-vertical-13.webp" alt="Business-Fotografie" loading="lazy"></figure>
+        <figure><img src="images/business/business-vertical-14.webp" alt="Business-Fotografie" loading="lazy"></figure>
+        <figure><img src="images/business/business-vertical-15.webp" alt="Business-Fotografie" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <section class="visually-hidden">
+      <h2>Business- und Personal-Branding-Fotografie in Niederbayern</h2>
+      <p>Als Fotograf für Business- und Personal-Branding-Fotografie begleite ich Unternehmer, Selbstständige, Künstler, Musiker und Freelancer in Rottenburg an der Laaber und im gesamten Landkreis Landshut. Auch in Schierling, Abensberg, Kelheim, Straubing, Ingolstadt und Regensburg entstehen bei mir authentische Business-Portraits und Personal-Branding-Fotos für Website, Social Media und geschäftliche Netzwerke.</p>
+    </section>
+
+    <section class="quote reveal"><p>“Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.”</p><span>Steve Jobs</span></section>
+  </main>
+
+  <footer id="kontakt" style="display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap;">
+    <span>© 2026 Adam Olendzki. All rights reserved.</span>
+    <a href="datenschutz.html" style="color: #8f8f89;">Datenschutz</a>
+  </footer>
+
+  <script>
+    (function () {
+      const hero = document.querySelector('.hero');
+      const heroImg = hero ? hero.querySelector('img') : null;
+      const heroText = hero ? hero.querySelector('.hero-text') : null;
+      if (!hero || !heroImg) return;
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const finePointer = window.matchMedia('(pointer: fine)').matches;
+
+      // Kurtyna na starcie
+      const curtain = document.createElement('div');
+      curtain.className = 'hero-curtain';
+      hero.appendChild(curtain);
+
+      let introDone = reduceMotion;
+      if (reduceMotion) {
+        curtain.style.display = 'none';
+        if (heroText) heroText.classList.add('hero-text-visible');
+      } else {
+        setTimeout(() => { curtain.classList.add('hero-curtain-open'); }, 200);
+        setTimeout(() => { if (heroText) heroText.classList.add('hero-text-visible'); }, 550);
+        setTimeout(() => { introDone = true; }, 1500);
+      }
+
+      if (reduceMotion) return;
+
+      // Wspólny render łączący: scroll-paralaksę + paralaksę kursora
+      let mx = 0, my = 0, ticking = false;
+
+      function render() {
+        const rect = hero.getBoundingClientRect();
+        const scrolled = Math.max(0, -rect.top);
+        const scrollShiftImg = scrolled * 0.32;
+        const curX = finePointer ? mx * -18 : 0;
+        const curY = finePointer ? my * -12 : 0;
+        heroImg.style.transform = `scale(1.08) translate(${curX}px, ${scrollShiftImg + curY}px)`;
+
+        if (heroText && introDone) {
+          const fade = Math.max(0, 1 - scrolled / (hero.offsetHeight * 0.7));
+          const scrollShiftText = scrolled * -0.18;
+          const textCurX = finePointer ? mx * 8 : 0;
+          const textCurY = finePointer ? my * 6 : 0;
+          heroText.style.opacity = fade;
+          heroText.style.transform = `translate(${textCurX}px, ${scrollShiftText + textCurY}px)`;
+        }
+        ticking = false;
+      }
+      function schedule() {
+        if (!ticking) { requestAnimationFrame(render); ticking = true; }
+      }
+
+      window.addEventListener('scroll', schedule, { passive: true });
+
+      if (finePointer) {
+        hero.addEventListener('mousemove', function (e) {
+          const rect = hero.getBoundingClientRect();
+          mx = (e.clientX - rect.left) / rect.width - 0.5;
+          my = (e.clientY - rect.top) / rect.height - 0.5;
+          schedule();
+        });
+        hero.addEventListener('mouseleave', function () {
+          mx = 0; my = 0;
+          schedule();
+        });
+      }
+
+      schedule();
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const reveals = document.querySelectorAll('.reveal');
+      if (!reveals.length) return;
+
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        reveals.forEach((el) => el.classList.add('reveal-visible'));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+      reveals.forEach((el) => observer.observe(el));
+    })();
+  </script>
+</body>
+</html>

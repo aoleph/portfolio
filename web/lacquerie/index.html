@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LACQUERIE — Nagelstudio Landshut</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#17110F;
+    --ink-2:#241A16;
+    --paper:#F7F1E7;
+    --paper-deep:#EFE2CD;
+    --lacquer:#C81D3B;
+    --lacquer-deep:#7A0F22;
+    --brass:#B4915B;
+    --taupe:#9C8A7C;
+    --line:rgba(247,241,231,.14);
+    --line-dark:rgba(23,17,15,.12);
+    --white:#FFFFFF;
+
+    --sw1:#7A0F22; /* Rouge Noir */
+    --sw2:#C1592B; /* Terracotta Fumé */
+    --sw3:#F3EDE2; /* Vernis Blanc */
+    --sw4:#B98860; /* Noisette */
+    --sw5:#2F5D4E; /* Émeraude */
+    --sw6:#C97B6E; /* Argile */
+    --sw7:#24364A; /* Nuit Bleue */
+    --sw8:#B4915B; /* Or Fondu */
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);color:var(--paper);
+    font-family:'Inter',sans-serif;font-weight:300;line-height:1.7;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit;}
+  img{display:block;max-width:100%;}
+  h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;line-height:1.1;color:var(--paper);letter-spacing:-.01em;}
+  .on-paper h1,.on-paper h2,.on-paper h3,.on-paper h4{color:var(--ink);}
+  .mono{font-family:'Space Mono',monospace;}
+  .kicker{
+    font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--brass);font-weight:700;display:inline-block;margin-bottom:1.3rem;
+  }
+  .on-paper .kicker{color:var(--lacquer-deep);}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;padding:1.6rem 3rem;
+    transition:background .3s ease, padding .3s ease, box-shadow .3s ease;
+  }
+  header.scrolled{background:rgba(23,17,15,.92);backdrop-filter:blur(10px);padding:1.1rem 3rem;box-shadow:0 2px 24px rgba(0,0,0,.3);}
+  .logo{
+    font-family:'Fraunces',serif;font-weight:600;font-style:italic;font-size:1.5rem;letter-spacing:.02em;cursor:pointer;color:var(--paper);
+    display:inline-flex;align-items:center;gap:.5rem;
+  }
+  .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--lacquer);display:inline-block;box-shadow:0 0 0 3px rgba(200,29,59,.25);}
+  nav.mainnav{display:flex;gap:2.2rem;align-items:center;}
+  nav.mainnav a{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--taupe);cursor:pointer;position:relative;padding-bottom:3px;}
+  nav.mainnav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--lacquer);transition:width .3s ease;}
+  nav.mainnav a:hover::after,nav.mainnav a.active::after{width:100%;}
+  nav.mainnav a:hover,nav.mainnav a.active{color:var(--paper);}
+  .nav-cta{background:var(--lacquer);color:var(--white)!important;padding:.65rem 1.4rem;border-radius:2px;font-weight:500!important;letter-spacing:.05em!important;}
+  .nav-cta:hover{background:var(--lacquer-deep);}
+  .nav-cta::after{display:none;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .burger span{width:24px;height:1px;background:var(--paper);display:block;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2rem;border-radius:2px;
+    font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;cursor:pointer;border:none;
+    transition:transform .3s ease, box-shadow .3s ease, background .3s ease;
+  }
+  .btn-solid{background:var(--lacquer);color:var(--white);}
+  .btn-solid:hover{transform:translateY(-3px);box-shadow:0 16px 30px -14px rgba(200,29,59,.55);background:var(--lacquer-deep);}
+  .btn-outline{background:transparent;border:1px solid var(--line);color:var(--paper);}
+  .btn-outline:hover{background:rgba(247,241,231,.06);transform:translateY(-3px);}
+  .on-paper .btn-outline{border:1px solid var(--line-dark);color:var(--ink);}
+  .on-paper .btn-outline:hover{background:rgba(23,17,15,.05);}
+
+  /* ================= HERO ================= */
+  .hero{position:relative;padding:11.5rem 3rem 5rem;overflow:hidden;text-align:center;}
+  .hero::before{
+    content:'';position:absolute;inset:0;z-index:0;
+    background:radial-gradient(ellipse 60% 45% at 50% 0%, rgba(200,29,59,.16), transparent 70%);
+  }
+  .hero-content{position:relative;z-index:2;max-width:760px;margin:0 auto;}
+  .hero-content h1{font-size:clamp(2.6rem,6vw,4.8rem);margin-bottom:1.5rem;}
+  .hero-content h1 em{font-style:italic;color:var(--lacquer);}
+  .hero-content p{color:var(--taupe);font-size:1.05rem;max-width:480px;margin:0 auto 2.3rem;}
+  .hero-btnrow{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:5rem;}
+
+  /* ================= SHADE WALL (signature) ================= */
+  .shadewall{position:relative;z-index:2;max-width:920px;margin:0 auto;}
+  .shadewall-strip{display:flex;justify-content:center;gap:clamp(.6rem,2vw,1.6rem);flex-wrap:wrap;}
+  .swatch{width:74px;text-align:center;cursor:default;}
+  .swatch-chip{
+    width:74px;height:74px;border-radius:50%;position:relative;overflow:hidden;margin:0 auto .8rem;
+    box-shadow:0 18px 30px -14px rgba(0,0,0,.55), inset 0 -10px 16px rgba(0,0,0,.25), inset 0 8px 12px rgba(255,255,255,.14);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .swatch-chip::after{
+    content:'';position:absolute;top:8%;left:14%;width:36%;height:22%;border-radius:50%;
+    background:rgba(255,255,255,.55);filter:blur(4px);transform:rotate(-25deg);
+  }
+  .swatch:hover .swatch-chip{transform:translateY(-8px) scale(1.08);}
+  .swatch .sname{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.03em;color:var(--taupe);display:block;line-height:1.4;}
+  .swatch .snum{color:var(--brass);}
+
+  /* ================= SECTION GENERIC ================= */
+  section{padding:6.5rem 3rem;}
+  .section-inner{max-width:1180px;margin:0 auto;}
+  .sec-head{max-width:600px;margin-bottom:3.4rem;}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .sec-head h2{font-size:clamp(2rem,3.6vw,2.7rem);}
+  .sec-head p{color:var(--taupe);margin-top:1rem;}
+  .on-paper .sec-head p{color:#6E6053;}
+
+  .on-paper{background:var(--paper);color:var(--ink);}
+
+  /* ================= SERVICES ================= */
+  .service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;}
+  .service-card{
+    background:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:2.2rem 1.6rem;
+    transition:transform .35s ease, border-color .35s ease;
+  }
+  .service-card:hover{transform:translateY(-6px);border-color:var(--lacquer);}
+  .service-card .sdot{width:14px;height:14px;border-radius:50%;margin-bottom:1.3rem;}
+  .service-card h3{font-size:1.05rem;margin-bottom:.6rem;}
+  .service-card p{color:var(--taupe);font-size:.85rem;}
+
+  /* ================= GALLERY ================= */
+  .grid-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;}
+  .shine-card{
+    position:relative;border-radius:4px;overflow:hidden;aspect-ratio:3/4;
+  }
+  .shine-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease, filter .5s ease;filter:grayscale(35%) contrast(1.05);}
+  .shine-card:hover img{transform:scale(1.06);filter:grayscale(0%) contrast(1.05);}
+  .shine-card::before{
+    content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55));z-index:1;pointer-events:none;
+  }
+  .shine-card .tag{
+    position:absolute;left:.9rem;bottom:.8rem;z-index:2;font-family:'Space Mono',monospace;font-size:.66rem;
+    color:var(--paper);letter-spacing:.04em;
+  }
+  .shine-card .tag .n{color:var(--brass);}
+
+  /* ================= TESTIMONIAL ================= */
+  .testimonial{text-align:center;background:var(--ink-2);}
+  .testimonial-inner{max-width:700px;margin:0 auto;}
+  .testimonial blockquote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:clamp(1.3rem,2.4vw,1.9rem);
+    margin-bottom:1.3rem;line-height:1.4;
+  }
+  .testimonial .cite{font-family:'Space Mono',monospace;font-size:.74rem;color:var(--taupe);text-transform:uppercase;letter-spacing:.08em;}
+
+  /* ================= CTA ================= */
+  .cta-band{background:var(--lacquer);color:var(--white);text-align:center;padding:5.5rem 2rem;position:relative;overflow:hidden;}
+  .cta-band .kicker{color:rgba(255,255,255,.75);}
+  .cta-band h2{color:var(--white);font-size:clamp(1.9rem,3.6vw,2.6rem);max-width:620px;margin:0 auto 2rem;}
+  .cta-band .btn-solid{background:var(--white);color:var(--lacquer-deep);}
+  .cta-band .btn-solid:hover{background:var(--paper-deep);}
+  .cta-band .btn-outline{border-color:rgba(255,255,255,.5);color:var(--white);}
+
+  /* ================= FOOTER ================= */
+  footer{background:var(--ink);border-top:1px solid var(--line);padding:3.8rem 3rem 2rem;}
+  .footer-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:2.4rem;padding-bottom:2.4rem;border-bottom:1px solid var(--line);}
+  .footer-grid .logo{margin-bottom:1rem;font-size:1.35rem;}
+  .footer-grid p{color:var(--taupe);font-size:.86rem;max-width:260px;}
+  .footer-col h4{font-family:'Space Mono',monospace;font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--brass);margin-bottom:1rem;}
+  .footer-col a,.footer-col p{display:block;color:var(--taupe);font-size:.86rem;margin-bottom:.55rem;}
+  .footer-col a:hover{color:var(--paper);}
+  .footer-bottom{max-width:1180px;margin:0 auto;padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.76rem;color:var(--taupe);font-family:'Space Mono',monospace;}
+  .footer-legal{display:flex;gap:1.4rem;flex-wrap:wrap;}
+  .footer-bottom a:hover{color:var(--paper);}
+
+  /* ================= PAGE HERO ================= */
+  .page-hero{padding:11rem 3rem 4.5rem;text-align:center;position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 55% 50% at 50% 0%, rgba(200,29,59,.14), transparent 70%);}
+  .page-hero h1{font-size:clamp(2.3rem,5vw,3.4rem);position:relative;z-index:2;}
+  .page-hero .kicker{position:relative;z-index:2;}
+
+  /* ================= ÜBER MICH ================= */
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:center;}
+  .about-img{border-radius:4px;overflow:hidden;aspect-ratio:4/5;}
+  .about-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%);}
+  .about-text p{color:#6E6053;margin-bottom:1.1rem;max-width:520px;}
+  .cred-list{margin-top:1.8rem;border-top:1px solid var(--line-dark);padding-top:1.4rem;}
+  .cred-row{display:flex;gap:1.2rem;padding:.8rem 0;border-bottom:1px solid var(--line-dark);}
+  .cred-row .yr{font-family:'Space Mono',monospace;color:var(--lacquer);min-width:60px;font-size:.85rem;}
+  .cred-row .desc{color:#6E6053;font-size:.9rem;}
+
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:4.5rem;}
+  .value-item{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.8rem;}
+  .value-item h4{font-size:1.02rem;margin-bottom:.5rem;}
+  .value-item p{color:#6E6053;font-size:.86rem;}
+
+  /* ================= LEISTUNGEN — shade-card price list ================= */
+  .price-group{margin-bottom:3.2rem;}
+  .price-group-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;border-bottom:2px solid var(--lacquer);padding-bottom:.7rem;}
+  .price-group-head .gdot{width:16px;height:16px;border-radius:50%;flex-shrink:0;}
+  .price-group-head h3{font-size:1.3rem;flex:1;}
+  .price-group-head span{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--lacquer);}
+  .price-row{display:flex;align-items:baseline;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line-dark);}
+  .price-row:last-child{border-bottom:none;}
+  .price-row .pname{font-weight:500;font-size:1rem;color:var(--ink);}
+  .price-row .pcode{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--brass);margin-right:.5rem;}
+  .price-row .pdesc{color:#6E6053;font-size:.82rem;margin-top:.2rem;}
+  .price-row .dots{flex:1;border-bottom:1px dotted var(--line-dark);transform:translateY(-.4rem);}
+  .price-row .pval{font-family:'Space Mono',monospace;font-weight:700;color:var(--ink);font-size:1rem;white-space:nowrap;}
+  .price-note{color:#6E6053;font-size:.85rem;text-align:center;margin-top:1rem;}
+
+  .salon-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:4.5rem;}
+  .strip-item{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.8rem;}
+  .strip-item h4{font-size:1.02rem;margin-bottom:.5rem;}
+  .strip-item p{color:#6E6053;font-size:.86rem;}
+
+  /* ================= LEGAL ================= */
+  .legal-body{max-width:750px;margin:0 auto;padding:0 3rem 6rem;}
+  .legal-body h2{font-size:1.3rem;margin:2.3rem 0 .9rem;}
+  .legal-body h2:first-child{margin-top:0;}
+  .legal-body h3{font-family:'Space Mono',monospace;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;margin:1.5rem 0 .6rem;color:var(--lacquer);}
+  .legal-body p,.legal-body li{color:#6E6053;font-size:.95rem;margin-bottom:.9rem;}
+  .legal-body ul{padding-left:1.3rem;margin-bottom:1rem;}
+  .legal-body a.inline-link{color:var(--lacquer);text-decoration:underline;}
+  .legal-note{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.3rem 1.5rem;font-size:.85rem;color:#6E6053;margin-bottom:2rem;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  @media(max-width:980px){
+    .service-grid{grid-template-columns:repeat(2,1fr);}
+    .grid-gallery{grid-template-columns:repeat(2,1fr);}
+    .about-grid{grid-template-columns:1fr;}
+    .values{grid-template-columns:1fr;}
+    .salon-strip{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .swatch{width:62px;}
+    .swatch-chip{width:62px;height:62px;}
+  }
+  @media(max-width:768px){
+    header{padding:1.1rem 1.5rem;}
+    nav.mainnav{
+      position:fixed;top:0;right:0;height:100vh;width:80%;max-width:300px;
+      background:var(--ink-2);flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:1.8rem;padding:3rem;transform:translateX(100%);transition:transform .35s ease;
+      box-shadow:-10px 0 40px rgba(0,0,0,.3);
+    }
+    nav.mainnav.open{transform:translateX(0);}
+    .burger{display:flex;}
+    section{padding:4rem 1.5rem;}
+    .hero{padding:8.5rem 1.5rem 3.5rem;}
+    .page-hero{padding:8.5rem 1.5rem 3.5rem;}
+    .service-grid{grid-template-columns:1fr;}
+    .grid-gallery{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .legal-body{padding:0 1.5rem 4rem;}
+    .swatch{width:52px;}
+    .swatch-chip{width:52px;height:52px;}
+    .swatch .sname{font-size:.56rem;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo" onclick="showPage('home')"><span class="dot"></span>LACQUERIE</div>
+  <nav class="mainnav" id="mainNav">
+    <a href="../" style="opacity:.7;">← Portfolio</a>
+    <a onclick="showPage('home')" data-page="home">Home</a>
+    <a onclick="showPage('ubermich')" data-page="ubermich">Über mich</a>
+    <a onclick="showPage('leistungen')" data-page="leistungen">Leistungen</a>
+    <a onclick="showPage('studio')" data-page="studio">Studio</a>
+    <a class="nav-cta" href="tel:+49871234567">Termin</a>
+  </nav>
+  <div class="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="kicker">Nagelstudio · Landshut</span>
+      <h1>Jede Farbe hat<br><em>einen Namen.</em></h1>
+      <p>Präzise Maniküre, langlebige Gel-Modellage und Nail Art — komponiert wie eine Farbkarte, nicht von der Stange. In der Ländgasse, mitten in Landshut.</p>
+      <div class="hero-btnrow">
+        <a class="btn btn-solid" href="tel:+49871234567">Termin anfragen</a>
+        <a class="btn btn-outline" onclick="showPage('leistungen')">Leistungen ansehen</a>
+      </div>
+    </div>
+
+    <div class="shadewall reveal">
+      <div class="shadewall-strip">
+        <div class="swatch"><div class="swatch-chip" style="background:var(--sw1)"></div><span class="sname"><span class="snum">01</span><br>Rouge Noir</span></div>
+        <div class="swatch"><div class="swatch-chip" style="background:var(--sw2)"></div><span class="sname"><span class="snum">02</span><br>Terracotta Fumé</span></div>
+        <div class="swatch"><div class="swatch-chip" style="background:var(--sw3)"></div><span class="sname"><span class="snum">03</span><br>Vernis Blanc</span></div>
+        <div class="swatch"><div class="swatch-chip" style="background:var(--sw4)"></div><span class="sname"><span class="snum">04</span><br>Noisette</span></div>
+        <div class="swatch"><div class="swatch-chip" style="background:var(--sw5)"></div><span class="sname"><span class="snum">05</span><br>Émeraude</span></div>
+        <div class="swatch"><div class="swatch-chip" style="background:var(--sw6)"></div><span class="sname"><span class="snum">06</span><br>Argile</span></div>
+        <div class="swatch"><div class="swatch-chip" style="background:var(--sw7)"></div><span class="sname"><span class="snum">07</span><br>Nuit Bleue</span></div>
+        <div class="swatch"><div class="swatch-chip" style="background:var(--sw8)"></div><span class="sname"><span class="snum">08</span><br>Or Fondu</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-paper">
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Leistungen</span>
+        <h2>Vier Handwerke, ein Anspruch: sauberer Abschluss.</h2>
+        <p>Jede Behandlung folgt derselben Sorgfalt — von der Nagelform bis zum letzten Glanzgang.</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card reveal">
+          <div class="sdot" style="background:var(--sw1)"></div>
+          <h3>Maniküre</h3>
+          <p>Klassisch oder Spa — Nagelform, Nagelhaut, Handpflege und Farbe deiner Wahl.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot" style="background:var(--sw5)"></div>
+          <h3>Gel-Modellage</h3>
+          <p>Verlängerung oder Verstärkung in Wunschform, bis zu vier Wochen stabil.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot" style="background:var(--sw8)"></div>
+          <h3>Nail Art</h3>
+          <p>Von der feinen Linie bis zum Statement-Finger — Handarbeit, kein Sticker.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot" style="background:var(--sw6)"></div>
+          <h3>Pediküre</h3>
+          <p>Medizinisch fundierte Fußpflege mit abschließendem Lack nach Wahl.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head">
+        <span class="kicker">Aus dem Studio</span>
+        <h2>Ergebnisse, keine Filter.</h2>
+      </div>
+      <div class="grid-gallery">
+        <div class="shine-card reveal">
+          <img src="https://images.unsplash.com/photo-1599948128020-9a44505b0d1b?auto=format&fit=crop&w=600&q=80" alt="Nagellackflaschen in Rot- und Rosétönen">
+          <span class="tag"><span class="n">01</span> · Rouge Noir</span>
+        </div>
+        <div class="shine-card reveal">
+          <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=600&q=80" alt="Rosa Maniküre in Nahaufnahme">
+          <span class="tag"><span class="n">06</span> · Argile</span>
+        </div>
+        <div class="shine-card reveal">
+          <img src="https://images.unsplash.com/photo-1604654894611-6973b376cbde?auto=format&fit=crop&w=600&q=80" alt="Schwarze Maniküre mit Ring">
+          <span class="tag"><span class="n">07</span> · Nuit Bleue</span>
+        </div>
+        <div class="shine-card reveal">
+          <img src="https://images.unsplash.com/photo-1636019411401-82485711b6ba?auto=format&fit=crop&w=600&q=80" alt="Fünf verschiedenfarbige Nagellacke">
+          <span class="tag"><span class="n">08</span> · Or Fondu</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonial">
+    <div class="testimonial-inner">
+      <blockquote class="reveal">„Ich komme seit zwei Jahren zu Nora. Kein Studio in Landshut arbeitet so sauber — und die Farbberatung sitzt jedes Mal.“</blockquote>
+      <div class="cite reveal">— Stammkundin, Landshut</div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Termin</span>
+    <h2 class="reveal">Buch dir deine Farbe — telefonisch oder per E-Mail.</h2>
+    <div class="hero-btnrow" style="margin-bottom:0;">
+      <a class="btn btn-solid" href="tel:+49871234567">0871 / 23 45 67</a>
+      <a class="btn btn-outline" href="mailto:hallo@lacquerie.de">hallo@lacquerie.de</a>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ ÜBER MICH ============ -->
+<div class="page" id="page-ubermich">
+  <div class="page-hero"><span class="kicker">Über mich</span><h1>Nora Vetter</h1></div>
+  <section class="on-paper" style="padding-top:1rem;">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-img reveal">
+          <img src="https://images.unsplash.com/photo-1571290274554-6a2eaa771e5f?auto=format&fit=crop&w=800&q=80" alt="Nora Vetter bei der Arbeit im Studio">
+        </div>
+        <div class="about-text">
+          <p class="reveal">Ich habe LACQUERIE 2021 gegründet, nachdem ich fünf Jahre lang in Studios in München und Wien gearbeitet habe. Mein Anspruch: jede Nagelform, jede Farbe soll bewusst gewählt sein — kein Standardmaß.</p>
+          <p class="reveal">Ich arbeite ausschließlich mit geprüften, atmungsaktiven Gel-Systemen und nehme mir für jede Kundin die Zeit, die eine gute Maniküre braucht — im Schnitt neunzig Minuten, ohne Hetze.</p>
+          <div class="cred-list">
+            <div class="cred-row reveal"><span class="yr">2021</span><span class="desc">Eröffnung von LACQUERIE in der Landshuter Altstadt</span></div>
+            <div class="cred-row reveal"><span class="yr">2019</span><span class="desc">Zertifizierung Gel- &amp; Acrylmodellage, IBS Wien</span></div>
+            <div class="cred-row reveal"><span class="yr">2016</span><span class="desc">Ausbildung zur staatlich geprüften Kosmetikerin</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="values">
+        <div class="value-item reveal">
+          <h4>Hygiene zuerst</h4>
+          <p>Sterilisierte Instrumente pro Kundin, medizinisch geprüfte Materialien.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Ehrliche Beratung</h4>
+          <p>Ich empfehle, was zu deinem Alltag passt — nicht, was am meisten kostet.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Kein Zeitdruck</h4>
+          <p>Ein Termin, eine Kundin. Keine parallelen Behandlungen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ LEISTUNGEN ============ -->
+<div class="page" id="page-leistungen">
+  <div class="page-hero"><span class="kicker">Leistungen</span><h1>Die Farbkarte</h1></div>
+  <section class="on-paper" style="padding-top:1rem;">
+    <div class="section-inner">
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <span class="gdot" style="background:var(--sw1)"></span>
+          <h3>Maniküre</h3>
+          <span>01 — 03</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">01</span><span class="pname">Klassische Maniküre</span><div class="pdesc">Feilen, Nagelhaut, Handmassage, Klarlack</div></div>
+          <div class="dots"></div><div class="pval">32 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">02</span><span class="pname">Maniküre mit Farblack</span><div class="pdesc">Wie oben, plus Farbe deiner Wahl</div></div>
+          <div class="dots"></div><div class="pval">40 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">03</span><span class="pname">Spa-Maniküre</span><div class="pdesc">Peeling, Paraffinbad, Massage, Farblack</div></div>
+          <div class="dots"></div><div class="pval">56 €</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <span class="gdot" style="background:var(--sw5)"></span>
+          <h3>Gel-Modellage</h3>
+          <span>04 — 06</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">04</span><span class="pname">Neumodellage</span><div class="pdesc">Aufbau in Wunschform und -länge</div></div>
+          <div class="dots"></div><div class="pval">62 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">05</span><span class="pname">Auffüllung</span><div class="pdesc">Nachfüllen nach 3–4 Wochen</div></div>
+          <div class="dots"></div><div class="pval">48 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">06</span><span class="pname">French Gel</span><div class="pdesc">Klassisches oder invertiertes French</div></div>
+          <div class="dots"></div><div class="pval">+8 €</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <span class="gdot" style="background:var(--sw8)"></span>
+          <h3>Nail Art</h3>
+          <span>07 — 08</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">07</span><span class="pname">Feine Linien / Ombré</span><div class="pdesc">Pro Hand</div></div>
+          <div class="dots"></div><div class="pval">ab 10 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">08</span><span class="pname">Statement-Finger</span><div class="pdesc">3D, Chrome oder Steinchen, pro Finger</div></div>
+          <div class="dots"></div><div class="pval">ab 4 €</div>
+        </div>
+      </div>
+
+      <p class="price-note">Alle Preise inkl. Materialkosten. Terminanfragen telefonisch oder per E-Mail.</p>
+
+      <div class="salon-strip">
+        <div class="strip-item reveal">
+          <h4>Nur nach Termin</h4>
+          <p>Keine Laufkundschaft — so bleibt genug Zeit für jede Behandlung.</p>
+        </div>
+        <div class="strip-item reveal">
+          <h4>24 h Absagefrist</h4>
+          <p>Kurzfristige Absagen unter 24 h werden anteilig berechnet.</p>
+        </div>
+        <div class="strip-item reveal">
+          <h4>Barzahlung &amp; EC</h4>
+          <p>Kartenzahlung ist möglich, Trinkgeld gerne bar.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============ STUDIO ============ -->
+<div class="page" id="page-studio">
+  <div class="page-hero"><span class="kicker">Studio</span><h1>Ländgasse 21</h1></div>
+  <section style="padding-top:1rem;">
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Der Raum</span>
+        <h2>Ruhig, hell, auf das Wesentliche reduziert.</h2>
+        <p>Zwei Arbeitsplätze, große Fenster zur Ländgasse, kein Hintergrundlärm.</p>
+      </div>
+      <div class="grid-gallery">
+        <div class="shine-card"><img src="https://images.unsplash.com/photo-1612887390768-fb02affea7a6?auto=format&fit=crop&w=600&q=80" alt="Maniküre-Detailaufnahme"></div>
+        <div class="shine-card"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=600&q=80" alt="Goldring mit frischer Maniküre"></div>
+        <div class="shine-card"><img src="https://images.unsplash.com/photo-1610992015836-7c249d75782d?auto=format&fit=crop&w=600&q=80" alt="Uhr und Maniküre im Detail"></div>
+        <div class="shine-card"><img src="https://images.unsplash.com/photo-1630843599725-32ead7671867?auto=format&fit=crop&w=600&q=80" alt="Weiße Maniküre"></div>
+      </div>
+    </div>
+  </section>
+  <section class="on-paper">
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Materialien</span>
+        <h2>Nur, was der Nagel wirklich verträgt.</h2>
+      </div>
+      <div class="values">
+        <div class="value-item reveal">
+          <h4>Atmungsaktive Gele</h4>
+          <p>Zertifizierte Systeme ohne aggressive Lösungsmittel.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Einweg wo nötig</h4>
+          <p>Feilen und Buffer werden nach jeder Kundin entsorgt.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Regionale Marken</h4>
+          <p>Lacke von Herstellern aus dem deutschsprachigen Raum, wo möglich.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ IMPRESSUM ============ -->
+<div class="page" id="page-impressum">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Impressum</h1></div>
+  <section class="on-paper" style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Name, Adresse, Telefonnummer und USt-IdNr. sind Platzhalter-Beispiele für dieses Portfolio-Demo. Bitte vor echter Veröffentlichung durch reale Geschäftsdaten ersetzen.</div>
+
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>LACQUERIE<br>Nora Vetter<br>Ländgasse 21<br>84028 Landshut<br>Deutschland</p>
+
+      <h3>Kontakt</h3>
+      <p>Telefon: <a class="inline-link" href="tel:+49871234567">0871 / 23 45 67</a><br>E-Mail: <a class="inline-link" href="mailto:hallo@lacquerie.de">hallo@lacquerie.de</a></p>
+
+      <h3>Umsatzsteuer-ID</h3>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE298765432</p>
+
+      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+      <p>Nora Vetter, Anschrift wie oben.</p>
+
+      <h3>Streitschlichtung</h3>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="inline-link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Meine E-Mail-Adresse findest du oben. Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+      <h3>Haftung für Inhalte</h3>
+      <p>Als Diensteanbieterin bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieterin jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+      <h3>Haftung für Links</h3>
+      <p>Dieses Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+      <h3>Urheberrecht</h3>
+      <p>Die durch mich erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DATENSCHUTZ ============ -->
+<div class="page" id="page-datenschutz">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Datenschutz</h1></div>
+  <section class="on-paper" style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Diese Vorlage deckt gängige Punkte für ein kleines Nagelstudio mit Kontaktformular und Google Analytics ab. Bitte fachlich prüfen lassen, bevor sie live geht.</div>
+
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>LACQUERIE<br>Nora Vetter<br>Ländgasse 21, 84028 Landshut<br>Telefon: 0871 / 23 45 67<br>E-Mail: hallo@lacquerie.de</p>
+
+      <h2>2. Allgemeines zur Datenverarbeitung</h2>
+      <p>Ich verarbeite personenbezogene Daten meiner Nutzer:innen grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie meiner Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt nach Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).</p>
+
+      <h2>3. Hosting</h2>
+      <p>Diese Website wird bei einem externen Hosting-Anbieter gehostet. Personenbezogene Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Der Hoster verarbeitet Daten in meinem Auftrag gemäß Art. 28 DSGVO.</p>
+
+      <h2>4. Kontaktaufnahme</h2>
+      <p>Wenn du mich per Telefon, E-Mail oder Kontaktformular kontaktierst, werden deine Angaben zum Zweck der Bearbeitung deiner Anfrage bei mir gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung). Die Daten werden gelöscht, sobald sie für die Bearbeitung nicht mehr erforderlich sind.</p>
+
+      <h2>5. Terminbuchung</h2>
+      <p>Bei einer Terminanfrage per Telefon oder E-Mail verarbeite ich die von dir mitgeteilten Daten (Name, Kontaktdaten, gewünschte Behandlung, Terminwunsch) zur Vorbereitung und Durchführung des Behandlungsvertrags gemäß Art. 6 Abs. 1 lit. b DSGVO.</p>
+
+      <h2>6. Google Analytics</h2>
+      <p>Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google"). Google Analytics verwendet Cookies bzw. vergleichbare Technologien, die eine Analyse der Benutzung der Website ermöglichen.</p>
+      <p>Die dabei erzeugten Informationen (z. B. Zugriffszeit, Ort des Zugriffs, Häufigkeit des Seitenbesuchs, gekürzte IP-Adresse) werden an Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert, sodass deine IP-Adresse vor der Übertragung innerhalb der EU/EWR gekürzt wird.</p>
+      <p>Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die du über das Cookie-Banner erteilen oder ablehnen kannst. Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+      <p>Google verarbeitet Daten auch in den USA; hierfür bestehen Standardvertragsklauseln der EU-Kommission als Garantie für ein angemessenes Datenschutzniveau. Weitere Infos: <a class="inline-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.</p>
+      <p>Du kannst die Erfassung verhindern, indem du das Browser-Add-on installierst: <a class="inline-link" href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h2>7. Cookies</h2>
+      <p>Diese Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, alle anderen (z. B. Google Analytics) nur mit deiner Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO.</p>
+
+      <h2>8. Deine Rechte</h2>
+      <ul>
+        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
+        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
+        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
+        <li>Recht auf Widerruf erteilter Einwilligungen</li>
+      </ul>
+      <p>Zudem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, z. B. beim Bayerischen Landesamt für Datenschutzaufsicht.</p>
+
+      <h2>9. Änderungen dieser Datenschutzerklärung</h2>
+      <p>Ich behalte mir vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht. Stand: 2026.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo"><span class="dot"></span>LACQUERIE</div>
+      <p>Nagelstudio in Landshut. Maniküre, Gel-Modellage und Nail Art nach Terminvereinbarung.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a href="tel:+49871234567">0871 / 23 45 67</a>
+      <a href="mailto:hallo@lacquerie.de">hallo@lacquerie.de</a>
+      <p>Ländgasse 21, 84028 Landshut</p>
+    </div>
+    <div class="footer-col">
+      <h4>Seite</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('ubermich')">Über mich</a>
+      <a onclick="showPage('leistungen')">Leistungen</a>
+      <a onclick="showPage('studio')">Studio</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 LACQUERIE</span>
+    <div class="footer-legal">
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY>40);
+  });
+  function toggleNav(){document.getElementById('mainNav').classList.toggle('open');}
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    document.querySelectorAll('nav.mainnav a[data-page]').forEach(a=>{
+      a.classList.toggle('active', a.dataset.page===name);
+    });
+    document.getElementById('mainNav').classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant'});
+    initReveal();
+  }
+
+  function initReveal(){
+    const els = document.querySelectorAll('.reveal:not(.in)');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} });
+    },{threshold:.15});
+    els.forEach(el=>obs.observe(el));
+  }
+  initReveal();
+</script>
+
+</body>
+</html>

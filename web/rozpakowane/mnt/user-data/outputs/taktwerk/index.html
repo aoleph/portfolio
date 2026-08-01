@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAKTWERK — Kfz-Werkstatt, Dingolfing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14181B;
+    --ink-2:#1D2226;
+    --paper:#F2F3F1;
+    --paper-deep:#E4E6E2;
+    --teal:#1F9E8C;
+    --teal-deep:#146F62;
+    --ink-soft:#8B9296;
+    --amber:#D69E2E;
+    --status-red:#C0392B;
+    --status-green:#2E9E5B;
+    --line:rgba(242,243,241,.14);
+    --line-dark:rgba(20,24,27,.12);
+    --white:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);color:var(--paper);
+    font-family:'IBM Plex Sans',sans-serif;font-weight:300;line-height:1.7;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit;}
+  img{display:block;max-width:100%;}
+  h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;line-height:1.1;color:var(--paper);letter-spacing:.01em;text-transform:uppercase;}
+  .on-paper h1,.on-paper h2,.on-paper h3,.on-paper h4{color:var(--ink);}
+  .kicker{
+    font-family:'IBM Plex Sans',sans-serif;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--teal);font-weight:600;display:inline-block;margin-bottom:1.3rem;
+  }
+  .on-paper .kicker{color:var(--teal-deep);}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;padding:1.6rem 3rem;
+    transition:background .3s ease, padding .3s ease, box-shadow .3s ease;
+  }
+  header.scrolled{background:rgba(20,24,27,.94);backdrop-filter:blur(10px);padding:1.1rem 3rem;box-shadow:0 2px 24px rgba(0,0,0,.3);}
+  .logo{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:.03em;text-transform:uppercase;cursor:pointer;color:var(--paper);display:inline-flex;align-items:center;gap:.55rem;}
+  .logo .mark{width:10px;height:10px;border-radius:50%;background:var(--teal);flex-shrink:0;box-shadow:0 0 0 3px rgba(31,158,140,.25);}
+  nav.mainnav{display:flex;gap:2.2rem;align-items:center;}
+  nav.mainnav a{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;position:relative;padding-bottom:3px;}
+  nav.mainnav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--teal);transition:width .3s ease;}
+  nav.mainnav a:hover::after,nav.mainnav a.active::after{width:100%;}
+  nav.mainnav a:hover,nav.mainnav a.active{color:var(--paper);}
+  .nav-cta{background:var(--teal);color:var(--ink)!important;padding:.65rem 1.4rem;border-radius:2px;font-weight:600!important;letter-spacing:.05em!important;}
+  .nav-cta:hover{background:var(--teal-deep);color:var(--white)!important;}
+  .nav-cta::after{display:none;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .burger span{width:24px;height:1px;background:var(--paper);display:block;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2rem;border-radius:2px;
+    font-family:'IBM Plex Sans',sans-serif;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;cursor:pointer;border:none;
+    transition:transform .3s ease, box-shadow .3s ease, background .3s ease;
+  }
+  .btn-solid{background:var(--teal);color:var(--ink);}
+  .btn-solid:hover{transform:translateY(-3px);box-shadow:0 16px 30px -14px rgba(31,158,140,.5);background:var(--teal-deep);color:var(--white);}
+  .btn-outline{background:transparent;border:1px solid var(--line);color:var(--paper);}
+  .btn-outline:hover{background:rgba(242,243,241,.06);transform:translateY(-3px);}
+  .on-paper .btn-outline{border:1px solid var(--line-dark);color:var(--ink);}
+  .on-paper .btn-outline:hover{background:rgba(20,24,27,.05);}
+
+  /* ================= HERO ================= */
+  .hero{position:relative;padding:11.5rem 3rem 3.5rem;overflow:hidden;text-align:center;}
+  .hero::before{
+    content:'';position:absolute;inset:0;z-index:0;
+    background:radial-gradient(ellipse 55% 45% at 50% 0%, rgba(31,158,140,.16), transparent 70%);
+  }
+  .hero-content{position:relative;z-index:2;max-width:720px;margin:0 auto;}
+  .hero-content h1{font-size:clamp(2.8rem,6.4vw,5rem);margin-bottom:1.5rem;}
+  .hero-content h1 em{font-style:normal;color:var(--teal);}
+  .hero-content p{color:var(--ink-soft);font-family:'IBM Plex Sans',sans-serif;font-size:1.03rem;max-width:520px;margin:0 auto 2.3rem;}
+  .hero-btnrow{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;}
+
+  /* ================= DIAGNOSE-AMPEL (signature) ================= */
+  .diag-wrap{position:relative;z-index:2;max-width:480px;margin:0 auto;background:var(--ink-2);border:1px solid var(--line);border-radius:6px;padding:1.6rem 1.8rem;text-align:left;}
+  .diag-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:.9rem;border-bottom:1px solid var(--line);}
+  .diag-head span{font-family:'IBM Plex Sans',sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+  .diag-head .dstatus{color:var(--teal);font-weight:600;}
+  .diag-row{display:flex;align-items:center;justify-content:space-between;padding:.65rem 0;}
+  .diag-row .dname{font-family:'IBM Plex Sans',sans-serif;font-size:.88rem;color:var(--paper);}
+  .diag-light{width:11px;height:11px;border-radius:50%;background:#3A4046;box-shadow:inset 0 1px 2px rgba(0,0,0,.4);animation:diagCheck 5s ease-in-out infinite;}
+  .diag-row:nth-child(2) .diag-light{animation-delay:.2s;}
+  .diag-row:nth-child(3) .diag-light{animation-delay:.9s;}
+  .diag-row:nth-child(4) .diag-light{animation-delay:1.6s;}
+  .diag-row:nth-child(5) .diag-light{animation-delay:2.3s;}
+  .diag-row:nth-child(6) .diag-light{animation-delay:3.0s;}
+  @keyframes diagCheck{
+    0%{background:#3A4046;}
+    8%{background:var(--status-green);box-shadow:0 0 8px rgba(46,158,91,.6);}
+    92%{background:var(--status-green);box-shadow:0 0 8px rgba(46,158,91,.6);}
+    97%{background:#3A4046;}
+    100%{background:#3A4046;}
+  }
+
+  /* ================= SECTION GENERIC ================= */
+  section{padding:6.5rem 3rem;}
+  .section-inner{max-width:1180px;margin:0 auto;}
+  .sec-head{max-width:600px;margin-bottom:3.4rem;}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .sec-head h2{font-size:clamp(2.1rem,4vw,3rem);}
+  .sec-head p{color:var(--ink-soft);font-family:'IBM Plex Sans',sans-serif;margin-top:1rem;}
+  .on-paper .sec-head p{color:#5A6166;}
+  .on-paper{background:var(--paper);color:var(--ink);}
+
+  /* ================= SERVICES ================= */
+  .service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;}
+  .service-card{
+    background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:2.2rem 1.6rem;
+    transition:transform .35s ease, border-color .35s ease;
+  }
+  .service-card:hover{transform:translateY(-6px);border-color:var(--teal);}
+  .service-card .sdot{width:14px;height:14px;background:var(--teal);margin-bottom:1.3rem;}
+  .service-card h3{font-size:1.2rem;margin-bottom:.6rem;text-transform:none;font-weight:600;font-family:'IBM Plex Sans',sans-serif;}
+  .service-card p{color:#5A6166;font-size:.85rem;}
+
+  /* ================= GALLERY ================= */
+  .grid-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;}
+  .shine-card{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:4/5;}
+  .shine-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease, filter .5s ease;filter:grayscale(50%) contrast(1.05);}
+  .shine-card:hover img{transform:scale(1.06);filter:grayscale(0%) contrast(1.05);}
+  .shine-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55));z-index:1;pointer-events:none;}
+  .shine-card .tag{position:absolute;left:.9rem;bottom:.8rem;z-index:2;font-family:'IBM Plex Sans',sans-serif;font-size:.72rem;color:var(--paper);letter-spacing:.04em;text-transform:uppercase;}
+
+  /* ================= TESTIMONIAL ================= */
+  .testimonial{text-align:center;background:var(--ink-2);}
+  .testimonial-inner{max-width:700px;margin:0 auto;}
+  .testimonial blockquote{
+    font-family:'IBM Plex Sans',sans-serif;font-weight:400;font-style:italic;font-size:clamp(1.2rem,2.2vw,1.6rem);
+    margin-bottom:1.3rem;line-height:1.5;
+  }
+  .testimonial .cite{font-family:'IBM Plex Sans',sans-serif;font-size:.76rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;}
+
+  /* ================= CTA ================= */
+  .cta-band{background:var(--teal);color:var(--ink);text-align:center;padding:5.5rem 2rem;}
+  .cta-band .kicker{color:rgba(20,24,27,.6);}
+  .cta-band h2{color:var(--ink);font-size:clamp(2rem,4vw,2.8rem);max-width:620px;margin:0 auto 2rem;}
+  .cta-band .btn-solid{background:var(--ink);color:var(--paper);}
+  .cta-band .btn-solid:hover{background:var(--ink-2);}
+  .cta-band .btn-outline{border-color:rgba(20,24,27,.4);color:var(--ink);}
+
+  /* ================= FOOTER ================= */
+  footer{background:var(--ink);border-top:1px solid var(--line);padding:3.8rem 3rem 2rem;}
+  .footer-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:2.4rem;padding-bottom:2.4rem;border-bottom:1px solid var(--line);}
+  .footer-grid .logo{margin-bottom:1rem;font-size:1.35rem;}
+  .footer-grid p{color:var(--ink-soft);font-family:'IBM Plex Sans',sans-serif;font-size:.86rem;max-width:260px;}
+  .footer-col h4{font-family:'IBM Plex Sans',sans-serif;font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:1rem;}
+  .footer-col a,.footer-col p{display:block;color:var(--ink-soft);font-family:'IBM Plex Sans',sans-serif;font-size:.86rem;margin-bottom:.55rem;}
+  .footer-col a:hover{color:var(--paper);}
+  .footer-bottom{max-width:1180px;margin:0 auto;padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.76rem;color:var(--ink-soft);font-family:'IBM Plex Sans',sans-serif;}
+  .footer-legal{display:flex;gap:1.4rem;flex-wrap:wrap;}
+  .footer-bottom a:hover{color:var(--paper);}
+
+  /* ================= PAGE HERO ================= */
+  .page-hero{padding:11rem 3rem 4.5rem;text-align:center;position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 55% 50% at 50% 0%, rgba(31,158,140,.16), transparent 70%);}
+  .page-hero h1{font-size:clamp(2.6rem,5.6vw,3.8rem);position:relative;z-index:2;}
+  .page-hero .kicker{position:relative;z-index:2;}
+
+  /* ================= ÜBER MICH ================= */
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:center;}
+  .about-img{border-radius:4px;overflow:hidden;aspect-ratio:4/5;}
+  .about-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%);}
+  .about-text p{color:#5A6166;font-family:'IBM Plex Sans',sans-serif;margin-bottom:1.1rem;max-width:520px;}
+  .cred-list{margin-top:1.8rem;border-top:1px solid var(--line-dark);padding-top:1.4rem;}
+  .cred-row{display:flex;gap:1.2rem;padding:.8rem 0;border-bottom:1px solid var(--line-dark);}
+  .cred-row .yr{font-family:'IBM Plex Sans',sans-serif;font-weight:700;color:var(--teal-deep);min-width:60px;font-size:.82rem;}
+  .cred-row .desc{color:#5A6166;font-family:'IBM Plex Sans',sans-serif;font-size:.9rem;}
+
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:4.5rem;}
+  .value-item{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.8rem;}
+  .value-item h4{font-size:1.15rem;margin-bottom:.5rem;text-transform:none;font-family:'IBM Plex Sans',sans-serif;font-weight:600;}
+  .value-item p{color:#5A6166;font-size:.86rem;}
+
+  /* ================= LEISTUNGEN — price list ================= */
+  .price-group{margin-bottom:3.2rem;}
+  .price-group-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;border-bottom:2px solid var(--teal);padding-bottom:.7rem;}
+  .price-group-head h3{font-size:1.4rem;flex:1;}
+  .price-group-head span{font-family:'IBM Plex Sans',sans-serif;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-deep);}
+  .price-row{display:flex;align-items:baseline;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line-dark);}
+  .price-row:last-child{border-bottom:none;}
+  .price-row .pname{font-weight:600;font-size:1rem;color:var(--ink);font-family:'IBM Plex Sans',sans-serif;}
+  .price-row .pdesc{color:#5A6166;font-family:'IBM Plex Sans',sans-serif;font-size:.82rem;margin-top:.2rem;}
+  .price-row .dots{flex:1;border-bottom:1px dotted var(--line-dark);transform:translateY(-.4rem);}
+  .price-row .pval{font-family:'IBM Plex Sans',sans-serif;font-weight:700;color:var(--ink);font-size:1rem;white-space:nowrap;}
+  .price-note{color:#5A6166;font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;text-align:center;margin-top:1rem;}
+
+  /* ================= LEGAL ================= */
+  .legal-body{max-width:750px;margin:0 auto;padding:0 3rem 6rem;}
+  .legal-body h2{font-size:1.4rem;margin:2.3rem 0 .9rem;text-transform:none;}
+  .legal-body h2:first-child{margin-top:0;}
+  .legal-body h3{font-family:'IBM Plex Sans',sans-serif;font-weight:700;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;margin:1.5rem 0 .6rem;color:var(--teal-deep);}
+  .legal-body p,.legal-body li{color:#5A6166;font-size:.95rem;margin-bottom:.9rem;}
+  .legal-body ul{padding-left:1.3rem;margin-bottom:1rem;}
+  .legal-body a.inline-link{color:var(--teal-deep);text-decoration:underline;}
+  .legal-note{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.3rem 1.5rem;font-size:.85rem;color:#5A6166;margin-bottom:2rem;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  @media(max-width:980px){
+    .service-grid{grid-template-columns:repeat(2,1fr);}
+    .grid-gallery{grid-template-columns:repeat(2,1fr);}
+    .about-grid{grid-template-columns:1fr;}
+    .values{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:768px){
+    header{padding:1.1rem 1.5rem;}
+    nav.mainnav{
+      position:fixed;top:0;right:0;height:100vh;width:80%;max-width:300px;
+      background:var(--ink-2);flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:1.8rem;padding:3rem;transform:translateX(100%);transition:transform .35s ease;
+      box-shadow:-10px 0 40px rgba(0,0,0,.3);
+    }
+    nav.mainnav.open{transform:translateX(0);}
+    .burger{display:flex;}
+    section{padding:4rem 1.5rem;}
+    .hero{padding:8.5rem 1.5rem 3rem;}
+    .page-hero{padding:8.5rem 1.5rem 3.5rem;}
+    .service-grid{grid-template-columns:1fr;}
+    .grid-gallery{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .legal-body{padding:0 1.5rem 4rem;}
+    .diag-wrap{padding:1.3rem 1.4rem;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo" onclick="showPage('home')"><span class="mark"></span>Taktwerk</div>
+  <nav class="mainnav" id="mainNav">
+    <a href="../" style="opacity:.7;">← Portfolio</a>
+    <a onclick="showPage('home')" data-page="home">Home</a>
+    <a onclick="showPage('ubermich')" data-page="ubermich">Über mich</a>
+    <a onclick="showPage('leistungen')" data-page="leistungen">Leistungen</a>
+    <a class="nav-cta" href="tel:+498731456789">Termin</a>
+  </nav>
+  <div class="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="kicker">Kfz-Werkstatt · Meisterbetrieb · Dingolfing</span>
+      <h1>Reparatur mit<br>offener <em>Karte</em>.</h1>
+      <p>Jede Diagnose schriftlich, jeder Kostenpunkt vorab erklärt — keine Überraschungen auf der Rechnung.</p>
+      <div class="hero-btnrow">
+        <a class="btn btn-solid" href="tel:+498731456789">Termin vereinbaren</a>
+        <a class="btn btn-outline" onclick="showPage('leistungen')">Leistungen ansehen</a>
+      </div>
+    </div>
+
+    <div class="diag-wrap reveal">
+      <div class="diag-head">
+        <span>Diagnose-Check</span>
+        <span class="dstatus">Live</span>
+      </div>
+      <div class="diag-row"><span class="dname">Bremsen</span><span class="diag-light"></span></div>
+      <div class="diag-row"><span class="dname">Reifen &amp; Fahrwerk</span><span class="diag-light"></span></div>
+      <div class="diag-row"><span class="dname">Motor &amp; Öl</span><span class="diag-light"></span></div>
+      <div class="diag-row"><span class="dname">Beleuchtung</span><span class="diag-light"></span></div>
+      <div class="diag-row"><span class="dname">Batterie &amp; Elektrik</span><span class="diag-light"></span></div>
+    </div>
+  </section>
+
+  <section class="on-paper">
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Leistungen</span>
+        <h2>Fünf Systeme, ein Befund.</h2>
+        <p>Bei jedem Termin bekommst du eine Übersicht, was geprüft wurde und wo Handlungsbedarf besteht.</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Inspektion &amp; Wartung</h3>
+          <p>Nach Herstellervorgabe, mit Nachweis für die Serviceheft-Historie.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Bremsen &amp; Fahrwerk</h3>
+          <p>Prüfung und Austausch von Belägen, Scheiben und Stoßdämpfern.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Reifenservice</h3>
+          <p>Wechsel, Einlagerung und Auswuchten, auch ohne Termin.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Diagnose &amp; Elektrik</h3>
+          <p>Fehlerspeicher auslesen, Ursache finden statt nur Symptome behandeln.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head">
+        <span class="kicker">In der Werkstatt</span>
+        <h2>Ordentlich, dokumentiert, nachvollziehbar.</h2>
+      </div>
+      <div class="grid-gallery">
+        <div class="shine-card reveal">
+          <img src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=700&q=80" alt="Ölwechsel am Motor">
+          <span class="tag">Wartung</span>
+        </div>
+        <div class="shine-card reveal">
+          <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=700&q=80" alt="Motorraum im Detail">
+          <span class="tag">Diagnose</span>
+        </div>
+        <div class="shine-card reveal">
+          <img src="https://images.unsplash.com/photo-1637640125496-31852f042a60?auto=format&fit=crop&w=700&q=80" alt="Werkzeugkasten in der Werkstatt">
+          <span class="tag">Werkzeug</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonial">
+    <div class="testimonial-inner">
+      <blockquote class="reveal">„Endlich eine Werkstatt, die mir zeigt, was sie gemacht hat — mit Fotos vom alten Teil. Kein 'vertrauen Sie mir einfach'.“</blockquote>
+      <div class="cite reveal">— Kunde, Dingolfing</div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Termin</span>
+    <h2 class="reveal">Kostenvoranschlag vor jeder Reparatur.</h2>
+    <div class="hero-btnrow" style="margin-bottom:0;">
+      <a class="btn btn-solid" href="tel:+498731456789">08731 / 45 67 89</a>
+      <a class="btn btn-outline" href="mailto:werkstatt@taktwerk-dingolfing.de">werkstatt@taktwerk-dingolfing.de</a>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ ÜBER MICH ============ -->
+<div class="page" id="page-ubermich">
+  <div class="page-hero"><span class="kicker">Über mich</span><h1>Michael Reiter</h1></div>
+  <section class="on-paper" style="padding-top:1rem;">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-img reveal">
+          <img src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=800&q=80" alt="Michael Reiter bei der Arbeit in der Werkstatt">
+        </div>
+        <div class="about-text">
+          <p class="reveal">Ich habe elf Jahre bei einem großen Vertragshändler gearbeitet, bevor ich 2019 meine eigene Werkstatt eröffnet habe. Was mich dort am meisten gestört hat: Kund:innen verstanden selten, wofür sie eigentlich bezahlten.</p>
+          <p class="reveal">Bei TAKTWERK bekommst du deshalb vor jeder größeren Reparatur einen schriftlichen Kostenvoranschlag — und die Erklärung, warum ein Teil ausgetauscht werden muss, nicht nur die Rechnung dafür.</p>
+          <div class="cred-list">
+            <div class="cred-row reveal"><span class="yr">2019</span><span class="desc">Gründung von TAKTWERK in Dingolfing</span></div>
+            <div class="cred-row reveal"><span class="yr">2015</span><span class="desc">Meisterprüfung im Kfz-Technikerhandwerk, HWK München</span></div>
+            <div class="cred-row reveal"><span class="yr">2008</span><span class="desc">Ausbildung zum Kfz-Mechatroniker, Beginn der Laufbahn</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="values">
+        <div class="value-item reveal">
+          <h4>Kostenvoranschlag vorab</h4>
+          <p>Ab 150 € Reparaturkosten bekommst du eine schriftliche Freigabe zum Unterschreiben.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Teile nach Wahl</h4>
+          <p>Original oder markengleiches Ersatzteil — du entscheidest, ich berate.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Altteile zur Ansicht</h4>
+          <p>Ausgetauschte Teile bekommst du auf Wunsch mit, samt Foto in der Doku.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ LEISTUNGEN ============ -->
+<div class="page" id="page-leistungen">
+  <div class="page-hero"><span class="kicker">Leistungen</span><h1>Preise &amp; Service</h1></div>
+  <section class="on-paper" style="padding-top:1rem;">
+    <div class="section-inner">
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Inspektion &amp; Wartung</h3>
+          <span>Regelmäßig</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Kleine Inspektion</span><div class="pdesc">Ölwechsel, Filter, Sichtprüfung</div></div>
+          <div class="dots"></div><div class="pval">ab 129 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Große Inspektion</span><div class="pdesc">Nach Herstellervorgabe, alle Verschleißteile geprüft</div></div>
+          <div class="dots"></div><div class="pval">ab 249 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">HU-Vorbereitung</span><div class="pdesc">Prüfung vor der Hauptuntersuchung, Mängel beheben</div></div>
+          <div class="dots"></div><div class="pval">69 €</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Bremsen &amp; Fahrwerk</h3>
+          <span>Sicherheit</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Bremsbeläge vorne</span><div class="pdesc">Inkl. Einbau, exkl. Material</div></div>
+          <div class="dots"></div><div class="pval">ab 89 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Bremsscheiben &amp; Beläge</span><div class="pdesc">Pro Achse, inkl. Einbau</div></div>
+          <div class="dots"></div><div class="pval">ab 219 €</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Reifen &amp; Räder</h3>
+          <span>Saisonal</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Radwechsel</span><div class="pdesc">Inkl. Auswuchten</div></div>
+          <div class="dots"></div><div class="pval">29 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Reifeneinlagerung</span><div class="pdesc">Pro Saison, vier Reifen</div></div>
+          <div class="dots"></div><div class="pval">39 €</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Diagnose &amp; Elektrik</h3>
+          <span>Fehlersuche</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Fehlerspeicher auslesen</span><div class="pdesc">Inkl. Kurzbefund</div></div>
+          <div class="dots"></div><div class="pval">39 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Elektrik-Fehlersuche</span><div class="pdesc">Nach Zeitaufwand</div></div>
+          <div class="dots"></div><div class="pval">89 €/Std.</div>
+        </div>
+      </div>
+
+      <p class="price-note">Alle Preise inkl. MwSt., exkl. Material sofern nicht anders angegeben. Kostenvoranschlag ab 150 € immer vorab.</p>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============ IMPRESSUM ============ -->
+<div class="page" id="page-impressum">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Impressum</h1></div>
+  <section class="on-paper" style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Name, Adresse, Telefonnummer und USt-IdNr. sind Platzhalter-Beispiele für dieses Portfolio-Demo. Bitte vor echter Veröffentlichung durch reale Geschäftsdaten ersetzen.</div>
+
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>TAKTWERK Kfz-Werkstatt<br>Michael Reiter<br>Industriestraße 14<br>84130 Dingolfing<br>Deutschland</p>
+
+      <h3>Kontakt</h3>
+      <p>Telefon: <a class="inline-link" href="tel:+498731456789">08731 / 45 67 89</a><br>E-Mail: <a class="inline-link" href="mailto:werkstatt@taktwerk-dingolfing.de">werkstatt@taktwerk-dingolfing.de</a></p>
+
+      <h3>Umsatzsteuer-ID</h3>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE412345678</p>
+
+      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+      <p>Michael Reiter, Anschrift wie oben.</p>
+
+      <h3>Berufsbezeichnung</h3>
+      <p>Kfz-Techniker-Meister, verliehen durch die Handwerkskammer München und Oberbayern. Eingetragen in der Handwerksrolle.</p>
+
+      <h3>Streitschlichtung</h3>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="inline-link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Meine E-Mail-Adresse findest du oben. Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+      <h3>Haftung für Inhalte</h3>
+      <p>Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+      <h3>Haftung für Links</h3>
+      <p>Dieses Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+      <h3>Urheberrecht</h3>
+      <p>Die durch mich erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DATENSCHUTZ ============ -->
+<div class="page" id="page-datenschutz">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Datenschutz</h1></div>
+  <section class="on-paper" style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Diese Vorlage deckt gängige Punkte für eine kleine Kfz-Werkstatt mit Kontaktformular und Google Analytics ab. Bitte fachlich prüfen lassen, bevor sie live geht.</div>
+
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>TAKTWERK Kfz-Werkstatt<br>Michael Reiter<br>Industriestraße 14, 84130 Dingolfing<br>Telefon: 08731 / 45 67 89<br>E-Mail: werkstatt@taktwerk-dingolfing.de</p>
+
+      <h2>2. Allgemeines zur Datenverarbeitung</h2>
+      <p>Ich verarbeite personenbezogene Daten meiner Nutzer:innen grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie meiner Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt nach Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).</p>
+
+      <h2>3. Hosting</h2>
+      <p>Diese Website wird bei einem externen Hosting-Anbieter gehostet. Personenbezogene Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Der Hoster verarbeitet Daten in meinem Auftrag gemäß Art. 28 DSGVO.</p>
+
+      <h2>4. Kontaktaufnahme &amp; Terminvereinbarung</h2>
+      <p>Wenn du mich per Telefon, E-Mail oder Kontaktformular kontaktierst oder einen Termin vereinbarst, werden deine Angaben (Name, Kontaktdaten, Fahrzeugdaten, Terminwunsch) zum Zweck der Bearbeitung deiner Anfrage bei mir gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung). Die Daten werden gelöscht, sobald sie für die Bearbeitung nicht mehr erforderlich sind, gesetzliche Aufbewahrungsfristen bleiben unberührt.</p>
+
+      <h2>5. Google Analytics</h2>
+      <p>Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google"). Google Analytics verwendet Cookies bzw. vergleichbare Technologien, die eine Analyse der Benutzung der Website ermöglichen.</p>
+      <p>Die dabei erzeugten Informationen (z. B. Zugriffszeit, Ort des Zugriffs, Häufigkeit des Seitenbesuchs, gekürzte IP-Adresse) werden an Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert, sodass deine IP-Adresse vor der Übertragung innerhalb der EU/EWR gekürzt wird.</p>
+      <p>Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die du über das Cookie-Banner erteilen oder ablehnen kannst. Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+      <p>Google verarbeitet Daten auch in den USA; hierfür bestehen Standardvertragsklauseln der EU-Kommission als Garantie für ein angemessenes Datenschutzniveau. Weitere Infos: <a class="inline-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.</p>
+      <p>Du kannst die Erfassung verhindern, indem du das Browser-Add-on installierst: <a class="inline-link" href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h2>6. Cookies</h2>
+      <p>Diese Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, alle anderen (z. B. Google Analytics) nur mit deiner Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO.</p>
+
+      <h2>7. Deine Rechte</h2>
+      <ul>
+        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
+        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
+        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
+        <li>Recht auf Widerruf erteilter Einwilligungen</li>
+      </ul>
+      <p>Zudem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, z. B. beim Bayerischen Landesamt für Datenschutzaufsicht.</p>
+
+      <h2>8. Änderungen dieser Datenschutzerklärung</h2>
+      <p>Ich behalte mir vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht. Stand: 2026.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo"><span class="mark"></span>Taktwerk</div>
+      <p>Kfz-Meisterbetrieb in Dingolfing — Inspektion, Bremsen, Reifen und Diagnose, transparent erklärt.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a href="tel:+498731456789">08731 / 45 67 89</a>
+      <a href="mailto:werkstatt@taktwerk-dingolfing.de">werkstatt@taktwerk-dingolfing.de</a>
+      <p>Industriestraße 14, 84130 Dingolfing</p>
+    </div>
+    <div class="footer-col">
+      <h4>Seite</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('ubermich')">Über mich</a>
+      <a onclick="showPage('leistungen')">Leistungen</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 TAKTWERK Kfz-Werkstatt</span>
+    <div class="footer-legal">
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY>40);
+  });
+  function toggleNav(){document.getElementById('mainNav').classList.toggle('open');}
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    document.querySelectorAll('nav.mainnav a[data-page]').forEach(a=>{
+      a.classList.toggle('active', a.dataset.page===name);
+    });
+    document.getElementById('mainNav').classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant'});
+    initReveal();
+  }
+
+  function initReveal(){
+    const els = document.querySelectorAll('.reveal:not(.in)');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} });
+    },{threshold:.15});
+    els.forEach(el=>obs.observe(el));
+  }
+  initReveal();
+</script>
+
+</body>
+</html>

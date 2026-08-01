@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Blog von Adam Olendzki Photographer: Gedanken, Tipps und Geschichten hinter den Kulissen der Fotografie.">
+  <title>Blog – Fotografie & Insights | Adam Olendzki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;1,300&family=Jost:ital,wght@0,300;0,400;1,300&family=Oswald:wght@100;200;300;400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #f7f7f5; color: #242422; font-family: 'Inter', sans-serif; font-weight: 300; }
+    a { color: inherit; text-decoration: none; }
+
+    /* HEADER */
+    header { position: fixed; inset: 0 0 auto; z-index: 20; min-height: 78px; display: flex; align-items: center; justify-content: space-between; padding: 22px 42px; background: rgba(20,20,18,.92); backdrop-filter: blur(10px); color: #fff; box-sizing: border-box; }
+    .logo { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 300; letter-spacing: 1.6px; white-space: nowrap; transition: color .35s ease, letter-spacing .35s ease; }
+    .logo:hover { color: #d4a820; letter-spacing: 2.4px; }
+    nav ul { display: flex; gap: 26px; align-items: center; list-style: none; padding: 0; margin: 0; }
+    nav a { font-family: 'Oswald', sans-serif; font-size: 21.6px; font-weight: 100; letter-spacing: 1.2px; text-transform: lowercase; cursor: pointer; transition: color .3s ease; }
+    nav > ul > li > a:hover { color: #d4a820; }
+    .dropdown { position: relative; }
+    .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #141412; box-shadow: 0 8px 16px rgba(0,0,0,.65); padding: 15px 0; min-width: 320px; z-index: 100; border: 1px solid #262624; }
+    .dropdown-menu li a { display: block; padding: 10px 25px; font-family: 'Jost', sans-serif; font-size: 20px; font-weight: 200; letter-spacing: 2px; text-transform: lowercase; color: #bebebe; }
+    .dropdown-menu li a:hover { background: #222220; color: #fff; }
+    .dropdown:hover .dropdown-menu { display: block; }
+
+    /* READING PROGRESS BAR — nowy akcent na widoku artykułu */
+    .read-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: #d4a820; z-index: 30; transition: width .1s linear; }
+
+    /* HERO */
+    .hero { height: 78vh; min-height: 480px; position: relative; display: flex; align-items: flex-end; justify-content: flex-start; overflow: hidden; background: #141412; }
+    .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.55); }
+    .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.14), rgba(0,0,0,.62)); }
+    .hero-text { position: relative; z-index: 1; padding: 0 0 clamp(36px, 5vw, 60px) clamp(24px, 6vw, 90px); }
+    .hero h1 { margin: 0; display: flex; flex-direction: column; }
+    .hero h1 span { color: #fff; font-family: 'Oswald', sans-serif; font-size: clamp(42px, 7.5vw, 100px); font-weight: 300; letter-spacing: 1px; text-transform: uppercase; text-align: left; line-height: .98; }
+    .hero-sub { margin: 20px 0 0; color: #d4a820; font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; }
+
+    /* mniejsze hero na widoku artykułu */
+    .hero.article-hero { height: 56vh; min-height: 380px; }
+    .hero.article-hero h1 span { font-size: clamp(30px, 4.6vw, 58px); }
+    .hero.article-hero .hero-sub { color: #cfcdc4; text-transform: none; letter-spacing: .3px; font-size: 16px; font-family: 'Jost', sans-serif; max-width: 640px; }
+
+    /* INTRO */
+    .intro { max-width: 900px; margin: 0 auto; padding: 60px 24px 20px; text-align: center; }
+    .intro p { margin: 0; font-family: 'Jost', sans-serif; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.75; color: #4e4e49; }
+    .intro .label { display: block; margin-bottom: 14px; color: #d4a820; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Oswald', sans-serif; }
+
+    /* BLOG GRID */
+    .blog-section { padding: 50px 0 90px; }
+    .blog-grid { max-width: 1300px; margin: 0 auto; padding: 0 60px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
+    .blog-card { display: block; cursor: pointer; }
+    .blog-card figure { margin: 0; overflow: hidden; background: #d7d7d2; aspect-ratio: 4 / 3; position: relative; }
+    .blog-card img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(1); transition: transform .8s cubic-bezier(.2,.8,.2,1), filter .5s ease; }
+    .blog-card:hover img { filter: brightness(.85); transform: scale(1.06); }
+    .blog-card .tag { position: absolute; left: 14px; top: 14px; z-index: 1; background: #d4a820; color: #141412; font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; }
+    .blog-card-body { padding: 22px 2px 0; }
+    .blog-card-meta { margin: 0 0 10px; font-family: 'Oswald', sans-serif; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #9a9a94; }
+    .blog-card-title { margin: 0 0 10px; font-family: 'Oswald', sans-serif; font-size: 21px; font-weight: 400; line-height: 1.3; color: #1e1e1c; }
+    .blog-card-excerpt { margin: 0; font-family: 'Jost', sans-serif; font-size: 15px; line-height: 1.6; color: #68685f; }
+
+    /* ARTICLE */
+    .article-wrap { max-width: 760px; margin: 0 auto; padding: 60px 24px 30px; }
+    .spa-back { display: inline-block; margin-bottom: 20px; font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: 1.5px; color: #74746e; text-transform: lowercase; cursor: pointer; }
+    .spa-back:hover { color: #d4a820; }
+    .article-meta { display: flex; gap: 14px; align-items: center; margin-bottom: 6px; }
+    .article-meta .tag { background: #d4a820; color: #141412; font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; }
+    .article-meta .readtime { font-family: 'Oswald', sans-serif; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #9a9a94; }
+    .article-body { font-family: 'Jost', sans-serif; font-size: 18px; line-height: 1.85; color: #33332f; }
+    .article-body p { margin: 0 0 22px; }
+    .article-body h3 { margin: 40px 0 16px; font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 400; color: #1a1a18; }
+    .article-body ul { margin: 0 0 22px; padding-left: 22px; }
+    .article-body li { margin-bottom: 10px; }
+    .article-body li strong { color: #1a1a18; }
+
+    .next-article { max-width: 760px; margin: 30px auto 90px; padding: 0 24px; }
+    .next-article-card { display: grid; grid-template-columns: 140px 1fr auto; gap: 22px; align-items: center; background: #141412; padding: 22px; }
+    .next-article-card figure { margin: 0; overflow: hidden; aspect-ratio: 4/3; background: #1c1c19; }
+    .next-article-card img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(1); transition: transform .6s ease, filter .4s ease; }
+    .next-article-card:hover img { filter: brightness(.85); transform: scale(1.06); }
+    .next-article-label { font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #d4a820; margin-bottom: 8px; display: block; }
+    .next-article-title { font-family: 'Oswald', sans-serif; font-size: 17px; color: #f2f1ec; line-height: 1.3; }
+    .next-article-arrow { color: #d4a820; font-size: 22px; }
+
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    footer { padding: 38px; background: #1a1a18; color: #8f8f89; text-align: center; font-size: 12px; letter-spacing: 1px; }
+
+    .spa-page { display: none; }
+
+    @media (max-width: 760px) {
+      header { padding: 18px 20px; min-height: 64px; }
+      .logo { font-size: 17px; }
+      nav { display: none; }
+      .hero { height: 62vh; }
+      .hero.article-hero { height: 46vh; min-height: 320px; }
+      .blog-grid { grid-template-columns: 1fr; padding: 0 24px; gap: 46px; }
+      .article-wrap { padding: 40px 24px 10px; }
+      .next-article-card { grid-template-columns: 90px 1fr auto; padding: 16px; gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="read-progress" id="readProgress"></div>
+
+  <header>
+    <div class="logo"><a href="/">ADAM OLENDZKI PHOTOGRAPHER</a></div>
+    <nav>
+      <ul>
+        <li><a href="/#about">about</a></li>
+        <li class="dropdown">
+          <a>portfolio &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="/schwangerschaft/">schwangerschaftsfotografie</a></li>
+            <li><a href="/business/">business & image</a></li>
+            <li><a href="/family/">familie & kinder fotografie</a></li>
+            <li><a href="/couples/">paare / couples</a></li>
+            <li><a href="/women-zone/">women zone</a></li>
+          </ul>
+        </li>
+        <li><a href="/#projects">kooperation</a></li>
+        <li><a href="/blog/">blog</a></li>
+        <li><a href="/#contact">kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- BLOG ÜBERSICHT -->
+    <div id="page-blog" class="spa-page" style="display:block;">
+      <section class="hero">
+        <img src="images/blog/blog-cover.webp" alt="Blog">
+        <div class="hero-text">
+          <h1><span>Fotografie</span><span>&amp; Insights</span></h1>
+          <p class="hero-sub">Adam Olendzki – Gedanken hinter der Kamera</p>
+        </div>
+      </section>
+
+      <section class="intro">
+        <span class="label">Willkommen</span>
+        <p>Hier findest Du interessante Gedanken, technische Einblicke und kleine Geschichten aus der Welt der Fotografie – aber auch weit darüber hinaus.</p>
+      </section>
+
+      <section class="blog-section">
+        <div class="blog-grid">
+
+          <a class="blog-card" data-target="page-article-megapixel">
+            <figure><span class="tag">Technik</span><img src="images/blog/blog-megapixel-horizontal-01.webp" alt="Megapixel-Wahn und Marketing"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">6 Min. Lesezeit</div>
+              <div class="blog-card-title">Megapixel-Wahn und Marketing: Brauchen wir wirklich ständig das Neueste?</div>
+              <p class="blog-card-excerpt">Warum ein teurer Body kein fehlendes Grundlagenwissen ersetzt – und wohin die Investition wirklich gehört...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-preise">
+            <figure><span class="tag">Gedanken</span><img src="images/blog/blog-preise-horizontal-01.webp" alt="Was kostet ein echtes Bild"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">5 Min. Lesezeit</div>
+              <div class="blog-card-title">Was kostet ein echtes Bild? Die Wahrheit hinter den Preisen in der Fotografie</div>
+              <p class="blog-card-excerpt">Warum der Preis niemals nur die Zeit vor der Kamera bezahlt, sondern jahrelange Erfahrung und unsichtbare Arbeit...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-hss">
+            <figure><span class="tag">Technik</span><img src="images/blog/blog-hss-horizontal-01.webp" alt="HSS und ND-Filter"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">6 Min. Lesezeit</div>
+              <div class="blog-card-title">Lichtbändigung bei offener Blende: Was ist HSS und wie rettet der ND-Filter dein Porträt?</div>
+              <p class="blog-card-excerpt">Wie Du auch bei gleißendem Sonnenschein mit offener Blende blitzt und ein butterweiches Bokeh bekommst...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-trends">
+            <figure><span class="tag">Technik</span><img src="images/blog/blog-trends-horizontal-01.webp" alt="Trendsetter im Studio"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">6 Min. Lesezeit</div>
+              <div class="blog-card-title">Trendsetter im Studio: Warum sich der Blick über den Tellerrand in der Portrait- und Fashionfotografie lohnt</div>
+              <p class="blog-card-excerpt">Farbakzente im Hintergrund, Gobos und Styling im Team mit dem Model – wie man Trends klug für den eigenen Stil nutzt...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-kamera">
+            <figure><span class="tag">Technik</span><img src="images/blog/blog-kamera-horizontal-01.webp" alt="Canon, Sony oder Nikon"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">6 Min. Lesezeit</div>
+              <div class="blog-card-title">Canon, Sony oder Nikon: Warum Ergonomie und Funktionalität mehr zählen als das Logo auf dem Gehäuse</div>
+              <p class="blog-card-excerpt">Die perfekte Marke gibt es nicht – nur das Werkzeug, das zu Deinem Genre und Deinen räumlichen Bedingungen passt...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-inspiration">
+            <figure><span class="tag">Mindset</span><img src="images/blog/blog-inspiration-horizontal-01.webp" alt="Woher die Magie kommt"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">5 Min. Lesezeit</div>
+              <div class="blog-card-title">Woher die Magie kommt: Auf der Suche nach den wahren Inspirationen in der Fotografie</div>
+              <p class="blog-card-excerpt">Inspiration lässt sich nicht erzwingen – warum der Wald oft mehr Ideen liefert als jeder Bildschirm...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-fineart">
+            <figure><span class="tag">Kunst</span><img src="images/blog/blog-fineart-horizontal-01.webp" alt="Fine Art Fotografie"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">6 Min. Lesezeit</div>
+              <div class="blog-card-title">Fine Art Fotografie: Zwischen klassischer Malerei und digitaler Ästhetik</div>
+              <p class="blog-card-excerpt">Klassische Lichtsetzung im Sinne der alten Meister oder digitale Traumwelten – zwei völlig unterschiedliche Wege, Fine Art zu verstehen...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-psychology">
+            <figure><span class="tag">Mindset</span><img src="images/blog/blog-psychology-horizontal-01.webp" alt="Psychologie der Fotografie"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">4 Min. Lesezeit</div>
+              <div class="blog-card-title">Die Psychologie der Fotografie</div>
+              <p class="blog-card-excerpt">Warum haben wir Angst vor der Kamera? Wie lernen wir, uns selbst durch die Linse neu zu entdecken...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-makeup">
+            <figure><span class="tag">Vorbereitung</span><img src="images/blog/blog-makeup-horizontal-01.webp" alt="Make-up beim Fotoshooting"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">3 Min. Lesezeit</div>
+              <div class="blog-card-title">Brauche ich ein professionelles Make-up?</div>
+              <p class="blog-card-excerpt">Ein Mythos, der viele verunsichert – was tatsächlich wichtig ist und was nicht...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-light">
+            <figure><span class="tag">Technik</span><img src="images/blog/blog-light-horizontal-01.webp" alt="Kreatives Licht in der Fotografie"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">3 Min. Lesezeit</div>
+              <div class="blog-card-title">Kreatives Licht in der Fotografie</div>
+              <p class="blog-card-excerpt">Hartes oder weiches Licht? Was die Lichtqualität wirklich mit Deinem Foto macht...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-retouching">
+            <figure><span class="tag">Bearbeitung</span><img src="images/blog/blog-retouching-horizontal-01.webp" alt="Grenzen der Retusche"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">4 Min. Lesezeit</div>
+              <div class="blog-card-title">Wo endet die Grenze einer sinnvollen Retusche?</div>
+              <p class="blog-card-excerpt">Ein Fotograf ist kein Bügeleisen, kein Solarium und kein Friseur – warum Vorbereitung der Schlüssel ist...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-ai">
+            <figure><span class="tag">Gedanken</span><img src="images/blog/blog-ai-horizontal-01.webp" alt="KI generierte Fotografie"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">4 Min. Lesezeit</div>
+              <div class="blog-card-title">Ist eine KI-generierte Session eine Bedrohung für Fotografen?</div>
+              <p class="blog-card-excerpt">Warum sich das echte Gefühl eines Shootings niemals künstlich erzeugen lässt...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-companion">
+            <figure><span class="tag">Mindset</span><img src="images/blog/blog-companion-horizontal-01.webp" alt="Begleitperson beim Fotoshooting"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">3 Min. Lesezeit</div>
+              <div class="blog-card-title">Die Begleitperson beim Shooting</div>
+              <p class="blog-card-excerpt">Warum der ständige Blick zum Partner mehr über Dich verrät, als Du denkst...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-lampenfieber">
+            <figure><span class="tag">Mindset</span><img src="images/blog/blog-lampenfieber-horizontal-01.webp" alt="Lampenfieber vor dem Fotoshooting"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">5 Min. Lesezeit</div>
+              <div class="blog-card-title">Lampenfieber vor einem Fotoshooting?</div>
+              <p class="blog-card-excerpt">Warum Nervosität vor der Kamera kein Problem ist – und was sie über Dich verrät...</p>
+            </div>
+          </a>
+
+          <a class="blog-card" data-target="page-article-smartphone">
+            <figure><span class="tag">Technik</span><img src="images/blog/blog-smartphone-horizontal-01.webp" alt="Smartphone-Fotografie im Fokus"></figure>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">6 Min. Lesezeit</div>
+              <div class="blog-card-title">Smartphone-Fotografie im Fokus: Wann das Handy die Kamera ersetzt (und wo es scheitert)</div>
+              <p class="blog-card-excerpt">Zwischen Marketing-Megapixeln und echter Physik – wo das Handy brilliert und warum es im Studio an seine Grenzen stößt...</p>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <section class="visually-hidden">
+        <h2>Fotografie-Blog in der Region Landshut</h2>
+        <p>Als Fotograf aus Rottenburg an der Laaber schreibe ich hier über Fotografie, Vorbereitung auf ein Shooting und Gedanken hinter der Kamera – relevant für Kundinnen und Kunden aus Landshut, Schierling, Abensberg, Kelheim, Straubing, Ingolstadt, Regensburg und München.</p>
+      </section>
+    </div>
+
+    <!-- ARTIKEL: PREISE -->
+    <div id="page-article-preise" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-preise-horizontal-01.webp" alt="Was kostet ein echtes Bild">
+        <div class="hero-text">
+          <h1><span>Was kostet</span><span>ein echtes Bild?</span></h1>
+          <p class="hero-sub">Die Wahrheit hinter den Preisen in der Fotografie</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Gedanken</span><span class="readtime">5 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Sicherlich hat man diesen Vorwurf in der Fotografie schon oft gehört: „Was für eine Arbeit? Ein paar Mal auf den Auslöser gedrückt, und dafür verlangst du so viel Geld?" Für Außenstehende dauert ein Shooting eine Stunde, und die fertigen Aufnahmen erscheinen wie durch Zauberei auf dem Computer. Warum also kostet ein Paket mit wenigen Aufnahmen bei dem einen Anbieter so viel wie bei einem anderen eine ganze Session mit Dutzenden Bildern?</p>
+          <p>Der Preis in der Fotografie ist niemals eine einfache Bezahlung für die „Zeit vor der Kamera". Er spiegelt jahrelange Erfahrung, das aufgebaute Fundament und den dahinterstehenden Aufwand wider. Schauen wir uns an, was sich tatsächlich hinter den unterschiedlichen Preisstrukturen in der Praxis verbirgt.</p>
+          <h3>1. Unterschiedliche Herangehensweisen an das Handwerk</h3>
+          <p>In der Preisgestaltung spiegeln sich oft ganz unterschiedliche Arbeitsweisen wider:</p>
+          <ul>
+            <li><strong>Der detailorientierte Ansatz:</strong> Hier liegt der Fokus auf einem durchdachten Konzept, präziser Lichtsetzung, intensiver Vorbereitung, dem passenden Styling und einer Bildsprache, die von Anfang bis Ende aufeinander abgestimmt ist. Jedes einzelne Bild wird als eigenständiges Werk betrachtet und entsprechend aufwendig behandelt.</li>
+            <li><strong>Der standardisierte Ansatz:</strong> Hier wird oft nach einem festen, schnellen Schema gearbeitet. Die Abläufe sind standardisiert, und die Session folgt einem schnelleren Rhythmus, was sich direkt in einer anderen Kalkulation und einem anderen Endergebnis niederschlägt.</li>
+          </ul>
+          <h3>2. Wofür steht der Preis? Die unsichtbaren Faktoren</h3>
+          <p>Ein großer Teil des Budgets fließt in Bereiche, die für den Betrachter auf den ersten Blick unsichtbar bleiben, aber für das Ergebnis entscheidend sind:</p>
+          <ul>
+            <li><strong>Die Ausrüstung und Technik:</strong> Zuverlässige Kameras, lichtstarke Objektive, professionelle Studioblitzanlagen mit Lichtformern und Ersatzgeräte für den Notfall erfordern hohe Investitionen. Hinzu kommen leistungsstarke Computer und professionelle Software für die Bearbeitung.</li>
+            <li><strong>Die Arbeit nach dem Shooting (Postproduktion):</strong> Das eigentliche Fotografieren macht oft nur einen Bruchteil des gesamten Prozesses aus. Ein Großteil der Arbeit findet am Rechner statt: die sorgfältige Selektion der besten Aufnahmen, die Hautretusche, die präzise Farbkorrektur und das Ausarbeiten von Stimmung und Details.</li>
+            <li><strong>Kontinuierliche Weiterentwicklung:</strong> Das Erlernen neuer Lichttechniken, der Umgang mit modernen Werkzeugen und das Verfeinern des eigenen Stils erfordern einen ständigen Einsatz von Zeit und Ressourcen.</li>
+          </ul>
+          <h3>3. Warum weniger manchmal mehr ist (Qualität versus Quantität)</h3>
+          <p>Warum können drei ausgearbeitete, perfekt retuschierte Bilder so viel kosten wie zehn unbearbeitete oder flach belichtete Aufnahmen?</p>
+          <p>Hier bezahlt man für den redaktionellen Wert und die Selektion. Statt den Kunden mit einer riesigen Menge an durchschnittlichen Dateien zu überfluten, wird eine Handvoll starker, aussagekräftiger Momente ausgewählt und bis ins Detail perfektioniert. Es geht um die Essenz und die visuelle Wirkung, die ein Bild transportiert.</p>
+          <h3>4. Die Wirkung von professionellen Aufnahmen</h3>
+          <p>Wer den Wert von Bildern hinterfragt, vergisst oft, welche Rolle sie im eigenen Auftreten spielen. Ob im Business, in der Porträt- oder Fashionfotografie: Visuelle Qualität prägt den ersten Eindruck. Hochwertige Aufnahmen mit einer gezielten Lichtführung, passenden Farben und einer klaren Bildsprache erzeugen eine ganz andere Präsenz als Schnappschüsse. Die Investition in solche Ergebnisse zahlt sich aus, weil sie über Jahre hinweg Bestand haben.</p>
+          <h3>Fazit</h3>
+          <p>Der Preis in der Fotografie entsteht nicht zufällig. Er ist das Resultat aus technischem Aufwand, dem zeitlichen Investment in der Nachbearbeitung, der verwendeten Ausrüstung und der handwerklichen Handschrift, die hinter den Aufnahmen steht.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-hss">
+          <figure><img src="images/blog/blog-hss-horizontal-01.webp" alt="HSS und ND-Filter"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Lichtbändigung bei offener Blende: Was ist HSS und wie rettet der ND-Filter dein Porträt?</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: HSS -->
+    <div id="page-article-hss" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-hss-horizontal-01.webp" alt="HSS und ND-Filter">
+        <div class="hero-text">
+          <h1><span>Lichtbändigung bei</span><span>offener Blende</span></h1>
+          <p class="hero-sub">Was ist HSS und wie rettet der ND-Filter dein Porträt?</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Technik</span><span class="readtime">6 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Wer in der Porträt- oder Fashionfotografie schon einmal versucht hat, draußen an einem sonnigen Tag mit offener Blende (zum Beispiel f/1.4 oder f/1.8) zu fotografieren und gleichzeitig den Blitz einzuschalten, kennt das frustrierende Ergebnis: Entweder ist das Bild komplett weiß überbelichtet, oder die Kamera zwingt dich zu einer kurzen Verschlusszeit, die der Blitz schlichtweg verweigert.</p>
+          <p>Das Geheimnis hinter der Lösung dieses Problems heißt HSS (High Speed Sync) – oder, als clevere Alternative für das schmale Budget, der Griff zum ND-Filter. Schauen wir uns an, wie das technologisch zusammenhängt und wie du damit auch bei grellem Sonnenlicht butterweiche Hintergründe zauberst.</p>
+          <h3>Was ist HSS und wofür braucht man es?</h3>
+          <p>Normalerweise hat jede Kamera eine sogenannte Blitzsynchronzeit (oft liegt sie bei 1/200s oder 1/250s). Das ist die maximale Verschlusszeit, bei der der mechanische Verschluss der Kamera komplett geöffnet ist, während der Blitz abfeuert. Versucht man, bei hellem Tageslicht mit einer kürzeren Zeit (z. B. 1/1000s) zu fotografieren, schiebt sich der vordere Vorhang des Verschlusses bereits über den Sensor, während der Blitz zündet – das Resultat ist ein pechschwarzer Balken auf dem Foto.</p>
+          <p>HSS (High Speed Sync) durchbricht diese physische Grenze. Statt eines einzigen, kurzen Blitzes feuert die HSS-fähige Lampe eine extrem schnelle Serie von Mikro-Blitzen ab, während der Verschluss am Sensor vorbeiläuft. Dadurch wird das Bild gleichmäßig belichtet – selbst bei Verschlusszeiten von 1/4000s oder 1/8000s.</p>
+          <p><strong>Wann braucht man das?</strong> Vor allem in der Porträt- und Fashionfotografie im Freien bei hellem Tageslicht. Wenn du das Umgebungslicht abdunkeln und gleichzeitig mit offener Blende (z. B. f/1.4) fotografieren willst, um einen wunderschönen, unscharfen Hintergrund (Bokeh) zu erzeugen, kommst du um HSS kaum herum.</p>
+          <h3>Das Problem ohne HSS: Warum man sonst abblenden muss</h3>
+          <p>Wenn deine Studio- oder Systemlampe kein HSS unterstützt und deine Kamera bei der maximalen Synchronzeit (z. B. 1/200s) trotz niedrigster ISO-Zahl (ISO 100) immer noch ein viel zu helles Bild liefert, bleibt dir ohne Hilfsmittel nur ein Ausweg: Du musst die Blende schließen (also auf f/8, f/11 oder noch höher gehen).</p>
+          <p>Das physikalische Resultat: Das Bild wird zwar korrekt belichtet, aber der Hintergrund wird plötzlich scharf, störende Elemente im Umfeld treten in den Vordergrund, und der so beliebte, dreidimensionale Porträt-Look geht komplett verloren.</p>
+          <h3>Die Rettung ohne HSS: Der ND-Filter (Neutralgraufilter)</h3>
+          <p>Wer keine teure HSS-Lampe besitzt, kann die Physik ganz einfach austricksen – und zwar mit einem ND-Filter (Neutralgraufilter), der wie eine Sonnenbrille vor das Objektiv geschraubt wird.</p>
+          <p>Ein ND-Filter schluckt Licht, ohne die Farben oder die Schärfe des Bildes zu verändern. Dadurch kannst du den Sensor „verdunkeln", die Belichtungszeit auf der sicheren Synchronzeit der Kamera (z. B. 1/200s) belassen und trotzdem mit offener Blende (f/1.4 oder f/1.8) und zugeschaltetem Blitz fotografieren.</p>
+          <h3>Der Filterfaktor und die Blenden-Äquivalenz: Welcher ND passt?</h3>
+          <p>ND-Filter werden in verschiedenen Stärken angegeben (oft über Blendenstufen oder den Lichtwertfaktor wie ND8, ND64 etc.). Wenn du weißt, wie viel Licht du kompensieren musst, hilft dir diese praktische Umrechnung:</p>
+          <ul>
+            <li><strong>ND8</strong> (3 Blendenstufen / Stop 3): Reduziert das Licht so stark, als würdest du die Blende um 3 Stufen schließen. Perfekt, wenn es leicht bewölkt ist.</li>
+            <li><strong>ND16</strong> (4 Blendenstufen / Stop 4): Entspricht einer Reduktion um 4 Blenden.</li>
+            <li><strong>ND32</strong> (5 Blendenstufen / Stop 5): Reduziert das Licht um 5 Stufen.</li>
+            <li><strong>ND64</strong> (6 Blendenstufen / Stop 6): Entspricht einer Reduktion um 6 Blenden.</li>
+            <li><strong>ND500 / ND1000</strong> (9 bis 10 Blendenstufen): Extrem starke Filter, die meist für Langzeitbelichtungen von Wasserfällen genutzt werden, für harten Sonnenschein beim Blitzen aber oft schon zu dunkel sind.</li>
+          </ul>
+          <p><strong>Wie rechnet man das für die Blende?</strong> Jede Verdopplung oder Halbierung der Lichtmenge entspricht einer Blendenstufe. Wenn du im hellen Sonnenschein stehst und ohne Filter bei ISO 100 und 1/200s eine Blende von f/11 einstellen müsstest, damit das Bild nicht überbelichtet, aber du möchtest unbedingt mit f/1.4 fotografieren, hast du eine Differenz von etwa 6 Blendenstufen.</p>
+          <p>Um diesen Unterschied auszugleichen (also von f/11 auf f/1.4 zu kommen und dabei den Blitz bei 1/200s zu nutzen), benötigst du einen ND64-Filter (der genau diese 6 Blenden Licht schluckt).</p>
+          <h3>Fazit</h3>
+          <p>HSS ist eine fantastische Technologie, die das entfesselte Blitzen im hellen Sonnenlicht extrem flexibel macht. Wer jedoch ältere Lampen nutzt oder das Budget sparen möchte, muss den Kopf nicht in den Sand stecken: Mit einem passenden ND-Filter im Gepäck lässt sich die physikalische Lichtmenge perfekt kontrollieren, sodass der Traum von der offenen Blende und dem sanften Bokeh auch bei gleißendem Sonnenschein Realität wird.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-trends">
+          <figure><img src="images/blog/blog-trends-horizontal-01.webp" alt="Trendsetter im Studio"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Trendsetter im Studio: Warum sich der Blick über den Tellerrand in der Portrait- und Fashionfotografie lohnt</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: TRENDS IM STUDIO -->
+    <div id="page-article-trends" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-trends-horizontal-01.webp" alt="Trendsetter im Studio">
+        <div class="hero-text">
+          <h1><span>Trendsetter</span><span>im Studio</span></h1>
+          <p class="hero-sub">Warum sich der Blick über den Tellerrand in der Portrait- und Fashionfotografie lohnt</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Technik</span><span class="readtime">6 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Wer in der Porträt- und Fashionfotografie arbeitet, weiß: Die Welt steht modisch und technisch niemals still. Was heute noch als moderner Look gefeiert wird, kann morgen schon kalter Kaffee sein. Doch warum lohnt es sich überhaupt, aktiv am Ball zu bleiben, Trends zu verfolgen und neue Gadgets in den eigenen Workflow zu integrieren?</p>
+          <p>Die Antwort ist simpel: Stillstand bedeutet in der kreativen Branche Rückschritt. Wer sich weiterentwickelt, hebt sich von der Masse ab, begeistert seine Kunden und bleibt vor allem selbst mit Spaß bei der Sache. Schauen wir uns an, worauf es in der Fashion- und Porträtsfotografie ankommt, wenn man Trends klug und vor allem authentisch für sich nutzt.</p>
+          <h3>1. Der Style und das Outfit: Warum Teamwork mit dem Model alles verändert</h3>
+          <p>In der Fashionfotografie macht das Kleidungsstück oder das Styling oft die halbe Miete. Doch ein Trendoutfit allein reicht nicht aus – es muss zur Bildsprache passen.</p>
+          <p>Hier ist der Fotograf als Regisseur gefragt. Es ist enorm wichtig, der Model-Auswahl oder dem Model selbst eine klare Richtung vorzugeben, den Style zu kommunizieren und gemeinsam Outfits auszuwählen, die das Konzept tragen. Wer die aktuellen Modemagazine, Laufsteg-Trends oder visuellen Strömungen auf Social Media verfolgt, weiß, welche Texturen, Schnitte und Farbkombinationen gerade funktionieren. Wenn man der Darstellerin vor der Kamera gezielt Tipps gibt, wie sie das Outfit optimal in Szene setzt, entsteht ein völlig anderes, professionelleres Endresultat als bei einem bloßen „Zufallsshooting".</p>
+          <h3>2. Mehr als nur der Mensch: Die Magie des Hintergrundlichts</h3>
+          <p>Ein klassischer Anfängerfehler im Studio ist die Annahme, dass Licht ausschließlich dazu da ist, die Person vor der Kamera hell zu machen. Doch wer sich moderne Bildwelten ansieht, merkt schnell: Das wahre Geheimnis liegt im Hintergrund.</p>
+          <p><strong>Tiefenwirkung durch Farbakzente:</strong> Das gezielte Anleuchten des Hintergrunds mit RGB-Farblichtern bricht die Eintönigkeit und trennt das Model dreidimensional vom Raum. Ein sanfter Farbverlauf im Hintergrund – zum Beispiel ein warmer Kontrast aus Cyan und Orange – verleiht selbst einem schlichten Studiohintergrund sofort einen High-End-Magazin-Look.</p>
+          <p><strong>Strukturen und Schatten mit Gobos:</strong> Wer ein kreatives Statement setzen möchte, greift zu Lichtformern mit Gobos (Projektionsmasken). Ob gemusterter Blätterschatten, der durch ein vermeintliches Fenster fällt, oder abstrakte Linien und geometrische Formen auf dem Hintergrund: Damit holt man sich spielerisch visuelle Dynamik ins Bild, ohne das Studio umbauen zu müssen.</p>
+          <h3>3. Neue Technik und der eigene Stil: Der Kompass des Herzens</h3>
+          <p>Bei aller Begeisterung für neue Spielzeuge, bunte RGB-Lichter oder Gobo-Aufsätze gibt es eine goldene Regel: Nicht jede Neuerung passt zu jedem Fotografen.</p>
+          <p>Man muss nicht blindlings jedem technischen Trend hinterherlaufen, nur weil er gerade neu auf dem Markt ist und andere ihn nutzen. Wenn du als Fotograf spürst, dass bestimmte Effekte – wie etwa verspielte Lichtmuster oder grelle Farbspiele – einfach nicht zu deiner visuellen Handschrift passen, dann lass die Finger davon.</p>
+          <p>Alles, was du tust, muss zu 100 Prozent mit deinem eigenen Stil und deiner inneren Überzeugung im Einklang stehen. Es geht darum, auf das eigene Bauchgefühl zu hören und zu wissen: Passt das wirklich zu mir? Wer sich durch modische Gadgets verbiegt, läuft Gefahr, dass die eigenen Bilder plötzlich fremd wirken, als hätte sie jemand völlig anderes fotografiert. Erweitere deinen Stil nur mit den Dingen, die sich für dich stimmig anfühlen und deine ganz persönliche Bildsprache organisch unterstreichen.</p>
+          <h3>Fazit</h3>
+          <p>Trends in der Fashionfotografie blind zu kopieren bringt keinen weiter. Wer sie jedoch als Inspiration nutzt, um seinen eigenen Stil mit Bedacht zu bereichern, bleibt authentisch. Am Ende zählt nicht, ob man jede technische Neuheit besitzt, sondern ob die Bilder am Ende eine klare Handschrift tragen: deine eigene.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-kamera">
+          <figure><img src="images/blog/blog-kamera-horizontal-01.webp" alt="Canon, Sony oder Nikon"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Canon, Sony oder Nikon: Warum Ergonomie und Funktionalität mehr zählen als das Logo auf dem Gehäuse</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: KAMERA-MARKEN -->
+    <div id="page-article-kamera" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-kamera-horizontal-01.webp" alt="Canon, Sony oder Nikon">
+        <div class="hero-text">
+          <h1><span>Canon, Sony</span><span>oder Nikon?</span></h1>
+          <p class="hero-sub">Warum Ergonomie und Funktionalität mehr zählen als das Logo auf dem Gehäuse</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Technik</span><span class="readtime">6 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Geht man in Fotogruppen online oder liest in Foren, stößt man fast zwangsläufig auf ein Phänomen: den Marken-Krieg. Da wird leidenschaftlich diskutiert, teils sogar abfällig darüber gelächelt, ob man nun mit einer Sony, einer Canon oder einer Nikon unterwegs ist. Besonders Anfänger stehen oft ratlos da, fragen Profis nach dem „einzig wahren" Modell und erwarten die magische Antwort, welche Marke sie endlich zum besseren Fotografen macht.</p>
+          <p>Doch die Wahrheit ist ernüchternd für all die Fanboys – und beruhigend für alle Einsteiger: Die perfekte Marke gibt es nicht. Es gibt nur das Werkzeug, das zu deinem Genre und deinen räumlichen Bedingungen passt.</p>
+          <h3>Der Mythos der „besseren" Marke</h3>
+          <p>Jeder der drei großen Hersteller hat seine eigenen Stärken, eine eigene Menüstruktur und ja – auch eine ganz eigene Farbcharakteristik in den JPEGs oder den standardmäßigen RAW-Profilen. Manche Farben gelten als hauttonfreundlicher, andere schlagen in bestimmte Richtungen aus.</p>
+          <p>Aber machen wir uns nichts vor: In Zeiten von leistungsstarker Nachbearbeitung und individuellen Farbprofilen lässt sich ein Großteil des Looks im Retuscheprozess ohnehin exakt dorthin steuern, wo man ihn haben möchte. Ob die RAW-Datei zu Beginn einen Hauch wärmer oder kühler interpretiert wird, entscheidet nicht über die Qualität des fertigen Bildes.</p>
+          <h3>Das wichtigste Kriterium: Was und wo fotografierst du eigentlich?</h3>
+          <p>Der entscheidende Fehler, den viele machen, ist der Kauf einer Kamera, ohne das eigene Einsatzgebiet und die räumlichen Grenzen zu hinterfragen. Denn je nach Genre und Studio-Setup gelten völlig andere physikalische Gesetze:</p>
+          <p><strong>Das Platzproblem im Heimstudio (APS-C vs. Vollformat):</strong> Wer in den eigenen vier Wänden oder einem kleineren Raum ein Studio einrichtet, sollte genau hinsehen. APS-C-Kameras können hier schnell zur Kostenfalle oder zum räumlichen Hindernis werden: Durch den Crop-Faktor benötigt man mehr Abstand zum Motiv, um denselben Bildausschnitt zu bekommen. Steht man im Heimstudio also plötzlich an der Wand und kann nicht weiter zurück, ist die Vollformat-Kamera die deutlich bessere Wahl, da sie bei gleicher Brennweite mehr Raum und Weite abbildet. APS-C-Sensoren können in diesem Bereich höchstens dann eine Rolle spielen, wenn das Budget extrem knapp ist – man erkauft sich den günstigen Preis jedoch mit räumlichen Einschränkungen.</p>
+          <p><strong>Wildlife- und Sportfotografie:</strong> Wer Tiere in freier Wildbahn oder rasante Sportarten fotografiert, setzt professionell meist auf Vollformat-Boliden, schätzt aber manchmal APS-C-Modelle als rein budgetfreundliche Einstiegsoption, um mit kleinerem Budget mehr scheinbare Reichweite zu bekommen. Dennoch dominieren hier vor allem die Highspeed-Serienbilder und der rasante, KI-gestützte Autofokus der Top-Modelle.</p>
+          <p><strong>Moderne Street- und Reisefotografie:</strong> Wer durch enge Gassen zieht oder urbane Momente einfängt, braucht kein schweres Profi-Flaggschiff. Hier steht ein kompakter, unauffälliger Body im Vordergrund, der leicht in der Hand liegt und den man stundenlang mitnehmen kann.</p>
+          <h3>Was wirklich zählt: Ergonomie, Haptik und Bedienbarkeit</h3>
+          <p>Kamera-Empfehlungen bringen einem rein gar nichts, wenn sie an den eigenen Bedürfnissen vorbeigehen. Wenn man stundenlang shootet oder den entscheidenden Moment nicht verpassen darf, ist das Logo auf dem Gehäuse völlig egal. Was stattdessen über Erfolg oder Misserfolg entscheidet, sind ganz praktische Faktoren:</p>
+          <p><strong>Wie liegt die Kamera in der Hand?</strong> Ist der Griff tief genug? Passt sie zum eigenen Handgelenk, besonders wenn man schwerere Objektive ansetzt?</p>
+          <p><strong>Die Ergonomie und Tastenbelegung:</strong> Kommt man intuitiv an alle wichtigen Rädchen heran? Kann man Blende, Belichtungszeit und ISO blind umschalten, ohne den Blick vom Motiv abzuwenden?</p>
+          <p><strong>Das Menü und die Bedienlogik:</strong> Fühlt sich das System logisch an oder muss man sich jedes Mal durch endlose Untermenüs quälen?</p>
+          <p>Jeder Fotograf hat andere Hände, andere Gewohnheiten und einen anderen Workflow. Eine Kamera muss sich anfühlen wie eine Verlängerung des eigenen Arms. Wer sich durch ein unergonomisches Gehäuse quält, nur weil die Marke gerade im Trend liegt, vergibt wertvolle Konzentration.</p>
+          <h3>Fazit: Probieren geht über Studieren</h3>
+          <p>Lass dich von den hitzigen Online-Debatten zwischen Canon-, Sony- und Nikon-Anhängern nicht verrückt machen. Analysiere zuerst, was du wirklich fotografierst und wie viel Platz dein Studio bietet: Brauchst du Vollformat, damit du im kleinen Raum nicht an die Wand stößt, oder suchst du ein leichtes Setup für unterwegs? Bevor du blind einen Namen kaufst, nimm die Kameras in die Hand, spüre die Ergonomie und schaue, welches System zu deinem Workflow passt.</p>
+          <p>Am Ende fotografiert nicht das Logo auf dem Gehäuse – es ist die Verbindung aus deiner Hand, deinem für den Zweck gewählten Werkzeug und deinem Blick für den Moment.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-inspiration">
+          <figure><img src="images/blog/blog-inspiration-horizontal-01.webp" alt="Woher die Magie kommt"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Woher die Magie kommt: Auf der Suche nach den wahren Inspirationen in der Fotografie</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: INSPIRATION -->
+    <div id="page-article-inspiration" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-inspiration-horizontal-01.webp" alt="Woher die Magie kommt">
+        <div class="hero-text">
+          <h1><span>Woher die</span><span>Magie kommt</span></h1>
+          <p class="hero-sub">Auf der Suche nach den wahren Inspirationen in der Fotografie</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Mindset</span><span class="readtime">5 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Jeder Fotograf kennt diesen Moment: Man blickt durch den Sucher, das Licht stimmt, die Technik sitzt – aber die Seele des Bildes fehlt. Es ist wie ein leeres Blatt Papier oder eine unbeschriebene Leinwand. Woher nehmen wir also die Ideen, die ein Foto von einem simplen Abbild in ein echtes Kunstwerk verwandeln?</p>
+          <p>Inspiration lässt sich nicht erzwingen. Sie ist kein Schalter, den man morgens um acht Uhr umlegt. Sie ist vielmehr ein leiser Prozess, der tief mit unserer Wahrnehmung, unserer Offenheit für den anderen Menschen und ganz persönlichen Rückzugsorten verbunden ist.</p>
+          <h3>Die Kraft des Blicks: Was sehen wir im Gegenüber?</h3>
+          <p>Wahre fotografische Inspiration beginnt oft nicht mit Technik, sondern mit Empathie. Wenn wir einen Menschen vor der Linse haben, geht es um mehr als nur um korrekte Blendenwerte oder den perfekten Fokus auf den Augen. Es geht darum, das zu sehen, was oft im Alltag verborgen bleibt: ein flüchtiges Funkeln im Blick, eine ungesagte Geschichte, eine bestimmte Haltung, die Verletzungsfreiheit oder innere Stärke ausstrahlt.</p>
+          <p>Manchmal reicht ein einziger Blick in die Augen eines Menschen, um das gesamte Konzept für eine Session im Kopf zu haben. Die Inspiration liegt oft in der Einzigartigkeit des Charakters – ihn zu entschlüsseln und in Licht und Schatten zu übersetzen, ist die eigentliche Kunst.</p>
+          <h3>Der Rhythmus der Kreativität: Wann erwachen die besten Ideen?</h3>
+          <p>Nicht jeder funktioniert nach dem gleichen Zeitplan. Viele Kreative und Künstler kennen diese magischen Phasen: Für die einen bricht die Erleuchtung in den frühen Morgenstunden an, wenn die Welt noch schläft und die ersten Sonnenstrahlen eine ganz eigene, unverbrauchte Ruhe in den Tag bringen. Andere wiederum blühen erst spät am Abend oder mitten in der Nacht auf – in der stillen Dunkelheit, wenn alle Ablenkungen des Tages verschwunden sind und der Kopf Raum für abstrakte, tiefe Gedanken hat.</p>
+          <p>Oft entstehen die besten Ideen jedoch genau dann, wenn man gar nicht aktiv nach ihnen sucht. Im sogenannten „Leerlauf" – beim Kaffeetrinken, kurz vorm Einschlafen oder eben unterwegs in der Natur.</p>
+          <h3>Der Wald als kreativer Zufluchtsort</h3>
+          <p>Wenn der Kopf voll ist und die Ideen blockiert sind, hilft oft nur eins: raus. Für mich persönlich gibt es keinen besseren Ort für kreative Klarheit als einen ausgiebigen Spaziergang im Wald.</p>
+          <p>Wenn man zwischen den hohen Bäumen geht, das leise Rascheln unter den Schuhen hört und sieht, wie das sanfte Licht durch das Blätterdach bricht, schaltet das Gehirn auf Durchzug. Der Wald zwingt uns zur Entschleunigung. Und genau in dieser Ruhe, umgeben von organischen Strukturen, natürlichen Farben und dem Spiel von Licht und Schatten, fangen die Puzzleteile im Kopf plötzlich an, sich zusammenzufügen. Man sieht einen alten Baumstumpf, eine bemooste Wurzel oder einen bestimmten Lichteinfall – und zack, ist die Idee für ein neues, stimmungsvolles Fotoshooting geboren. Die Natur selbst wird zum besten Ideengeber, ganz ohne Bildschirm und Social Media.</p>
+          <h3>Was man für die eigene Kreativität wahren und wovon man sich inspirieren lassen sollte</h3>
+          <p><strong>Bewusster Perspektivwechsel:</strong> Einfach mal stehen bleiben, ganz nah an Details herangehen oder den Blick nach oben zu den Baumkronen richten – das bricht festgefahrene Sehgewohnheiten auf.</p>
+          <p><strong>Die richtige Tageszeit nutzen:</strong> Herausfinden, wann der eigene Kopf am klarsten ist (morgens in der Stille oder abends in der Dämmerung) und diese Momente für die Konzeption zu nutzen.</p>
+          <p><strong>Sich treiben lassen:</strong> Regelmäßige, ziellose Spaziergänge in der Natur – besonders im Wald – als festen Bestandteil in den kreativen Prozess einbauen, um den Kopf frei zu kriegen.</p>
+          <p><strong>Den Menschen sehen:</strong> Weg vom reinen „Posing", hin zur echten Verbindung. Dem Gegenüber Raum geben, damit der eigene Charakter durchscheint.</p>
+          <p>Am Ende ist Inspiration nichts, was man in Büchern findet. Sie ist das, was passiert, wenn wir aufhören zu suchen und anfangen, wirklich hinzusehen.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-fineart">
+          <figure><img src="images/blog/blog-fineart-horizontal-01.webp" alt="Fine Art Fotografie"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Fine Art Fotografie: Zwischen klassischer Malerei und digitaler Ästhetik</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: FINE ART -->
+    <div id="page-article-fineart" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-fineart-horizontal-01.webp" alt="Fine Art Fotografie">
+        <div class="hero-text">
+          <h1><span>Fine Art</span><span>Fotografie</span></h1>
+          <p class="hero-sub">Zwischen klassischer Malerei und digitaler Ästhetik</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Kunst</span><span class="readtime">6 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Wenn man in der Welt der Fotografie das Wort „Fine Art" hört, gehen die Meinungen sofort auseinander. Für den einen ist es die perfekte, fast akribische Beherrschung von Licht und Schatten direkt vor der Kamera – ganz im Sinne der alten Meister wie Rembrandt. Für den anderen beginnt Fine Art erst dort, wo die digitale Nachbearbeitung einsetzt: stark geglättete Haut, märchenhafte Farbpaletten und eine Bildsprache, die sich so weit von der Realität entfernt, dass sie fast wie gemalt wirkt, aber eben auf eine ganz eigene, digitale Art.</p>
+          <p>Doch was macht diese Kunstform eigentlich aus und wie drückt sie sich in verschiedenen Stilen aus? Schauen wir uns an, wie unterschiedlich Fine Art heute interpretiert wird.</p>
+          <h3>Zwei Welten, ein Begriff: Wie Fine Art verstanden wird</h3>
+          <p>Im Grunde lässt sich die moderne Fine-Art-Fotografie in zwei große Lager unterteilen – auch wenn die Grenzen oft fließend sind.</p>
+          <h3>1. Der klassisch-malerische Ansatz: Licht als Pinsel</h3>
+          <p>Für viele Puristen und Liebhaber des traditionellen Handwerks bedeutet Fine Art vor allem eins: Lichtsetzung. Hier wird die Magie im Studio oder vor Ort erschaffen, lange bevor das Bild überhaupt am Computer bearbeitet wird.</p>
+          <p>Ein Paradebeispiel dafür ist die Arbeit mit klassischem Licht, wie man es aus der Barockmalerei kennt – insbesondere das berühmte Rembrandt-Licht. Charakteristisch dafür ist das kleine Dreieck aus Licht auf der Schattenseite des Gesichts. Bei diesem Ansatz geht es darum, mit gezielten Lichtformern, Abschirmern und einer bewussten Inszenierung eine Tiefe und Stimmung zu erzeugen, die an Ölgemälde erinnert.</p>
+          <p><strong>Der Fokus:</strong> Die Technik beim Shooting, die Anatomie des Lichts, Texturen und eine zeitlose, fast greifbare Dramatik. Die Bearbeitung ist dezent und dient nur dazu, das zu unterstreichen, was die Kamera bereits eingefangen hat. Genau dieser Ansatz hat für mich persönlich den größten Reiz: Wenn man mit purem Licht und einer ruhigen Bildkomposition eine Geschichte erzählt, die ohne künstliche Effekte auskommt.</p>
+          <h3>2. Der stark bearbeitete, surreale Ansatz: Die digitale Leinwand</h3>
+          <p>Auf der anderen Seite steht die Richtung, in der die Nachbearbeitung das eigentliche Herzstück des Bildes bildet. Hier geht es weniger um das dokumentierte Licht im Raum, sondern um das Erschaffen einer komplett eigenen Welt.</p>
+          <p>Die Haut wird makellos geglättet, Kontraste werden verschoben, Farb-Looks kreiert, die in der physischen Realität so schlicht nicht existieren. Das Ergebnis ist oft bewusst entrückt, schwerelos und weit entfernt von dem, wie ein Mensch im Alltag aussieht. Es ist eine stilisierte Ästhetik, die stark an digitale Fantasy-Art oder moderne Hochglanz-Illustrationen erinnert.</p>
+          <p><strong>Der Fokus:</strong> Die kreative Vision nach dem Auslösen, das Malen mit digitalen Ebenen und Pinseln. Während manche diesen Stil als zu künstlich empfinden, feiern andere ihn genau dafür: weil er die Fotografie als Werkzeug nutzt, um die Grenzen der Vorstellungskraft zu sprengen.</p>
+          <h3>Fazit: Es gibt kein Richtig oder Falsch</h3>
+          <p>Fine Art Fotografie ist kein starres Regelwerk. Ob man nun stundenlang an perfekten Lichtstimmungen im Studio feilt, um die Ästhetik alter Meister wiederzubeleben, oder ob man die digitale Nachbearbeitung nutzt, um eine völlig entrückte, fantastische Realität zu erschaffen – am Ende zählt das Gefühl, das das Bild beim Betrachter hinterlässt.</p>
+          <p>Genau diese Vielfalt macht das Genre so spannend. Und während ich persönlich den echten, malerischen Look durch echtes Licht bevorzuge, bleibt eins sicher: Fine Art ist immer dort, wo Fotografie aufhört, nur eine Dokumentation zu sein, und beginnt, Kunst zu sein.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-psychology">
+          <figure><img src="images/blog/blog-psychology-horizontal-01.webp" alt="Die Psychologie der Fotografie"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Die Psychologie der Fotografie</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: PSYCHOLOGIE -->
+    <div id="page-article-psychology" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-psychology-horizontal-01.webp" alt="Die Psychologie der Fotografie">
+        <div class="hero-text">
+          <h1><span>Die Psychologie</span><span>der Fotografie</span></h1>
+          <p class="hero-sub">Wie ein Fotoshooting den Selbstwert verändern kann</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Mindset</span><span class="readtime">4 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Viele Menschen betreten ein Fotoshooting mit einer unsichtbaren Last: dem tief verwurzelten Gefühl, nicht fotogen zu sein. Dieses Gefühl ist selten rational, aber es ist fast universell. Und genau hier beginnt die psychologische Dimension der Fotografie, die weit über Technik und Ästhetik hinausgeht.</p>
+          <h3>Warum wir Angst vor der Kamera haben</h3>
+          <p>Die Kamera erzeugt eine besondere Form der Selbstaufmerksamkeit. Sie zwingt uns, uns selbst von außen zu betrachten – und das widerspricht unserem gewohnten Selbstbild, das wir hauptsächlich aus dem Spiegel kennen. Hinzu kommt die soziale Dimension: Wie wirke ich auf andere? Sehe ich so aus, wie ich mich fühle? Diese Fragen können in Sekundenschnelle eine Flut von Selbstzweifeln auslösen.</p>
+          <h3>Was während eines Shootings passiert</h3>
+          <p>Ein gut geführtes Fotoshooting ist mehr als das Drücken eines Auslösers. Es ist ein schrittweiser Prozess des Vertrauensaufbaus – zwischen Dir und der Kamera, zwischen Dir und mir als Fotograf, aber vor allem zwischen Dir und Dir selbst. Wenn dieser Prozess gelingt, passiert etwas Bemerkenswertes: Du hörst auf, Dich zu beobachten, und fängst an, einfach zu sein.</p>
+          <h3>Die Wirkung der fertigen Bilder</h3>
+          <p>Viele Kundinnen und Kunden berichten, dass sie sich auf ihren fertigen Fotos nicht wiedererkennen – aber im besten Sinne. Sie sehen sich selbst auf eine Weise, die sie vorher nicht für möglich gehalten hätten. Dieses Erlebnis kann nachhaltig wirken: Es verändert, wie man sich selbst wahrnimmt, wie man in den Spiegel schaut, wie man über das eigene Aussehen spricht.</p>
+          <h3>Fotografie als Werkzeug der Selbstannahme</h3>
+          <p>Das Ziel meiner Arbeit ist nicht, jemanden zu etwas zu machen, das er nicht ist. Es geht darum, sichtbar zu machen, was bereits da ist – nur oft verborgen hinter Unsicherheit, Gewohnheit oder dem Lärm des Alltags. Ein Foto kann ein Spiegel sein, der nicht verzerrt, sondern klärt.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-makeup">
+          <figure><img src="images/blog/blog-makeup-horizontal-01.webp" alt="Make-up beim Fotoshooting"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Brauche ich ein professionelles Make-up?</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: MAKEUP -->
+    <div id="page-article-makeup" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-makeup-horizontal-01.webp" alt="Make-up beim Fotoshooting">
+        <div class="hero-text">
+          <h1><span>Make-up beim</span><span>Fotoshooting</span></h1>
+          <p class="hero-sub">Muss es wirklich professionell sein?</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Vorbereitung</span><span class="readtime">3 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Eine der häufigsten Fragen vor einem Shooting lautet: Muss ich professionelles Make-up tragen? Die kurze Antwort: Nein, aber es gibt einiges zu bedenken.</p>
+          <h3>Was die Kamera sieht</h3>
+          <p>Die Kamera arbeitet mit Licht – und Licht reagiert auf Haut anders als das menschliche Auge. Glanzstellen wirken auf Fotos stärker, Augenringe tiefer, Hautunreinheiten kontrastreicher. Ein dezentes Make-up kann hier helfen, indem es diese Unterschiede ausgleicht – nicht, um etwas zu verbergen, sondern um das natürliche Erscheinungsbild besser abzubilden.</p>
+          <h3>Der Unterschied zwischen alltäglichem und Foto-Make-up</h3>
+          <p>Im Alltag wirkt ein leichtes Make-up natürlich. Auf Fotos kann es unter bestimmten Lichtverhältnissen fast unsichtbar sein. Professionelles Foto-Make-up ist daher etwas stärker aufgetragen – nicht auffälliger, sondern präziser: mit mehr Kontur, mehr Deckkraft und bewusst gesetzten Akzenten.</p>
+          <h3>Wann ein Profi wirklich Sinn ergibt</h3>
+          <p>Bei aufwändigeren Shootings – etwa Mode, Sensual oder Businessportraits mit hohem Anspruch – kann ein professioneller Visagist den Unterschied ausmachen. Nicht weil Dein eigenes Make-up schlecht wäre, sondern weil jemand, der täglich mit Fotografen zusammenarbeitet, genau weiß, wie Farben, Texturen und Licht zusammenspielen.</p>
+          <h3>Die ehrliche Empfehlung</h3>
+          <p>Für die meisten Shootings gilt: Dein gewohntes Make-up, gut aufgetragen und frisch, reicht vollkommen aus. Das Wichtigste ist, dass Du Dich darin wohlfühlst und Dich erkennst. Ein übertriebenes Make-up, das sich fremd anfühlt, erzeugt Distanz – und das sieht man auf Bildern.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-light">
+          <figure><img src="images/blog/blog-light-horizontal-01.webp" alt="Kreatives Licht in der Fotografie"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Kreatives Licht in der Fotografie</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: LICHT -->
+    <div id="page-article-light" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-light-horizontal-01.webp" alt="Kreatives Licht in der Fotografie">
+        <div class="hero-text">
+          <h1><span>Kreatives Licht</span><span>in der Fotografie</span></h1>
+          <p class="hero-sub">Warum nicht jedes Licht zu Dir passt</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Technik</span><span class="readtime">3 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Licht ist das wichtigste Werkzeug in der Fotografie – wichtiger als die Kamera, wichtiger als das Objektiv. Es entscheidet über Stimmung, Tiefe, Charakter. Und es wirkt auf jeden Menschen anders.</p>
+          <h3>Hartes vs. weiches Licht</h3>
+          <p>Hartes Licht kommt aus einer kleinen, konzentrierten Quelle – etwa direkter Sonne oder einem ungezähmten Blitz. Es erzeugt starke Kontraste, tiefe Schatten, klare Strukturen. Es kann dramatisch und ausdrucksstark sein, aber auch gnadenlos: Jede Pore, jede Falte, jeder Fleck wird betont. Weiches Licht dagegen streut sich – durch Wolken, Diffusoren, Reflektoren. Es umhüllt das Gesicht, schmeichelt der Haut, wirkt sanft und gleichmäßig.</p>
+          <h3>Wie Licht und Gesichtsstruktur zusammenwirken</h3>
+          <p>Wangenknochen, Nasenformen, Stirnbreite – all das reagiert unterschiedlich auf Licht. Ein Licht, das bei einem Gesicht elegant Tiefe erzeugt, kann bei einem anderen Gesicht ungewollte Schatten werfen. Gute Porträtfotografie bedeutet auch, das richtige Licht für die jeweilige Person zu finden – nicht das technisch korrekte, sondern das menschlich passende.</p>
+          <h3>Natürliches vs. künstliches Licht</h3>
+          <p>Natürliches Licht – besonders in der goldenen Stunde kurz nach Sonnenaufgang oder vor Sonnenuntergang – hat eine Wärme und Weichheit, die kaum zu replizieren ist. Künstliches Licht bietet dagegen vollständige Kontrolle: Es bleibt gleich, es reagiert auf Anweisungen, es lässt sich formen. Beides hat seinen Platz – und die Wahl hängt immer vom gewünschten Ergebnis und von Dir ab.</p>
+          <h3>Was das für Dein Shooting bedeutet</h3>
+          <p>Vor jedem Shooting denke ich darüber nach, welches Licht zu Dir passt – nicht nur technisch, sondern auch emotional. Magst Du dramatische, kontrastreiche Bilder oder lieber etwas Zartes, Atmosphärisches? Diese Frage beeinflusst alles: Ort, Tageszeit, Equipment. Das Licht ist nicht zufällig – es ist eine Entscheidung.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-retouching">
+          <figure><img src="images/blog/blog-retouching-horizontal-01.webp" alt="Grenzen der Retusche"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Wo endet die Grenze einer sinnvollen Retusche?</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: RETUSCHE -->
+    <div id="page-article-retouching" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-retouching-horizontal-01.webp" alt="Grenzen der Retusche">
+        <div class="hero-text">
+          <h1><span>Grenzen der</span><span>Retusche</span></h1>
+          <p class="hero-sub">Wo endet eine sinnvolle Bildbearbeitung?</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Bearbeitung</span><span class="readtime">4 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Die Frage nach der „richtigen" Menge an Retusche begleitet die Fotografie schon seit der Dunkelkammer-Ära. Heute, mit Photoshop und KI-gestützten Tools, ist die Grenze wichtiger denn je – denn technisch ist inzwischen fast alles möglich. Die eigentliche Frage ist nicht, was machbar ist, sondern was sinnvoll und ehrlich ist.</p>
+          <h3>Ein Fotograf ist kein Bügeleisen</h3>
+          <p>Eine zerknitterte Bluse, eine schief sitzende Hose oder sichtbare Druckstellen von Kleidung lassen sich in der Nachbearbeitung zwar oft korrigieren, sollten aber gar nicht erst entstehen. Genauso wenig ist die Retusche dafür gedacht, ein fehlendes Make-up, ungepflegte Haare oder einen frischen Sonnenbrand vom letzten Solariumsbesuch zu „reparieren". Diese Dinge liegen in der Verantwortung der fotografierten Person und gehören in die Vorbereitung vor dem Shooting, nicht in die Bildbearbeitung danach.</p>
+          <h3>Was ich als Fotograf tatsächlich mache</h3>
+          <p>Meine Retusche konzentriert sich auf eine behutsame, natürlich wirkende Verbesserung: kleine Unreinheiten, vorübergehende Rötungen, Pickel oder Augenschatten werden dezent reduziert, ohne dass die natürliche Hautstruktur verloren geht. Punktuelle Pigmentflecken oder störende Reflexionen können gemildert werden, ebenso kleinere, kurzfristige Hautirritationen. Wichtig ist mir dabei immer, dass die Haut am Ende noch wie Haut aussieht – mit Poren, mit Textur, mit Charakter.</p>
+          <h3>Was Retusche bewusst nicht ersetzt</h3>
+          <p>Eine professionelle Bearbeitung ist kein Ersatz für Frisör, Kosmetikstudio, Solarium oder Maniküre. Wer sich vor dem Shooting bewusst Zeit für Pflege und Vorbereitung nimmt, profitiert doppelt: Die Bilder wirken natürlicher, und die Bearbeitungszeit danach bleibt überschaubar.</p>
+          <h3>Mein Anspruch: Echtheit vor Perfektion</h3>
+          <p>Mir ist wichtig, dass Du Dich auf Deinen Bildern selbst wiedererkennst – nur in Deiner besten, ausgeruhtesten und selbstbewusstesten Version. Genau dort verläuft für mich die Grenze sinnvoller Retusche: Unterstützung statt Verwandlung, Verfeinerung statt Verfälschung.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-ai">
+          <figure><img src="images/blog/blog-ai-horizontal-01.webp" alt="KI generierte Fotografie"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Ist eine KI-generierte Session eine Bedrohung für Fotografen?</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: KI -->
+    <div id="page-article-ai" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-ai-horizontal-01.webp" alt="KI-generierte Fotografie">
+        <div class="hero-text">
+          <h1><span>KI-generierte</span><span>Fotografie</span></h1>
+          <p class="hero-sub">Eine Bedrohung für klassische Fotografen?</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Gedanken</span><span class="readtime">4 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Künstliche Intelligenz kann heute in wenigen Sekunden beeindruckend realistische Porträts erzeugen. Kein Termin, kein Reisen, kein Make-up – nur ein paar Eingaben, und fertig ist das perfekte Bild. Für viele klingt das nach dem Ende der klassischen Porträtfotografie. Ich sehe das anders, und zwar aus einem ganz bestimmten Grund: Ein echtes Shooting ist niemals nur das Ergebnis, sondern vor allem die Erfahrung.</p>
+          <h3>Das Gefühl, das keine KI erzeugen kann</h3>
+          <p>Wer schon einmal vor der Kamera stand, kennt diesen Moment direkt nach dem Shooting, wenn die ersten Bilder auf dem Display erscheinen: das ungläubige Lächeln, das leise „Bin das wirklich ich?", dieser kurze Schreck und gleich danach die pure Freude. Dieses Gefühl entsteht aus echtem Erleben – aus der Anspannung vor dem Termin, aus dem Vertrauen, das während des Shootings wächst, aus dem Moment, in dem Du Dich traust, Du selbst zu sein.</p>
+          <h3>Warum Selbstbetrug der Psyche nicht hilft</h3>
+          <p>Ein KI-Bild zeigt nicht Dich, sondern eine Berechnung darüber, wie Du theoretisch aussehen könntest. Wenn Du Dir dieses Bild ansiehst und Dich darin „wiederfindest", beruht das Gefühl auf einer Täuschung – und genau das kann langfristig problematisch werden. Studien zur Wirkung stark bearbeiteter oder künstlich erzeugter Bilder zeigen immer wieder, dass die Diskrepanz zwischen dem digitalen Idealbild und der eigenen Realität das Selbstbild eher schwächt als stärkt.</p>
+          <h3>Echte Fotografie als ehrlicher Spiegel</h3>
+          <p>Ein echtes Foto erzählt immer auch die Wahrheit über einen bestimmten Augenblick: Dein echtes Lächeln, Deine echte Haltung, das echte Licht, das auf Dich fiel. Genau diese Echtheit macht ein Bild wertvoll und macht das Erlebnis dahinter unersetzlich.</p>
+          <h3>Meine Haltung dazu</h3>
+          <p>KI-Tools werden in der Bildbearbeitung sicher weiter an Bedeutung gewinnen, etwa als Unterstützung bei technischen Details. Aber sie werden niemals das ersetzen, was ein echtes Shooting ausmacht: die persönliche Begegnung, das gemeinsame Erschaffen eines Moments und das ehrliche, oft überraschende Gefühl, sich selbst auf einem Bild wirklich zu erkennen.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-companion">
+          <figure><img src="images/blog/blog-companion-horizontal-01.webp" alt="Begleitperson beim Fotoshooting"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Die Begleitperson beim Shooting</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: BEGLEITPERSON -->
+    <div id="page-article-companion" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-companion-horizontal-01.webp" alt="Die Begleitperson beim Shooting">
+        <div class="hero-text">
+          <h1><span>Die Begleitperson</span><span>beim Shooting</span></h1>
+          <p class="hero-sub">Sicherheit oder stille Unsicherheit?</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Mindset</span><span class="readtime">3 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Bei Einzelshootings erlebe ich immer wieder eine bestimmte Situation: Eine Begleitperson – meist der Partner oder die Partnerin – sitzt am Rand, und die fotografierte Person sucht währenddessen immer wieder den Blickkontakt zu ihr. Ein kurzer Blick nach jeder Pose, ein fragendes Lächeln, ein „War das okay?" in den Augen. Auf den ersten Blick wirkt das harmlos. Psychologisch betrachtet steckt darin aber oft mehr, als man zunächst vermutet.</p>
+          <h3>Wenn der Blick zur Bestätigung wird</h3>
+          <p>Der ständige Blick zur Begleitperson ist häufig ein Zeichen von Unsicherheit – nicht gegenüber mir als Fotograf, sondern gegenüber der eigenen Wirkung. Viele Menschen haben gelernt, sich über die Reaktion einer vertrauten Person rückzuversichern, bevor sie sich selbst erlauben, ein Gefühl als „richtig" einzuordnen.</p>
+          <h3>Was das über die Beziehung zur eigenen Selbstwahrnehmung verrät</h3>
+          <p>Dieses Verhalten zeigt sich nicht nur vor der Kamera. Oft ist es ein kleiner Spiegel dafür, wie stark das eigene Selbstbild von der Zustimmung anderer abhängt – im Alltag, in der Partnerschaft, im Beruf.</p>
+          <h3>Wann es Sinn ergibt, eine Begleitperson mitzubringen</h3>
+          <p>Eine Begleitperson kann sehr wertvoll sein, wenn sie echte Sicherheit gibt, ohne zur Kontrollinstanz zu werden – etwa bei einem ersten Shooting überhaupt, bei großer Nervosität vor der Kamera oder bei sensiblen Themen wie einem Babybauch- oder Sensual-Shooting.</p>
+          <h3>Wann es sich lohnt, es einmal ohne zu versuchen</h3>
+          <p>Wenn Du merkst, dass Du Dich während eines Shootings ständig nach Bestätigung umsiehst, kann es lohnend sein, es bewusst einmal allein zu versuchen. Viele meiner Kundinnen und Kunden berichten danach, wie befreiend es war, sich ganz auf sich selbst, auf die Anleitung und auf den Moment zu konzentrieren.</p>
+          <h3>Meine Empfehlung</h3>
+          <p>Bring jemanden mit, wenn es Dir wirklich hilft, Dich zu öffnen – nicht, weil Du Dir ohne diese Person nicht vertraust. Wir können das vor dem Termin gemeinsam besprechen und genau die Konstellation finden, in der Du Dich am wohlsten und freisten fühlst.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-lampenfieber">
+          <figure><img src="images/blog/blog-lampenfieber-horizontal-01.webp" alt="Lampenfieber vor dem Fotoshooting"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Lampenfieber vor einem Fotoshooting?</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: LAMPENFIEBER -->
+    <div id="page-article-lampenfieber" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-lampenfieber-horizontal-01.webp" alt="Lampenfieber vor einem Fotoshooting">
+        <div class="hero-text">
+          <h1><span>Lampenfieber vor</span><span>dem Shooting?</span></h1>
+          <p class="hero-sub">Das ist völlig normal – und vielleicht sogar ein gutes Zeichen</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Mindset</span><span class="readtime">5 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Fast jeder Mensch kennt dieses Gefühl.</p>
+          <p>Ein paar Tage vor dem Fotoshooting beginnen die Gedanken zu kreisen: „Ich bin nicht fotogen.", „Ich weiß überhaupt nicht, wie ich posieren soll.", „Was, wenn die Bilder am Ende nicht schön werden?" oder „Ich werde bestimmt komisch aussehen."</p>
+          <p>Wenn du dich in diesen Gedanken wiedererkennst, bist du nicht allein. Tatsächlich sind genau diese Sorgen der Grund, warum viele Menschen kurz vor einem Shooting nervös werden – besonders dann, wenn sie zum ersten Mal alleine vor einer Kamera stehen.</p>
+          <p>Das Interessante daran ist jedoch: Nicht die Kamera ist das eigentliche Problem. Es sind unsere Gedanken.</p>
+          <p>Unser Gehirn liebt es, sich auf mögliche Schwierigkeiten vorzubereiten. Leider macht es dabei keinen Unterschied zwischen einer echten Gefahr und einer Situation, die einfach nur ungewohnt ist. Aus einem Fotoshooting wird im Kopf plötzlich eine Art Prüfung. Jede Bewegung wird kontrolliert, jedes Lächeln hinterfragt und jede kleine Unsicherheit wirkt plötzlich riesengroß.</p>
+          <p>Genau dadurch entsteht Anspannung. Und diese Anspannung sieht man später oft auf den Bildern.</p>
+          <h3>Der erste Schritt: Höre auf, gegen deine Nervosität zu kämpfen.</h3>
+          <p>Viele versuchen krampfhaft, entspannt zu wirken. Doch genau das macht alles noch schwieriger.</p>
+          <p>Erlaube dir stattdessen, nervös zu sein.</p>
+          <p>Das klingt vielleicht widersprüchlich, aber sobald du akzeptierst, dass Aufregung völlig normal ist, verliert sie einen großen Teil ihrer Kraft. Du musst nicht perfekt sein. Niemand erwartet das.</p>
+          <h3>Lenke deine Aufmerksamkeit um.</h3>
+          <p>Während eines Shootings passiert häufig Folgendes: Du beobachtest dich selbst permanent. Wie sehe ich gerade aus? Sitzen meine Haare richtig? Lächle ich komisch? Was macht meine Hand?</p>
+          <p>Je mehr Aufmerksamkeit du auf dich selbst richtest, desto verkrampfter wird dein Körper.</p>
+          <p>Versuche stattdessen, deine Aufmerksamkeit bewusst nach außen zu lenken. Nimm das Licht wahr. Spüre den Wind. Höre die Geräusche um dich herum. Führe ein Gespräch. Lache, wenn dir danach ist.</p>
+          <p>In dem Moment, in dem du aufhörst, dich selbst zu kontrollieren, entstehen die natürlichsten Bilder.</p>
+          <h3>Atme bewusst.</h3>
+          <p>Stress verändert unsere Atmung – sie wird schneller und flacher. Deshalb lohnt sich eine einfache Übung: Atme vier Sekunden lang ruhig ein. Halte den Atem zwei Sekunden. Atme anschließend sechs Sekunden langsam wieder aus. Wiederhole das einige Male.</p>
+          <p>Du wirst merken, dass sich nicht nur dein Körper entspannt, sondern auch dein Gesicht weicher wirkt. Die Schultern sinken automatisch nach unten und dein Blick wird ruhiger.</p>
+          <h3>Du musst nicht wissen, wie man posiert.</h3>
+          <p>Das ist wahrscheinlich die größte Sorge überhaupt. Die Wahrheit ist: Fast niemand weiß das. Und genau deshalb ist es nicht deine Aufgabe. Es ist die Aufgabe des Fotografen.</p>
+          <p>Ein gutes Fotoshooting besteht nicht daraus, jemanden vor die Kamera zu stellen und zu sagen: „Jetzt lächeln." Ein guter Fotograf beobachtet, erklärt, macht kleine Vorschläge und achtet auf Licht, Haltung, Hände, Blickrichtung und die vielen kleinen Details, über die du gar nicht nachdenken musst.</p>
+          <p>Du musst also keine Erfahrung mitbringen. Du musst nur bereit sein, den Moment zuzulassen.</p>
+          <h3>Auch der Fotograf ist ein Mensch.</h3>
+          <p>Viele stellen sich Fotografen als Menschen vor, die ausschließlich auf Technik achten. In Wirklichkeit erlebt ein guter Fotograf jede Session gemeinsam mit der Person vor der Kamera. Er erkennt Unsicherheit. Er sieht, wenn jemand verkrampft. Er merkt, wann eine Pause gut tut.</p>
+          <p>Und oft entstehen die schönsten Bilder genau dann, wenn die Kamera für einen Moment fast vergessen wird.</p>
+          <p>Deshalb gehört zu einem guten Shooting nicht nur das Fotografieren. Es gehört auch dazu, eine Atmosphäre zu schaffen, in der Vertrauen entstehen darf. Denn erst wenn du dich wohlfühlst, kann deine Persönlichkeit sichtbar werden.</p>
+          <h3>Vergiss den Gedanken an das perfekte Bild.</h3>
+          <p>Perfektion ist selten das, was Menschen berührt. Es sind kleine Gesten. Ein echter Blick. Ein spontanes Lächeln. Eine nachdenkliche Sekunde. Genau diese Momente machen ein Bild lebendig.</p>
+          <h3>Eine kleine Aufgabe vor deinem Shooting.</h3>
+          <p>Bevor du losfährst, schließe für einen Moment die Augen. Stell dir nicht das perfekte Foto vor. Stell dir stattdessen vor, wie entspannt du nach dem Shooting nach Hause fährst. Wie überrascht du bist, dass alles viel einfacher war, als du gedacht hast. Und wie du später deine Bilder anschaust und denkst: „Warum habe ich mir eigentlich so viele Sorgen gemacht?"</p>
+          <p>Genau das höre ich nach einem Fotoshooting immer wieder. Die größte Angst existiert meistens nur bis zu dem Moment, in dem die ersten Minuten vorbei sind. Danach bleibt oft nur noch eines: Freude.</p>
+          <p>Vielleicht wirst du am Ende feststellen, dass es nie darum ging, perfekt auszusehen. Sondern darum, dich selbst für einen Moment so zu zeigen, wie du wirklich bist.</p>
+          <p>Und genau darin liegt für mich die schönste Form der Fotografie.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-smartphone">
+          <figure><img src="images/blog/blog-smartphone-horizontal-01.webp" alt="Smartphone-Fotografie im Fokus"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Smartphone-Fotografie im Fokus: Wann das Handy die Kamera ersetzt (und wo es scheitert)</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: SMARTPHONE -->
+    <div id="page-article-smartphone" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-smartphone-horizontal-01.webp" alt="Smartphone-Fotografie im Fokus">
+        <div class="hero-text">
+          <h1><span>Smartphone-Fotografie</span><span>im Fokus</span></h1>
+          <p class="hero-sub">Wann das Handy die Kamera ersetzt (und wo es scheitert)</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Technik</span><span class="readtime">6 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Man hört es heute immer öfter: „Die beste Kamera ist die, die man dabei hat." Und tatsächlich stecken in unseren Hosentaschen mittlerweile Computer, die Fotos mit unfassbarer Schärfe, künstlicher Intelligenz und beeindruckendem Dynamikumfang ausgeben. Doch können moderne Smartphones wirklich vollwertige Kameras ersetzen?</p>
+          <p>Die Antwort ist wie so oft ein klares: Es kommt darauf an. Schauen wir uns an, in welchen Situationen das Handy brilliert, wo es gnadenlos an seine Grenzen stößt und was wirklich hinter dem Megapixel-Wahn steckt.</p>
+          <h3>1. Wann das Smartphone perfekt funktioniert (und die echte Kamera schlägt)</h3>
+          <p>Es gibt Szenarien, in denen das Smartphone dank smarter Software und kompakter Bauweise unschlagbar ist:</p>
+          <ul>
+            <li><strong>Schnappschüsse und Streetfotografie im Alltag:</strong> Wenn Du im Café sitzt, durch die Stadt gehst oder einen unvorhergesehenen Moment festhalten willst, ist das Handy sofort griffbereit. Niemand fühlt sich durch ein Smartphone bedroht oder beobachtet – perfekte Voraussetzungen für authentische, ungezwungene Momente.</li>
+            <li><strong>Gutes Tageslicht und Reisefotografie:</strong> Bei hellem Sonnenlicht oder gleichmäßiger Ausleuchtung liefern moderne Handys Bilder, die auf dem Display oder in sozialen Netzwerken kaum noch von echten Profi-Kameras zu unterscheiden sind. HDR-Algorithmen retten ausgebrannte Lichter im Handumdrehen.</li>
+            <li><strong>Immer dabei:</strong> Kein schwerer Rucksack, kein Objektivwechsel. Wer unbeschwert reisen will, schätzt die Leichtigkeit des Smartphones enorm.</li>
+          </ul>
+          <h3>2. Wo das Smartphone scheitert (die physikalischen Grenzen)</h3>
+          <p>So gut die Software auch trickst: Die Physik lässt sich nicht austricksen. Ein winziger Smartphone-Sensor kann mit der Lichtstärke und Tiefe einer echten Kamera nicht mithalten.</p>
+          <ul>
+            <li><strong>Studio, Fashion und kontrolliertes Licht:</strong> Wer im Studio arbeitet, mit entfesselten Blitzgeräten, präzisen Lichtformern oder Farb-Gels, kommt mit einem Handy schnell an eine Wand. Die Steuerung des Lichts, die Synchronisation und die saubere Trennung von Motiv und Hintergrund erfordern echte Hardware.</li>
+            <li><strong>Echte Tiefenschärfe (das Bokeh):</strong> Der beliebte Porträtmodus im Handy ist reine Rechenleistung (KI). Oft schneidet er Haare oder feine Konturen unsauber aus und erzeugt ein künstlich wirkendes, digital berechnetes Bokeh. Eine echte, offene Blende – etwa f/1.4 – erzeugt eine physikalische, butterweiche Unschärfe, die kein Algorithmus perfekt imitieren kann.</li>
+            <li><strong>Low Light und Action:</strong> Sobald das Licht schwindet oder sich Motive extrem schnell bewegen – etwa im Sport oder bei Wildlife –, fangen Handys an, stark zu entrauschen, wodurch Bilder oft „matschig" oder unnatürlich glatt wirken.</li>
+          </ul>
+          <h3>3. Megapixel im Smartphone: Marketing-Gag oder echte Funktion?</h3>
+          <p>Wenn man liest, dass ein Handy plötzlich 200 Megapixel haben soll, jubelt das Marketing – aber die Realität sieht anders aus.</p>
+          <ul>
+            <li><strong>Der Marketing-Trick:</strong> Bei einem so winzigen Sensor bedeutet eine extrem hohe Megapixel-Anzahl vor allem eins: winzig kleine Pixel, die extrem wenig Licht einfangen. Um bei schlechtem Licht überhaupt nutzbare Bilder zu bekommen, nutzen Handys deshalb das sogenannte Pixel Binning – das Zusammenlegen mehrerer Pixel zu einem größeren. Am Ende speichert das Handy meist trotzdem nur Fotos mit 12 oder 24 Megapixeln ab.</li>
+            <li><strong>Wann es nützlich ist:</strong> Eine hohe Auflösung hilft im Alltag vor allem beim digitalen Zoom oder beim nachträglichen Ausschnitt. Für den klassischen Print oder die professionelle Weiterverarbeitung im Großformat taugt die winzige Smartphone-Optik trotz Megapixel-Zahlen jedoch nicht.</li>
+          </ul>
+          <h3>Fazit</h3>
+          <p>Das Smartphone ist ein fantastisches Werkzeug für den Alltag, für die Reise und für den schnellen Schnappschuss. Es wird die dedizierte Kamera jedoch in der professionellen Porträt-, Fashion- oder Studiofotografie niemals komplett ersetzen. Wer ernsthaft und kreativ mit Licht, Tiefe und echter Bildqualität arbeiten will, greift nach wie vor zum richtigen Werkzeug – denn kein Algorithmus der Welt ersetzt das Auge des Fotografen und die Physik echten Glases.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-megapixel">
+          <figure><img src="images/blog/blog-megapixel-horizontal-01.webp" alt="Megapixel-Wahn und Marketing"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Megapixel-Wahn und Marketing: Brauchen wir wirklich ständig das Neueste?</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ARTIKEL: MEGAPIXEL -->
+    <div id="page-article-megapixel" class="spa-page">
+      <section class="hero article-hero">
+        <img src="images/blog/blog-megapixel-horizontal-01.webp" alt="Megapixel-Wahn und Marketing">
+        <div class="hero-text">
+          <h1><span>Megapixel-Wahn</span><span>und Marketing</span></h1>
+          <p class="hero-sub">Brauchen wir wirklich ständig das Neueste?</p>
+        </div>
+      </section>
+      <div class="article-wrap">
+        <a class="spa-back" data-target="page-blog">&larr; zurück zum Blog</a>
+        <div class="article-meta"><span class="tag">Technik</span><span class="readtime">6 Min. Lesezeit</span></div>
+        <div class="article-body">
+          <p>Der Kameramarkt steht gefühlt niemals still. Alle paar Monate wird das nächste Modell mit noch mehr Megapixeln, rasantem Autofokus und bahnbrechenden KI-Funktionen angekündigt. Für viele Fotografen entsteht so ein permanenter Druck: Man hat das Gefühl, dem technischen Fortschritt hinterherlaufen zu müssen, um überhaupt noch „mithalten" zu können.</p>
+          <p>Doch die ehrliche Frage lautet: Brauchen wir diesen ständigen Wechsel wirklich? Und rechtfertigt der technologische Fortschritt in der Praxis tatsächlich den Griff zum teuersten High-End-Body?</p>
+          <h3>Auflösungswahn: Braucht jeder 60 Megapixel?</h3>
+          <p>Ein perfektes Beispiel ist die Megapixel-Schlacht. Natürlich ist eine extreme Auflösung fantastisch, wenn man im High-End-Beauty-Bereich arbeitet, wo jede einzelne Wimper und Hautstruktur bis ins kleinste Detail seziert werden muss.</p>
+          <p>Aber machen wir uns nichts vor: Wer sich auf Fashion-, Porträt- oder Familienshootings spezialisiert, bei denen die Bilder am Ende auf Instagram landen, in einem Fotobuch gedruckt oder als klassischer Wandabzug in normaler Größe an der Wand hängen, braucht selten diese gigantischen Datenmengen. Oft erzeugen sie im Workflow nur unnötige Probleme – von ewig langen Ladezeiten beim Import über riesige Festplattengräber bis hin zu Computern, die unter den Datenmengen in die Knie gehen. Der praktische Nutzen im Alltag geht für viele schlichtweg an der Realität vorbei.</p>
+          <h3>Der Irrglaube: Kann ein teurer Body technisches Wissen ersetzen?</h3>
+          <p>Die wohl größte Illusion der Fotobranche ist die Idee, dass ein teurerer Apparat automatisch bessere Bilder macht. Die Realität sieht anders aus: Wer die Grundlagen der Fotografie nicht verinnerlicht hat, wer Blende, Belichtungszeit, ISO und vor allem das Licht nicht versteht, der nutzt selbst eine Profi-Kamera nur zu einem Bruchteil ihres Potenzials – oft schöpft man nicht einmal 5 Prozent ihrer tatsächlichen Leistungsfähigkeit aus.</p>
+          <p>Ein technologisch überlegenes Gehäuse gleicht kein fehlendes Auge für Komposition aus. Es ersetzt keine Empathie im Umgang mit dem Menschen vor der Linse und kein Gespür für den richtigen Moment.</p>
+          <h3>Die bessere Investition: Handwerk, Glas und Bewusstsein</h3>
+          <p>Wer klug wirtschaftet und seine fotografische Qualität wirklich nach vorne bringen will, setzt woanders an:</p>
+          <ul>
+            <li><strong>In die eigenen Fähigkeiten investieren:</strong> Kurse, Workshops und gezielte Weiterbildungen in der eigenen Lieblingsdisziplin bringen einen exponentiell weiter als jedes Hardware-Upgrade.</li>
+            <li><strong>Der Blick auf die Objektive:</strong> Glas ist durch nichts zu ersetzen. Eine hochwertige Festbrennweite mit einer tollen Lichtstärke formt den Look, das Bokeh und den Charakter des Bildes viel nachhaltiger als der neueste Sensor im Kameragehäuse. Ein durchdacht ausgewähltes Objektiv bleibt jahrelang im Rucksack, während Kamerabodys extrem schnell an Wert verlieren.</li>
+            <li><strong>Bewusster, minimalistischer Geräteeinsatz:</strong> Wer genau weiß, was er fotografieren möchte, wählt sein Equipment gezielt aus – und lässt sich von den Marketingversprechen der Hersteller nicht mehr so leicht aus der Ruhe bringen.</li>
+          </ul>
+          <p>Am Ende macht nicht die Kamera das Bild, sondern der Mensch, der dahintersteht. Die beste Ausrüstung ist nicht die teuerste auf dem Markt, sondern die, die man blind bedienen kann und die einen in der eigenen kreativen Vision perfekt unterstützt.</p>
+        </div>
+      </div>
+      <div class="next-article">
+        <a class="next-article-card" data-target="page-article-preise">
+          <figure><img src="images/blog/blog-preise-horizontal-01.webp" alt="Was kostet ein echtes Bild"></figure>
+          <div><span class="next-article-label">Nächster Artikel</span><div class="next-article-title">Was kostet ein echtes Bild? Die Wahrheit hinter den Preisen in der Fotografie</div></div>
+          <span class="next-article-arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer id="kontakt" style="display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap;">
+    <span>© 2026 Adam Olendzki. All rights reserved.</span>
+    <a href="datenschutz.html" style="color: #8f8f89;">Datenschutz</a>
+  </footer>
+
+  <script>
+    (function () {
+      var pages = document.querySelectorAll('.spa-page');
+      var progress = document.getElementById('readProgress');
+
+      function show(id) {
+        pages.forEach(function (p) { p.style.display = 'none'; });
+        var target = document.getElementById(id);
+        if (target) target.style.display = 'block';
+        window.scrollTo(0, 0);
+        history.pushState(null, '', id === 'page-blog' ? '/blog/' : '/blog/#' + id);
+        updateProgress();
+      }
+
+      document.querySelectorAll('[data-target]').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          show(el.getAttribute('data-target'));
+        });
+      });
+
+      // pasek postępu czytania — widoczny tylko na widoku artykułu
+      function updateProgress() {
+        var activePage = document.querySelector('.spa-page[style*="display: block"]');
+        var isArticle = activePage && activePage.id.indexOf('page-article-') === 0;
+        if (!isArticle) { progress.style.width = '0%'; return; }
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var scrolled = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+        progress.style.width = scrolled + '%';
+      }
+      window.addEventListener('scroll', updateProgress);
+      window.addEventListener('resize', updateProgress);
+
+      // obsługa hash przy wejściu (np. /blog/#page-article-light)
+      var hash = window.location.hash.replace('#', '');
+      if (hash && document.getElementById(hash)) {
+        show(hash);
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhysioPunkt — Physiotherapie Traunreut</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#1F6F64;
+    --teal-dark:#143F3A;
+    --mint:#E1EEEA;
+    --sand:#F6F3EC;
+    --ink:#1C2622;
+    --ink-soft:#5D685F;
+    --amber:#E2963B;
+    --line:rgba(28,38,34,.12);
+    --white:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--sand);color:var(--ink);
+    font-family:'Inter',sans-serif;font-weight:400;line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{text-decoration:none;color:inherit;}
+  img{display:block;max-width:100%;}
+  h1,h2,h3,h4{font-family:'Manrope',sans-serif;font-weight:700;line-height:1.15;color:var(--ink);}
+  .kicker{
+    font-family:'Manrope',sans-serif;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal);font-weight:700;display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.2rem;
+  }
+  .kicker::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--amber);}
+
+  header{
+    position:sticky;top:0;z-index:1000;background:rgba(246,243,236,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;padding:1.3rem 3rem;
+  }
+  .logo{font-family:'Manrope',sans-serif;font-weight:800;font-size:1.25rem;letter-spacing:-.01em;cursor:pointer;}
+  .logo span{color:var(--teal);}
+  nav.mainnav{display:flex;gap:2.2rem;align-items:center;}
+  nav.mainnav a{
+    font-size:.86rem;font-weight:600;color:var(--ink-soft);cursor:pointer;position:relative;padding-bottom:3px;
+  }
+  nav.mainnav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--amber);transition:width .25s ease;}
+  nav.mainnav a:hover::after,nav.mainnav a.active::after{width:100%;}
+  nav.mainnav a:hover,nav.mainnav a.active{color:var(--ink);}
+  .nav-cta{
+    background:var(--teal);color:var(--white)!important;padding:.7rem 1.5rem;border-radius:8px;font-weight:700!important;
+  }
+  .nav-cta:hover{background:var(--teal-dark);}
+  .nav-cta::after{display:none;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .burger span{width:22px;height:2px;background:var(--ink);display:block;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:5.5rem 3rem 5rem;max-width:1240px;margin:0 auto;
+    display:grid;grid-template-columns:1fr .95fr;gap:3.5rem;align-items:center;
+  }
+  .hero-left h1{font-size:clamp(2.4rem,4.6vw,3.6rem);margin-bottom:1.4rem;}
+  .hero-left h1 em{font-style:normal;color:var(--teal);}
+  .hero-left p{color:var(--ink-soft);max-width:460px;margin-bottom:2rem;font-size:1.02rem;}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;
+    padding:.95rem 1.9rem;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;border:none;
+    transition:transform .25s ease, background .25s ease;
+  }
+  .btn-solid{background:var(--teal);color:var(--white);}
+  .btn-solid:hover{background:var(--teal-dark);transform:translateY(-2px);}
+  .btn-outline{background:transparent;border:1.5px solid var(--ink);color:var(--ink);}
+  .btn-outline:hover{background:var(--white);transform:translateY(-2px);}
+  .hero-row{display:flex;gap:1rem;flex-wrap:wrap;}
+  .hero-right{border-radius:16px;overflow:hidden;aspect-ratio:4/5;position:relative;box-shadow:0 30px 60px -25px rgba(20,63,58,.35);}
+  .hero-right img{width:100%;height:100%;object-fit:cover;}
+  .hero-badge{
+    position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;
+    background:rgba(255,255,255,.94);border-radius:10px;padding:1rem 1.2rem;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .hero-badge .n{font-family:'Manrope',sans-serif;font-weight:800;font-size:1.4rem;color:var(--teal);}
+  .hero-badge .l{font-size:.72rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;}
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust-strip{
+    background:var(--teal);color:var(--white);
+    display:grid;grid-template-columns:repeat(4,1fr);
+  }
+  .trust-item{padding:2.2rem 1.5rem;text-align:center;border-right:1px solid rgba(255,255,255,.18);}
+  .trust-item:last-child{border-right:none;}
+  .trust-item .num{font-family:'Manrope',sans-serif;font-weight:800;font-size:1.8rem;}
+  .trust-item .lbl{font-size:.78rem;opacity:.85;margin-top:.3rem;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:6rem 3rem;}
+  .section-inner{max-width:1240px;margin:0 auto;}
+  .sec-head{max-width:600px;margin-bottom:3.2rem;}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .sec-head h2{font-size:clamp(2rem,3.6vw,2.8rem);}
+  .sec-head p{color:var(--ink-soft);margin-top:1rem;}
+
+  /* ---------- SERVICES CARDS ---------- */
+  .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;}
+  .service-card{
+    background:var(--white);border:1px solid var(--line);border-radius:14px;padding:2rem 1.6rem;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .service-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px -25px rgba(20,63,58,.3);}
+  .service-card .ic{
+    width:46px;height:46px;border-radius:10px;background:var(--mint);color:var(--teal);
+    display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;
+    font-family:'Manrope',sans-serif;font-weight:800;
+  }
+  .service-card h3{font-size:1.1rem;margin-bottom:.5rem;}
+  .service-card p{color:var(--ink-soft);font-size:.86rem;}
+
+  /* ---------- ABOUT TEASER ---------- */
+  .about-teaser{background:var(--white);}
+  .at-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+  .at-img{border-radius:14px;overflow:hidden;aspect-ratio:4/3;}
+  .at-img img{width:100%;height:100%;object-fit:cover;}
+  .at-text p{color:var(--ink-soft);margin-bottom:1.1rem;max-width:480px;}
+  .checklist{margin:1.6rem 0;}
+  .check-row{display:flex;gap:.8rem;align-items:flex-start;margin-bottom:.9rem;}
+  .check-row .cm{
+    width:22px;height:22px;border-radius:50%;background:var(--teal);color:var(--white);
+    display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;margin-top:.15rem;
+  }
+  .check-row p{color:var(--ink-soft);font-size:.92rem;margin:0;}
+
+  /* ---------- GALLERY ---------- */
+  .grid-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;}
+  .grid-gallery figure{border-radius:12px;overflow:hidden;aspect-ratio:3/4;margin:0;}
+  .grid-gallery img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+  .grid-gallery figure:hover img{transform:scale(1.05);}
+
+  /* ---------- TESTIMONIAL ---------- */
+  .testimonial{background:var(--mint);text-align:center;}
+  .testimonial-inner{max-width:720px;margin:0 auto;}
+  .testimonial blockquote{
+    font-family:'Manrope',sans-serif;font-weight:600;font-size:clamp(1.3rem,2.4vw,1.8rem);
+    color:var(--teal-dark);margin-bottom:1.4rem;line-height:1.4;
+  }
+  .testimonial .cite{font-size:.85rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;}
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{background:var(--teal-dark);color:var(--white);text-align:center;padding:5.5rem 2rem;}
+  .cta-band .kicker{color:var(--amber);}
+  .cta-band .kicker::before{background:var(--white);}
+  .cta-band h2{color:var(--white);font-size:clamp(2rem,3.8vw,2.8rem);max-width:640px;margin:0 auto 2rem;}
+  .cta-band .btn-solid{background:var(--amber);}
+  .cta-band .btn-solid:hover{background:#C87F26;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--white);border-top:1px solid var(--line);padding:4rem 3rem 2rem;}
+  .footer-grid{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:2.5rem;padding-bottom:2.6rem;border-bottom:1px solid var(--line);}
+  .footer-grid .logo{margin-bottom:1rem;}
+  .footer-grid p{color:var(--ink-soft);font-size:.88rem;max-width:260px;}
+  .footer-col h4{font-family:'Manrope',sans-serif;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);margin-bottom:1rem;}
+  .footer-col a,.footer-col p{display:block;color:var(--ink-soft);font-size:.88rem;margin-bottom:.55rem;}
+  .footer-col a:hover{color:var(--teal);}
+  .footer-bottom{max-width:1240px;margin:0 auto;padding-top:1.6rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.78rem;color:var(--ink-soft);}
+  .footer-legal{display:flex;gap:1.4rem;flex-wrap:wrap;}
+  .footer-bottom a:hover{color:var(--teal);}
+
+  /* ---------- PAGE HERO ---------- */
+  .page-hero{padding:4.5rem 3rem 3.5rem;max-width:1240px;margin:0 auto;}
+  .page-hero h1{font-size:clamp(2.3rem,5vw,3.4rem);max-width:760px;}
+
+  /* ---------- TEAM ---------- */
+  .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;}
+  .team-card{background:var(--white);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+  .team-card .timg{height:300px;overflow:hidden;}
+  .team-card .timg img{width:100%;height:100%;object-fit:cover;}
+  .team-card .tbody{padding:1.8rem 2rem 2.1rem;}
+  .team-card h4{font-size:1.35rem;margin-bottom:.25rem;}
+  .team-role{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);font-weight:700;display:block;margin-bottom:1rem;}
+  .team-card p{color:var(--ink-soft);font-size:.9rem;margin-bottom:1rem;}
+  .team-card ul{padding-left:1.1rem;}
+  .team-card li{color:var(--ink-soft);font-size:.85rem;margin-bottom:.4rem;}
+
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:4rem;}
+  .value-item{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:1.8rem;}
+  .value-item h4{font-size:1.05rem;margin-bottom:.5rem;}
+  .value-item p{color:var(--ink-soft);font-size:.87rem;}
+
+  /* ---------- LEISTUNGEN ---------- */
+  .info-note{
+    background:var(--mint);border-radius:12px;padding:1.4rem 1.6rem;margin-bottom:3rem;
+    font-size:.9rem;color:var(--teal-dark);
+  }
+  .price-group{margin-bottom:3.2rem;}
+  .price-group-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1rem;border-bottom:2px solid var(--teal);padding-bottom:.7rem;}
+  .price-group-head h3{font-size:1.4rem;}
+  .price-group-head span{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);}
+  .price-row{display:flex;align-items:baseline;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line);}
+  .price-row .pname{font-weight:600;font-size:1rem;}
+  .price-row .pdesc{color:var(--ink-soft);font-size:.82rem;margin-top:.2rem;}
+  .price-row .dots{flex:1;border-bottom:1px dotted var(--line);transform:translateY(-.4rem);}
+  .price-row .pval{font-family:'Manrope',sans-serif;font-weight:800;color:var(--teal-dark);font-size:1.05rem;white-space:nowrap;}
+  .price-note{color:var(--ink-soft);font-size:.85rem;text-align:center;margin-top:1rem;}
+
+  /* ---------- LEGAL ---------- */
+  .legal-body{max-width:760px;margin:0 auto;padding:0 3rem 6rem;}
+  .legal-body h2{font-size:1.4rem;margin:2.4rem 0 .9rem;}
+  .legal-body h2:first-child{margin-top:0;}
+  .legal-body h3{font-family:'Manrope',sans-serif;font-size:.9rem;text-transform:uppercase;letter-spacing:.04em;margin:1.5rem 0 .6rem;color:var(--teal);}
+  .legal-body p,.legal-body li{color:var(--ink-soft);font-size:.95rem;margin-bottom:.9rem;}
+  .legal-body ul{padding-left:1.3rem;margin-bottom:1rem;}
+  .legal-body a.inline-link{color:var(--teal);text-decoration:underline;}
+  .legal-note{background:var(--mint);border-radius:10px;padding:1.3rem 1.5rem;font-size:.85rem;color:var(--teal-dark);margin-bottom:2rem;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  @media(max-width:980px){
+    .hero{grid-template-columns:1fr;}
+    .trust-strip{grid-template-columns:repeat(2,1fr);}
+    .trust-item:nth-child(2){border-right:none;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .at-grid{grid-template-columns:1fr;}
+    .grid-gallery{grid-template-columns:repeat(2,1fr);}
+    .team-grid{grid-template-columns:1fr;}
+    .values{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:768px){
+    header{padding:1.1rem 1.5rem;}
+    nav.mainnav{
+      position:fixed;top:0;right:0;height:100vh;width:80%;max-width:300px;
+      background:var(--sand);flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:1.8rem;padding:3rem;transform:translateX(100%);transition:transform .35s ease;
+      border-left:1px solid var(--line);
+    }
+    nav.mainnav.open{transform:translateX(0);}
+    .burger{display:flex;}
+    section{padding:4rem 1.5rem;}
+    .hero,.page-hero{padding-left:1.5rem;padding-right:1.5rem;}
+    .services-grid{grid-template-columns:1fr;}
+    .grid-gallery{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .legal-body{padding:0 1.5rem 4rem;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo" onclick="showPage('home')">Physio<span>Punkt</span></div>
+  <nav class="mainnav" id="mainNav">
+    <a href="../" style="opacity:.75;">← Portfolio</a>
+    <a onclick="showPage('home')" data-page="home">Home</a>
+    <a onclick="showPage('team')" data-page="team">Team</a>
+    <a onclick="showPage('leistungen')" data-page="leistungen">Leistungen</a>
+    <a onclick="showPage('praxis')" data-page="praxis">Praxis</a>
+    <a class="nav-cta" onclick="showPage('home');setTimeout(()=>document.getElementById('kontakt').scrollIntoView({behavior:'smooth'}),50)">Termin buchen</a>
+  </nav>
+  <div class="burger" id="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-left">
+      <span class="kicker">Physiotherapie · Traunreut</span>
+      <h1>Beweglich bleiben,<br>Schmerzen <em>gezielt</em><br>behandeln.</h1>
+      <p>Krankengymnastik, manuelle Therapie und Sportrehabilitation — mit Zeit für eine gründliche Behandlung, nicht im Minutentakt.</p>
+      <div class="hero-row">
+        <a class="btn btn-solid" href="tel:+498669456789">Termin anfragen</a>
+        <a class="btn btn-outline" onclick="showPage('leistungen')">Leistungen ansehen</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1540205895360-4ad4cffb3aa8?auto=format&fit=crop&w=1000&q=80" alt="Physiotherapeutische Behandlung im PhysioPunkt">
+      <div class="hero-badge">
+        <div><div class="n">4.8 / 5.0</div><div class="l">Patientenbewertung</div></div>
+        <div><div class="n">15+</div><div class="l">Jahre Erfahrung</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-strip">
+    <div class="trust-item"><div class="num">15+</div><div class="lbl">Jahre Praxiserfahrung</div></div>
+    <div class="trust-item"><div class="num">2.400+</div><div class="lbl">Behandlungen pro Jahr</div></div>
+    <div class="trust-item"><div class="num">2</div><div class="lbl">Therapeut:innen</div></div>
+    <div class="trust-item"><div class="num">Alle Kassen</div><div class="lbl">+ Privatzahler</div></div>
+  </div>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Angebot</span>
+        <h2>Unsere Schwerpunkte</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="ic">01</div>
+          <h3>Krankengymnastik</h3>
+          <p>Gezielte Übungen zur Mobilisation und Kräftigung, individuell abgestimmt.</p>
+        </div>
+        <div class="service-card">
+          <div class="ic">02</div>
+          <h3>Manuelle Therapie</h3>
+          <p>Handgriffe zur Behandlung von Gelenk- und Muskelfunktionsstörungen.</p>
+        </div>
+        <div class="service-card">
+          <div class="ic">03</div>
+          <h3>Sportrehabilitation</h3>
+          <p>Aufbau nach Verletzungen, für Rückkehr in Sport und Alltag.</p>
+        </div>
+        <div class="service-card">
+          <div class="ic">04</div>
+          <h3>Klassische Massage</h3>
+          <p>Lösung von Verspannungen und Förderung der Durchblutung.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-teaser">
+    <div class="section-inner at-grid">
+      <div class="at-img">
+        <img src="https://images.unsplash.com/photo-1706353399656-210cca727a33?auto=format&fit=crop&w=900&q=80" alt="Behandlung im PhysioPunkt">
+      </div>
+      <div class="at-text">
+        <span class="kicker">Warum PhysioPunkt</span>
+        <h2>Behandlung mit Zeit<br>und Erfahrung</h2>
+        <p>Wir nehmen uns bewusst Zeit für jede Behandlung — mit einem festen Therapeuten-Team, nicht wechselndem Personal.</p>
+        <div class="checklist">
+          <div class="check-row"><div class="cm">✓</div><p>45 Minuten Behandlungszeit statt 20-Minuten-Takt</p></div>
+          <div class="check-row"><div class="cm">✓</div><p>Feste Ansprechpartner:innen über die gesamte Behandlungsdauer</p></div>
+          <div class="check-row"><div class="cm">✓</div><p>Abrechnung mit allen gesetzlichen und privaten Kassen</p></div>
+        </div>
+        <a class="btn btn-solid" onclick="showPage('team')">Team kennenlernen →</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Praxis</span>
+        <h2>Impressionen</h2>
+      </div>
+      <div class="grid-gallery">
+        <figure><img src="https://images.unsplash.com/photo-1522898467493-49726bf28798?auto=format&fit=crop&w=500&q=80" alt="Übung mit Gymnastikball"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1586401100295-7a8096fd231a?auto=format&fit=crop&w=500&q=80" alt="Kleingeräte für Kräftigung"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1645005513713-9e2b92a687d3?auto=format&fit=crop&w=500&q=80" alt="Krafttraining in Begleitung"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1645005512968-0c1fe99f0093?auto=format&fit=crop&w=500&q=80" alt="Gangtraining"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonial">
+    <div class="section-inner testimonial-inner">
+      <blockquote>„Nach meiner Knie-OP habe ich hier die beste Reha bekommen, die ich mir vorstellen konnte — geduldig, kompetent, mit klarem Plan."</blockquote>
+      <div class="cite">— Patientin, Rehabilitation nach Knie-OP</div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="kontakt">
+    <span class="kicker">Termin buchen</span>
+    <h2>Lass uns gemeinsam an deiner Beweglichkeit arbeiten.</h2>
+    <a class="btn btn-solid" href="tel:+498669456789">Anrufen: +49 8669 456789</a>
+  </section>
+
+</div>
+
+<!-- ============ TEAM ============ -->
+<div class="page" id="page-team">
+  <div class="page-hero">
+    <span class="kicker">Unser Team</span>
+    <h1>Zwei Therapeut:innen,<br>ein gemeinsamer Anspruch.</h1>
+  </div>
+
+  <section style="padding-top:1rem;">
+    <div class="section-inner">
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="timg"><img src="https://images.unsplash.com/photo-1519824145371-296894a0daa9?auto=format&fit=crop&w=700&q=80" alt="Thomas Berger bei der Behandlung"></div>
+          <div class="tbody">
+            <h4>Thomas Berger</h4>
+            <span class="team-role">Praxisinhaber · Physiotherapeut</span>
+            <p>Thomas hat seine Ausbildung 2009 in München abgeschlossen und seither in Kliniken und ambulanten Praxen in Bayern gearbeitet, bevor er 2018 PhysioPunkt gegründet hat.</p>
+            <ul>
+              <li>Zertifikat Manuelle Therapie (OMT)</li>
+              <li>Fortbildung Sportphysiotherapie, Köln 2015</li>
+              <li>Über 15 Jahre klinische Erfahrung</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="timg"><img src="https://images.unsplash.com/photo-1706353399656-210cca727a33?auto=format&fit=crop&w=700&q=80" alt="Julia Fink bei der Behandlung"></div>
+          <div class="tbody">
+            <h4>Julia Fink</h4>
+            <span class="team-role">Physiotherapeutin · Sportrehabilitation</span>
+            <p>Julia ist seit 2020 im Team und hat sich auf Rehabilitation nach Sportverletzungen spezialisiert. Ausbildung in Rosenheim, ergänzt durch mehrere Zusatzqualifikationen.</p>
+            <ul>
+              <li>Zertifizierte Sportphysiotherapeutin (DOSB)</li>
+              <li>Fortbildung Bewegungsanalyse, Innsbruck 2022</li>
+              <li>Betreuung regionaler Amateursportvereine</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="values">
+        <div class="value-item"><h4>Individuelle Behandlungspläne</h4><p>Jede Therapie wird auf Befund und Alltag der Patient:innen abgestimmt.</p></div>
+        <div class="value-item"><h4>Ausreichend Zeit</h4><p>Feste Behandlungszeiten statt Fließband-Termine.</p></div>
+        <div class="value-item"><h4>Ständige Weiterbildung</h4><p>Wir bilden uns regelmäßig fort, um aktuelle Methoden anzubieten.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Termin anfragen</span>
+    <h2>Wir freuen uns auf deinen Besuch.</h2>
+    <a class="btn btn-solid" href="tel:+498669456789">Termin vereinbaren</a>
+  </section>
+</div>
+
+<!-- ============ LEISTUNGEN ============ -->
+<div class="page" id="page-leistungen">
+  <div class="page-hero">
+    <span class="kicker">Preise &amp; Leistungen</span>
+    <h1>Kassenleistungen &amp; Selbstzahlerangebote</h1>
+  </div>
+
+  <section style="padding-top:1rem;">
+    <div class="section-inner" style="max-width:820px;">
+      <div class="info-note">Mit gültiger ärztlicher Verordnung rechnen wir direkt mit deiner gesetzlichen oder privaten Krankenkasse ab. Die folgenden Preise gelten für Selbstzahlerleistungen ohne Rezept.</div>
+
+      <div class="price-group">
+        <div class="price-group-head"><h3>Basisbehandlungen</h3><span>Kassenfähig</span></div>
+        <div class="price-row"><div><div class="pname">Krankengymnastik (KG)</div><div class="pdesc">Einzelbehandlung, 20 Minuten</div></div><div class="dots"></div><div class="pval">32 €</div></div>
+        <div class="price-row"><div><div class="pname">Manuelle Therapie</div><div class="pdesc">Gezielte Gelenkmobilisation</div></div><div class="dots"></div><div class="pval">38 €</div></div>
+        <div class="price-row"><div><div class="pname">Klassische Massagetherapie</div><div class="pdesc">20 Minuten, ganzer Rücken oder Teilbereich</div></div><div class="dots"></div><div class="pval">28 €</div></div>
+        <div class="price-row"><div><div class="pname">Lymphdrainage</div><div class="pdesc">30 Minuten, je nach Region</div></div><div class="dots"></div><div class="pval">36 €</div></div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head"><h3>Selbstzahler-Angebote</h3><span>Privat</span></div>
+        <div class="price-row"><div><div class="pname">Sportrehabilitation</div><div class="pdesc">45 Minuten, individueller Trainingsplan</div></div><div class="dots"></div><div class="pval">58 €</div></div>
+        <div class="price-row"><div><div class="pname">Bewegungsanalyse</div><div class="pdesc">Ganzkörper-Check mit Auswertung</div></div><div class="dots"></div><div class="pval">75 €</div></div>
+        <div class="price-row"><div><div class="pname">Wellness-Massage</div><div class="pdesc">50 Minuten, ganzer Körper</div></div><div class="dots"></div><div class="pval">62 €</div></div>
+        <div class="price-row"><div><div class="pname">Hausbesuch</div><div class="pdesc">Zzgl. zur jeweiligen Behandlung</div></div><div class="dots"></div><div class="pval">ab 15 €</div></div>
+      </div>
+
+      <p class="price-note">Preise für Kassenleistungen entsprechen den gültigen Verbandssätzen. Endpreise für Selbstzahlerleistungen können je nach Umfang variieren.</p>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Bereit?</span>
+    <h2>Vereinbare deinen ersten Termin.</h2>
+    <a class="btn btn-solid" href="tel:+498669456789">Termin buchen</a>
+  </section>
+</div>
+
+<!-- ============ PRAXIS ============ -->
+<div class="page" id="page-praxis">
+  <div class="page-hero">
+    <span class="kicker">Unsere Praxis</span>
+    <h1>Hell, ruhig,<br>gut ausgestattet.</h1>
+  </div>
+
+  <section style="padding-top:1rem;">
+    <div class="section-inner">
+      <p style="color:var(--ink-soft);max-width:620px;margin-bottom:3.5rem;">Zwei Behandlungsräume und ein Trainingsbereich mit modernen Kleingeräten — genug Platz für konzentriertes Arbeiten ohne Enge.</p>
+
+      <div class="grid-gallery">
+        <figure><img src="https://images.unsplash.com/photo-1522898467493-49726bf28798?auto=format&fit=crop&w=500&q=80" alt="Trainingsbereich"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1645005512968-0c1fe99f0093?auto=format&fit=crop&w=500&q=80" alt="Gangtraining im Flur"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1540205895360-4ad4cffb3aa8?auto=format&fit=crop&w=500&q=80" alt="Behandlungsraum"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1586401100295-7a8096fd231a?auto=format&fit=crop&w=500&q=80" alt="Kleingeräte"></figure>
+      </div>
+
+      <div class="values">
+        <div class="value-item"><h4>Zwei Behandlungsräume</h4><p>Für Einzeltermine mit ausreichend Privatsphäre.</p></div>
+        <div class="value-item"><h4>Moderner Trainingsbereich</h4><p>Ausgestattet für Kräftigung, Balance und Ausdauer.</p></div>
+        <div class="value-item"><h4>Barrierefreier Zugang</h4><p>Ebenerdig erreichbar, auch mit Rollator oder Rollstuhl.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Vorbeikommen</span>
+    <h2>Lern unsere Praxis kennen.</h2>
+    <a class="btn btn-solid" href="tel:+498669456789">Termin buchen</a>
+  </section>
+</div>
+
+<!-- ============ IMPRESSUM ============ -->
+<div class="page" id="page-impressum">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Impressum</h1></div>
+  <section style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Name, Adresse, Telefonnummer und Kammerangaben sind Platzhalter-Beispiele für dieses Portfolio-Demo. Bitte vor echter Veröffentlichung durch reale Praxisdaten ersetzen.</div>
+
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>PhysioPunkt — Physiotherapiepraxis Berger<br>Thomas Berger<br>Rosenweg 12<br>83301 Traunreut<br>Deutschland</p>
+
+      <h3>Kontakt</h3>
+      <p>Telefon: <a class="inline-link" href="tel:+498669456789">+49 8669 456789</a><br>E-Mail: <a class="inline-link" href="mailto:praxis@physiopunkt-traunreut.de">praxis@physiopunkt-traunreut.de</a></p>
+
+      <h3>Berufsbezeichnung &amp; berufsrechtliche Angaben</h3>
+      <p>Berufsbezeichnung: Physiotherapeut, verliehen in der Bundesrepublik Deutschland. Zuständige Aufsichtsbehörde: Gesundheitsamt Traunstein. Es gelten die berufsrechtlichen Regelungen für Physiotherapeut:innen nach dem Masseur- und Physiotherapeutengesetz (MPhG).</p>
+
+      <h3>Umsatzsteuer</h3>
+      <p>Heilbehandlungen im Bereich der Physiotherapie sind gemäß § 4 Nr. 14 Buchst. a UStG von der Umsatzsteuer befreit.</p>
+
+      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+      <p>Thomas Berger, Anschrift wie oben.</p>
+
+      <h3>Streitschlichtung</h3>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="inline-link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Unsere E-Mail-Adresse findest du oben. Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+      <h3>Haftung für Inhalte</h3>
+      <p>Als Diensteanbieterin sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieterin jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+      <h3>Haftung für Links</h3>
+      <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+      <h3>Urheberrecht</h3>
+      <p>Die durch die Betreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DATENSCHUTZ ============ -->
+<div class="page" id="page-datenschutz">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Datenschutz</h1></div>
+  <section style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Diese Vorlage deckt gängige Punkte für eine kleine Physiotherapiepraxis mit Kontaktformular und Google Analytics ab. Bitte fachlich prüfen lassen — insbesondere zur Verarbeitung von Gesundheitsdaten — bevor sie live geht.</div>
+
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>PhysioPunkt — Physiotherapiepraxis Berger<br>Thomas Berger<br>Rosenweg 12, 83301 Traunreut<br>Telefon: +49 8669 456789<br>E-Mail: praxis@physiopunkt-traunreut.de</p>
+
+      <h2>2. Allgemeines zur Datenverarbeitung</h2>
+      <p>Wir verarbeiten personenbezogene Daten unserer Nutzer:innen grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie unserer Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt nach Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).</p>
+
+      <h2>3. Gesundheitsdaten</h2>
+      <p>Im Rahmen der Terminvereinbarung und Behandlung verarbeiten wir ggf. Gesundheitsdaten (z. B. Angaben zu Beschwerden, ärztliche Verordnungen). Diese besonderen Kategorien personenbezogener Daten (Art. 9 DSGVO) verarbeiten wir ausschließlich zur Durchführung der Behandlung auf Grundlage von Art. 9 Abs. 2 lit. h DSGVO i. V. m. § 22 Abs. 1 Nr. 1 lit. b BDSG sowie unserer Schweigepflicht.</p>
+
+      <h2>4. Hosting</h2>
+      <p>Diese Website wird bei einem externen Hosting-Anbieter gehostet. Personenbezogene Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Der Hoster verarbeitet Daten in unserem Auftrag gemäß Art. 28 DSGVO.</p>
+
+      <h2>5. Kontaktaufnahme &amp; Terminbuchung</h2>
+      <p>Wenn du uns per Telefon, E-Mail oder Kontaktformular kontaktierst, werden deine Angaben zur Bearbeitung deiner Anfrage bzw. zur Vorbereitung des Behandlungsvertrags gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO. Die Daten werden gelöscht, sobald sie nicht mehr erforderlich sind, unter Beachtung der gesetzlichen Aufbewahrungsfristen für Behandlungsunterlagen.</p>
+
+      <h2>6. Google Analytics</h2>
+      <p>Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google"). Google Analytics verwendet Cookies bzw. vergleichbare Technologien, die eine Analyse der Benutzung der Website ermöglichen.</p>
+      <p>Die erzeugten Informationen (z. B. Zugriffszeit, Ort des Zugriffs, Häufigkeit des Seitenbesuchs, gekürzte IP-Adresse) werden an Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert, sodass deine IP-Adresse vor der Übertragung innerhalb der EU/EWR gekürzt wird.</p>
+      <p>Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die du über unser Cookie-Banner erteilen oder ablehnen kannst. Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+      <p>Google verarbeitet Daten auch in den USA; hierfür bestehen Standardvertragsklauseln der EU-Kommission als Garantie für ein angemessenes Datenschutzniveau. Weitere Infos: <a class="inline-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.</p>
+      <p>Du kannst die Erfassung verhindern, indem du das Browser-Add-on installierst: <a class="inline-link" href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h2>7. Cookies</h2>
+      <p>Diese Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, alle anderen (z. B. Google Analytics) nur mit deiner Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO.</p>
+
+      <h2>8. Deine Rechte</h2>
+      <ul>
+        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
+        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
+        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
+        <li>Recht auf Widerruf erteilter Einwilligungen</li>
+      </ul>
+      <p>Zudem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, z. B. beim Bayerischen Landesamt für Datenschutzaufsicht.</p>
+
+      <h2>9. Änderungen dieser Datenschutzerklärung</h2>
+      <p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht. Stand: 2026.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo">Physio<span>Punkt</span></div>
+      <p>Physiotherapiepraxis in Traunreut. Krankengymnastik, manuelle Therapie und Sportrehabilitation.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a href="tel:+498669456789">+49 8669 456789</a>
+      <a href="mailto:praxis@physiopunkt-traunreut.de">praxis@physiopunkt-traunreut.de</a>
+      <p>Rosenweg 12, 83301 Traunreut</p>
+    </div>
+    <div class="footer-col">
+      <h4>Seite</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('team')">Team</a>
+      <a onclick="showPage('leistungen')">Leistungen</a>
+      <a onclick="showPage('praxis')">Praxis</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 PhysioPunkt Traunreut</span>
+    <div class="footer-legal">
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleNav(){document.getElementById('mainNav').classList.toggle('open');}
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    document.querySelectorAll('nav.mainnav a[data-page]').forEach(a=>{
+      a.classList.toggle('active', a.dataset.page===name);
+    });
+    document.getElementById('mainNav').classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+</script>
+
+</body>
+</html>

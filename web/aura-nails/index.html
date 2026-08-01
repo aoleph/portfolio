@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA Nails — Nagelstudio Augsburg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pearl:#FCF3F6;
+    --pearl-deep:#F5E5EC;
+    --blush:#F3D2E1;
+    --lilac:#E4D6F5;
+    --sky:#D6E8FA;
+    --gold:#C9A876;
+    --ink:#2B2230;
+    --ink-soft:#6E6172;
+    --line:rgba(43,34,48,.12);
+    --white:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--pearl);color:var(--ink);
+    font-family:'Poppins',sans-serif;font-weight:300;line-height:1.7;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit;}
+  img{display:block;max-width:100%;}
+  h1,h2,h3,h4{font-family:'Bodoni Moda',serif;font-weight:600;line-height:1.12;color:var(--ink);}
+  .kicker{
+    font-family:'Poppins',sans-serif;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--gold);font-weight:600;display:inline-block;margin-bottom:1.2rem;
+  }
+
+  /* reveal-on-scroll */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3rem;
+    transition:background .3s ease, padding .3s ease, box-shadow .3s ease;
+  }
+  header.scrolled{background:rgba(252,243,246,.9);backdrop-filter:blur(10px);padding:1.1rem 3rem;box-shadow:0 2px 20px rgba(43,34,48,.06);}
+  .logo{
+    font-family:'Bodoni Moda',serif;font-weight:700;font-size:1.5rem;letter-spacing:.06em;cursor:pointer;
+    background:linear-gradient(100deg,#E9A9C9,#C9A8F5,#A8CDF5,#F5D9A8,#E9A9C9);
+    background-size:300% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:auraShift 8s linear infinite;
+  }
+  @keyframes auraShift{to{background-position:300% center;}}
+  nav.mainnav{display:flex;gap:2.2rem;align-items:center;}
+  nav.mainnav a{font-size:.82rem;letter-spacing:.05em;color:var(--ink-soft);cursor:pointer;position:relative;padding-bottom:3px;}
+  nav.mainnav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .3s ease;}
+  nav.mainnav a:hover::after,nav.mainnav a.active::after{width:100%;}
+  nav.mainnav a:hover,nav.mainnav a.active{color:var(--ink);}
+  .nav-cta{background:var(--ink);color:var(--white)!important;padding:.65rem 1.5rem;border-radius:100px;font-weight:500!important;}
+  .nav-cta:hover{background:var(--gold);}
+  .nav-cta::after{display:none;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .burger span{width:24px;height:1px;background:var(--ink);display:block;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2rem;border-radius:100px;
+    font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;cursor:pointer;border:none;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .btn-solid{background:var(--ink);color:var(--white);}
+  .btn-solid:hover{transform:translateY(-3px);box-shadow:0 16px 30px -14px rgba(43,34,48,.4);}
+  .btn-outline{background:transparent;border:1px solid var(--ink);color:var(--ink);}
+  .btn-outline:hover{background:var(--white);transform:translateY(-3px);}
+
+  /* ================= HERO with aura blob ================= */
+  .hero{
+    position:relative;padding:11rem 3rem 6rem;overflow:hidden;text-align:center;
+  }
+  .aura-blob{
+    position:absolute;top:-20%;left:50%;transform:translateX(-50%);
+    width:900px;height:900px;max-width:140vw;max-height:140vw;
+    background:conic-gradient(from 0deg, #F5D2E4, #E4D2F5, #D2E4F5, #F5EBD2, #F5D2E4);
+    filter:blur(90px);opacity:.55;border-radius:50%;
+    animation:auraRotate 22s linear infinite;
+    z-index:0;
+  }
+  @keyframes auraRotate{to{transform:translateX(-50%) rotate(360deg);}}
+  .hero-content{position:relative;z-index:2;max-width:760px;margin:0 auto;}
+  .hero-content h1{font-size:clamp(2.6rem,6vw,4.6rem);margin-bottom:1.4rem;}
+  .hero-content h1 em{
+    font-style:italic;
+    background:linear-gradient(100deg,#D998B8,#B098DA,#98B8DA,#D9C098,#D998B8);
+    background-size:300% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:auraShift 8s linear infinite;
+  }
+  .hero-content p{color:var(--ink-soft);font-size:1.05rem;max-width:480px;margin:0 auto 2.2rem;}
+  .hero-btnrow{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;}
+  .hero-showcase{
+    position:relative;z-index:2;max-width:980px;margin:0 auto;
+    border-radius:24px;overflow:hidden;aspect-ratio:16/8;
+    box-shadow:0 50px 90px -40px rgba(43,34,48,.35);
+  }
+  .hero-showcase img{width:100%;height:100%;object-fit:cover;}
+
+  /* ================= SECTION GENERIC ================= */
+  section{padding:6.5rem 3rem;}
+  .section-inner{max-width:1180px;margin:0 auto;}
+  .sec-head{max-width:600px;margin-bottom:3.4rem;}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .sec-head h2{font-size:clamp(2rem,3.6vw,2.8rem);}
+  .sec-head p{color:var(--ink-soft);margin-top:1rem;}
+
+  /* ================= SERVICES ================= */
+  .service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;}
+  .service-card{
+    background:var(--white);border-radius:20px;padding:2.2rem 1.6rem;
+    box-shadow:0 20px 50px -35px rgba(43,34,48,.3);
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .service-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px -30px rgba(43,34,48,.35);}
+  .service-card .sicon{
+    width:48px;height:48px;border-radius:50%;
+    background:linear-gradient(135deg,var(--blush),var(--lilac));
+    margin-bottom:1.2rem;
+  }
+  .service-card h3{font-size:1.1rem;margin-bottom:.5rem;}
+  .service-card p{color:var(--ink-soft);font-size:.85rem;}
+
+  /* ================= GALLERY with shine sweep ================= */
+  .grid-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;}
+  .shine-card{
+    position:relative;border-radius:18px;overflow:hidden;aspect-ratio:3/4;
+    box-shadow:0 20px 40px -30px rgba(43,34,48,.35);
+  }
+  .shine-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+  .shine-card::after{
+    content:'';position:absolute;top:0;left:-150%;width:60%;height:100%;
+    background:linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent);
+    transform:skewX(-20deg);transition:left 1.1s ease;
+  }
+  .shine-card:hover::after{left:150%;}
+  .shine-card:hover img{transform:scale(1.06);}
+
+  /* ================= TESTIMONIAL ================= */
+  .testimonial{text-align:center;background:linear-gradient(180deg, var(--pearl-deep), var(--pearl));}
+  .testimonial-inner{max-width:700px;margin:0 auto;}
+  .testimonial blockquote{
+    font-family:'Bodoni Moda',serif;font-style:italic;font-weight:500;font-size:clamp(1.3rem,2.4vw,1.9rem);
+    margin-bottom:1.3rem;line-height:1.4;
+  }
+  .testimonial .cite{font-size:.82rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;}
+
+  /* ================= CTA ================= */
+  .cta-band{background:var(--ink);color:var(--white);text-align:center;padding:5.5rem 2rem;}
+  .cta-band .kicker{color:var(--gold);}
+  .cta-band h2{color:var(--white);font-size:clamp(1.9rem,3.6vw,2.6rem);max-width:620px;margin:0 auto 2rem;}
+  .cta-band .btn-solid{background:var(--white);color:var(--ink);}
+  .cta-band .btn-solid:hover{background:var(--blush);}
+
+  /* ================= FOOTER ================= */
+  footer{background:var(--white);border-top:1px solid var(--line);padding:3.8rem 3rem 2rem;}
+  .footer-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:2.4rem;padding-bottom:2.4rem;border-bottom:1px solid var(--line);}
+  .footer-grid .logo{margin-bottom:1rem;font-size:1.35rem;}
+  .footer-grid p{color:var(--ink-soft);font-size:.88rem;max-width:260px;}
+  .footer-col h4{font-family:'Poppins',sans-serif;font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:1rem;}
+  .footer-col a,.footer-col p{display:block;color:var(--ink-soft);font-size:.88rem;margin-bottom:.55rem;}
+  .footer-col a:hover{color:var(--ink);}
+  .footer-bottom{max-width:1180px;margin:0 auto;padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.78rem;color:var(--ink-soft);}
+  .footer-legal{display:flex;gap:1.4rem;flex-wrap:wrap;}
+  .footer-bottom a:hover{color:var(--ink);}
+
+  /* ================= PAGE HERO ================= */
+  .page-hero{padding:11rem 3rem 4.5rem;text-align:center;position:relative;overflow:hidden;}
+  .page-hero h1{font-size:clamp(2.4rem,5vw,3.6rem);position:relative;z-index:2;}
+  .page-hero .kicker{position:relative;z-index:2;}
+  .page-hero .aura-blob{width:700px;height:700px;top:-30%;opacity:.4;}
+
+  /* ================= ÜBER MICH ================= */
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:center;}
+  .about-img{border-radius:24px;overflow:hidden;aspect-ratio:4/5;box-shadow:0 40px 70px -35px rgba(43,34,48,.35);}
+  .about-img img{width:100%;height:100%;object-fit:cover;}
+  .about-text p{color:var(--ink-soft);margin-bottom:1.1rem;max-width:520px;}
+  .cred-list{margin-top:1.8rem;border-top:1px solid var(--line);padding-top:1.4rem;}
+  .cred-row{display:flex;gap:1.2rem;padding:.8rem 0;border-bottom:1px solid var(--line);}
+  .cred-row .yr{font-family:'Bodoni Moda',serif;font-style:italic;color:var(--gold);min-width:60px;}
+  .cred-row .desc{color:var(--ink-soft);font-size:.9rem;}
+
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:4.5rem;}
+  .value-item{background:var(--white);border-radius:18px;padding:1.8rem;box-shadow:0 20px 40px -35px rgba(43,34,48,.3);}
+  .value-item h4{font-size:1.05rem;margin-bottom:.5rem;}
+  .value-item p{color:var(--ink-soft);font-size:.87rem;}
+
+  /* ================= LEISTUNGEN ================= */
+  .price-group{margin-bottom:3.4rem;}
+  .price-group-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1rem;border-bottom:2px solid var(--gold);padding-bottom:.7rem;}
+  .price-group-head h3{font-size:1.4rem;}
+  .price-group-head span{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
+  .price-row{display:flex;align-items:baseline;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line);}
+  .price-row:last-child{border-bottom:none;}
+  .price-row .pname{font-weight:500;font-size:1rem;}
+  .price-row .pdesc{color:var(--ink-soft);font-size:.82rem;margin-top:.2rem;}
+  .price-row .dots{flex:1;border-bottom:1px dotted var(--line);transform:translateY(-.4rem);}
+  .price-row .pval{font-family:'Bodoni Moda',serif;font-weight:600;color:var(--ink);font-size:1.1rem;white-space:nowrap;}
+  .price-note{color:var(--ink-soft);font-size:.85rem;text-align:center;margin-top:1rem;}
+
+  .salon-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:4.5rem;}
+  .strip-item{background:var(--white);border-radius:16px;padding:1.8rem;box-shadow:0 20px 40px -35px rgba(43,34,48,.3);}
+  .strip-item h4{font-size:1.05rem;margin-bottom:.5rem;}
+  .strip-item p{color:var(--ink-soft);font-size:.87rem;}
+
+  /* ================= LEGAL ================= */
+  .legal-body{max-width:750px;margin:0 auto;padding:0 3rem 6rem;}
+  .legal-body h2{font-size:1.35rem;margin:2.3rem 0 .9rem;}
+  .legal-body h2:first-child{margin-top:0;}
+  .legal-body h3{font-family:'Poppins',sans-serif;font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;margin:1.5rem 0 .6rem;color:var(--gold);}
+  .legal-body p,.legal-body li{color:var(--ink-soft);font-size:.95rem;margin-bottom:.9rem;}
+  .legal-body ul{padding-left:1.3rem;margin-bottom:1rem;}
+  .legal-body a.inline-link{color:var(--gold);text-decoration:underline;}
+  .legal-note{background:var(--white);border-radius:12px;padding:1.3rem 1.5rem;font-size:.85rem;color:var(--ink-soft);margin-bottom:2rem;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  @media(max-width:980px){
+    .service-grid{grid-template-columns:repeat(2,1fr);}
+    .grid-gallery{grid-template-columns:repeat(2,1fr);}
+    .about-grid{grid-template-columns:1fr;}
+    .values{grid-template-columns:1fr;}
+    .salon-strip{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:768px){
+    header{padding:1.1rem 1.5rem;}
+    nav.mainnav{
+      position:fixed;top:0;right:0;height:100vh;width:80%;max-width:300px;
+      background:var(--pearl);flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:1.8rem;padding:3rem;transform:translateX(100%);transition:transform .35s ease;
+      box-shadow:-10px 0 40px rgba(0,0,0,.08);
+    }
+    nav.mainnav.open{transform:translateX(0);}
+    .burger{display:flex;}
+    section{padding:4rem 1.5rem;}
+    .hero{padding:8.5rem 1.5rem 4rem;}
+    .page-hero{padding:8.5rem 1.5rem 3.5rem;}
+    .service-grid{grid-template-columns:1fr;}
+    .grid-gallery{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .legal-body{padding:0 1.5rem 4rem;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo" onclick="showPage('home')">AURA</div>
+  <nav class="mainnav" id="mainNav">
+    <a href="../" style="opacity:.75;">← Portfolio</a>
+    <a onclick="showPage('home')" data-page="home">Home</a>
+    <a onclick="showPage('ubermich')" data-page="ubermich">Über mich</a>
+    <a onclick="showPage('leistungen')" data-page="leistungen">Leistungen</a>
+    <a onclick="showPage('studio')" data-page="studio">Studio</a>
+    <a class="nav-cta" onclick="showPage('home');setTimeout(()=>document.getElementById('kontakt').scrollIntoView({behavior:'smooth'}),50)">Termin buchen</a>
+  </nav>
+  <div class="burger" id="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+  <section class="hero" style="padding-bottom:0;">
+    <div class="aura-blob"></div>
+    <div class="hero-content">
+      <span class="kicker">Nagelstudio · Augsburg</span>
+      <h1>Nägel mit<br><em>Aura.</em></h1>
+      <p>Maniküre, Gel-Modellage und Nail Art mit Liebe zum Detail — für Hände, die auffallen, ohne zu übertreiben.</p>
+      <div class="hero-btnrow">
+        <a class="btn btn-solid" href="tel:+49821445566">Termin buchen</a>
+        <a class="btn btn-outline" onclick="showPage('leistungen')">Preise ansehen</a>
+      </div>
+    </div>
+    <div class="hero-showcase reveal">
+      <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=1400&q=80" alt="Maniküre-Behandlung im AURA Nails Studio">
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head center reveal">
+        <span class="kicker">Angebot</span>
+        <h2>Was wir machen</h2>
+      </div>
+      <div class="service-grid">
+        <div class="service-card reveal"><div class="sicon"></div><h3>Maniküre</h3><p>Klassische Pflege und Formgebung für gesunde, gepflegte Nägel.</p></div>
+        <div class="service-card reveal"><div class="sicon"></div><h3>Gel-Modellage</h3><p>Langlebige Modellage in der Form und Länge deiner Wahl.</p></div>
+        <div class="service-card reveal"><div class="sicon"></div><h3>Nail Art</h3><p>Von dezenten Linien bis zu aufwendigen Designs — ganz nach Wunsch.</p></div>
+        <div class="service-card reveal"><div class="sicon"></div><h3>Chrome &amp; Aura</h3><p>Der schimmernde Perlglanz-Effekt, der gerade jeder haben will.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--white);">
+    <div class="section-inner">
+      <div class="sec-head center reveal">
+        <span class="kicker">Galerie</span>
+        <h2>Aus dem Studio</h2>
+      </div>
+      <div class="grid-gallery">
+        <div class="shine-card reveal"><img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=500&q=80" alt="Rosa Maniküre"></div>
+        <div class="shine-card reveal"><img src="https://images.unsplash.com/photo-1630843599725-32ead7671867?auto=format&fit=crop&w=500&q=80" alt="Weiße Maniküre"></div>
+        <div class="shine-card reveal"><img src="https://images.unsplash.com/photo-1604654894611-6973b376cbde?auto=format&fit=crop&w=500&q=80" alt="Schwarze Maniküre mit Ring"></div>
+        <div class="shine-card reveal"><img src="https://images.unsplash.com/photo-1641814250010-9887d86eedfd?auto=format&fit=crop&w=500&q=80" alt="Maniküre mit Ring"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonial">
+    <div class="section-inner testimonial-inner reveal">
+      <blockquote>„Endlich ein Studio, das genau versteht, was ich meine, auch wenn ich es selbst nicht in Worte fassen kann."</blockquote>
+      <div class="cite">— Stammkundin, Gel-Modellage &amp; Nail Art</div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="kontakt">
+    <span class="kicker">Termin buchen</span>
+    <h2>Zeit für neue Nägel?</h2>
+    <a class="btn btn-solid" href="tel:+49821445566">Anrufen: 0821 / 44 55 66</a>
+  </section>
+
+</div>
+
+<!-- ============ ÜBER MICH ============ -->
+<div class="page" id="page-ubermich">
+  <div class="page-hero">
+    <div class="aura-blob"></div>
+    <span class="kicker">Über mich</span>
+    <h1>Jasmin Roth</h1>
+  </div>
+
+  <section style="padding-top:1rem;">
+    <div class="section-inner about-grid">
+      <div class="about-img">
+        <img src="https://images.unsplash.com/photo-1571290274554-6a2eaa771e5f?auto=format&fit=crop&w=800&q=80" alt="Jasmin Roth bei der Arbeit">
+      </div>
+      <div class="about-text">
+        <span class="kicker">Meine Geschichte</span>
+        <h2>Nageldesign als Handwerk<br>und Kunstform</h2>
+        <p>Ich bin Jasmin — gelernte Nageldesignerin mit einem Faible für saubere Linien und schimmernde Effekte. Seit 2020 arbeite ich in meinem eigenen kleinen Studio in Augsburg.</p>
+        <p>Für mich ist jede Maniküre eine kleine Maßanfertigung: abgestimmt auf deinen Alltag, deinen Stil und deine Nagelform — nicht nach Schema F.</p>
+
+        <div class="cred-list">
+          <div class="cred-row"><span class="yr">2018</span><span class="desc">Ausbildung zur Nageldesignerin, München</span></div>
+          <div class="cred-row"><span class="yr">2020</span><span class="desc">Eröffnung des eigenen Studios in Augsburg</span></div>
+          <div class="cred-row"><span class="yr">2023</span><span class="desc">Zertifizierung in Chrome- &amp; Aura-Techniken</span></div>
+          <div class="cred-row"><span class="yr">2025</span><span class="desc">Regelmäßige Workshops zu neuen Nail-Art-Trends</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-inner">
+      <div class="values">
+        <div class="value-item"><h4>Individuell</h4><p>Jedes Design wird auf deine Nagelform und deinen Alltag abgestimmt.</p></div>
+        <div class="value-item"><h4>Sauber &amp; hygienisch</h4><p>Sterilisierte Werkzeuge und höchste Sorgfalt bei jeder Behandlung.</p></div>
+        <div class="value-item"><h4>Langlebig</h4><p>Hochwertige Produkte für ein Ergebnis, das wirklich hält.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Termin anfragen</span>
+    <h2>Ich freue mich auf dich.</h2>
+    <a class="btn btn-solid" href="tel:+49821445566">Termin vereinbaren</a>
+  </section>
+</div>
+
+<!-- ============ LEISTUNGEN ============ -->
+<div class="page" id="page-leistungen">
+  <div class="page-hero">
+    <div class="aura-blob"></div>
+    <span class="kicker">Preise &amp; Leistungen</span>
+    <h1>Klar &amp; transparent</h1>
+  </div>
+
+  <section style="padding-top:1rem;">
+    <div class="section-inner" style="max-width:800px;">
+      <div class="price-group">
+        <div class="price-group-head"><h3>Maniküre</h3><span>Pflege</span></div>
+        <div class="price-row"><div><div class="pname">Klassische Maniküre</div><div class="pdesc">Formgebung, Nagelhautpflege, Politur</div></div><div class="dots"></div><div class="pval">28 €</div></div>
+        <div class="price-row"><div><div class="pname">Handmassage &amp; Pflege</div><div class="pdesc">Zusatzbehandlung, 15 Minuten</div></div><div class="dots"></div><div class="pval">15 €</div></div>
+      </div>
+      <div class="price-group">
+        <div class="price-group-head"><h3>Modellage</h3><span>Gel</span></div>
+        <div class="price-row"><div><div class="pname">Gel-Modellage (Neuanlage)</div><div class="pdesc">Form und Länge nach Wunsch</div></div><div class="dots"></div><div class="pval">55 €</div></div>
+        <div class="price-row"><div><div class="pname">Gel-Auffüllung</div><div class="pdesc">Alle 3–4 Wochen empfohlen</div></div><div class="dots"></div><div class="pval">42 €</div></div>
+      </div>
+      <div class="price-group">
+        <div class="price-group-head"><h3>Effekte &amp; Nail Art</h3><span>Extras</span></div>
+        <div class="price-row"><div><div class="pname">Chrome- / Aura-Effekt</div><div class="pdesc">Pro Hand</div></div><div class="dots"></div><div class="pval">12 €</div></div>
+        <div class="price-row"><div><div class="pname">French / Ombré</div><div class="pdesc">Pro Hand</div></div><div class="dots"></div><div class="pval">15 €</div></div>
+        <div class="price-row"><div><div class="pname">Nail Art</div><div class="pdesc">Pro Nagel, je nach Aufwand</div></div><div class="dots"></div><div class="pval">ab 3 €</div></div>
+      </div>
+      <p class="price-note">Alle Preise inkl. MwSt. Endpreise können je nach Nagelform und Aufwand leicht variieren.</p>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Bereit?</span>
+    <h2>Wähl dein Design.</h2>
+    <a class="btn btn-solid" href="tel:+49821445566">Termin buchen</a>
+  </section>
+</div>
+
+<!-- ============ STUDIO ============ -->
+<div class="page" id="page-studio">
+  <div class="page-hero">
+    <div class="aura-blob"></div>
+    <span class="kicker">Das Studio</span>
+    <h1>Klein, hell,<br>voller Details.</h1>
+  </div>
+
+  <section style="padding-top:1rem;">
+    <div class="section-inner">
+      <p style="color:var(--ink-soft);max-width:600px;margin-bottom:3.5rem;">Ein ruhiger Raum mitten in Augsburg, eingerichtet für konzentrierte Detailarbeit — mit viel natürlichem Licht für die genaue Farbwahl.</p>
+
+      <div class="grid-gallery">
+        <div class="shine-card"><img src="https://images.unsplash.com/photo-1612887390768-fb02affea7a6?auto=format&fit=crop&w=500&q=80" alt="Maniküre Detail"></div>
+        <div class="shine-card"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=500&q=80" alt="Goldring mit Maniküre"></div>
+        <div class="shine-card"><img src="https://images.unsplash.com/photo-1610992015836-7c249d75782d?auto=format&fit=crop&w=500&q=80" alt="Uhr und Maniküre"></div>
+        <div class="shine-card"><img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=500&q=80" alt="Behandlung im Studio"></div>
+      </div>
+
+      <div class="salon-strip">
+        <div class="strip-item"><h4>Zentrale Lage</h4><p>Direkt in der Augsburger Innenstadt, gut erreichbar.</p></div>
+        <div class="strip-item"><h4>Ruhige Atmosphäre</h4><p>Ein Platz, ein Termin — ganz ohne Hektik.</p></div>
+        <div class="strip-item"><h4>Hygiene an erster Stelle</h4><p>Sterilisierte Werkzeuge bei jeder einzelnen Behandlung.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Vorbeikommen</span>
+    <h2>Schau im Studio vorbei.</h2>
+    <a class="btn btn-solid" href="tel:+49821445566">Termin buchen</a>
+  </section>
+</div>
+
+<!-- ============ IMPRESSUM ============ -->
+<div class="page" id="page-impressum">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Impressum</h1></div>
+  <section style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Name, Adresse, Telefonnummer und USt-IdNr. sind Platzhalter-Beispiele für dieses Portfolio-Demo. Bitte vor echter Veröffentlichung durch reale Geschäftsdaten ersetzen.</div>
+
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>AURA Nails<br>Jasmin Roth<br>Fuggerstraße 5<br>86150 Augsburg<br>Deutschland</p>
+
+      <h3>Kontakt</h3>
+      <p>Telefon: <a class="inline-link" href="tel:+49821445566">0821 / 44 55 66</a><br>E-Mail: <a class="inline-link" href="mailto:hello@auranails.de">hello@auranails.de</a></p>
+
+      <h3>Umsatzsteuer-ID</h3>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE311987654</p>
+
+      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+      <p>Jasmin Roth, Anschrift wie oben.</p>
+
+      <h3>Streitschlichtung</h3>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="inline-link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Meine E-Mail-Adresse findest du oben. Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+      <h3>Haftung für Inhalte</h3>
+      <p>Als Diensteanbieterin bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieterin jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+      <h3>Haftung für Links</h3>
+      <p>Dieses Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+      <h3>Urheberrecht</h3>
+      <p>Die durch mich erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DATENSCHUTZ ============ -->
+<div class="page" id="page-datenschutz">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Datenschutz</h1></div>
+  <section style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Diese Vorlage deckt gängige Punkte für ein kleines Nagelstudio mit Kontaktformular und Google Analytics ab. Bitte fachlich prüfen lassen, bevor sie live geht.</div>
+
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>AURA Nails<br>Jasmin Roth<br>Fuggerstraße 5, 86150 Augsburg<br>Telefon: 0821 / 44 55 66<br>E-Mail: hello@auranails.de</p>
+
+      <h2>2. Allgemeines zur Datenverarbeitung</h2>
+      <p>Ich verarbeite personenbezogene Daten meiner Nutzer:innen grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie meiner Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt nach Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).</p>
+
+      <h2>3. Hosting</h2>
+      <p>Diese Website wird bei einem externen Hosting-Anbieter gehostet. Personenbezogene Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Der Hoster verarbeitet Daten in meinem Auftrag gemäß Art. 28 DSGVO.</p>
+
+      <h2>4. Kontaktaufnahme</h2>
+      <p>Wenn du mich per Telefon, E-Mail oder Kontaktformular kontaktierst, werden deine Angaben zum Zweck der Bearbeitung deiner Anfrage bei mir gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung). Die Daten werden gelöscht, sobald sie für die Bearbeitung nicht mehr erforderlich sind.</p>
+
+      <h2>5. Terminbuchung</h2>
+      <p>Bei einer Terminanfrage per Telefon oder E-Mail verarbeite ich die von dir mitgeteilten Daten (Name, Kontaktdaten, gewünschte Behandlung, Terminwunsch) zur Vorbereitung und Durchführung des Behandlungsvertrags gemäß Art. 6 Abs. 1 lit. b DSGVO.</p>
+
+      <h2>6. Google Analytics</h2>
+      <p>Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google"). Google Analytics verwendet Cookies bzw. vergleichbare Technologien, die eine Analyse der Benutzung der Website ermöglichen.</p>
+      <p>Die dabei erzeugten Informationen (z. B. Zugriffszeit, Ort des Zugriffs, Häufigkeit des Seitenbesuchs, gekürzte IP-Adresse) werden an Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert, sodass deine IP-Adresse vor der Übertragung innerhalb der EU/EWR gekürzt wird.</p>
+      <p>Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die du über das Cookie-Banner erteilen oder ablehnen kannst. Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+      <p>Google verarbeitet Daten auch in den USA; hierfür bestehen Standardvertragsklauseln der EU-Kommission als Garantie für ein angemessenes Datenschutzniveau. Weitere Infos: <a class="inline-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.</p>
+      <p>Du kannst die Erfassung verhindern, indem du das Browser-Add-on installierst: <a class="inline-link" href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h2>7. Cookies</h2>
+      <p>Diese Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, alle anderen (z. B. Google Analytics) nur mit deiner Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO.</p>
+
+      <h2>8. Deine Rechte</h2>
+      <ul>
+        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
+        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
+        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
+        <li>Recht auf Widerruf erteilter Einwilligungen</li>
+      </ul>
+      <p>Zudem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, z. B. beim Bayerischen Landesamt für Datenschutzaufsicht.</p>
+
+      <h2>9. Änderungen dieser Datenschutzerklärung</h2>
+      <p>Ich behalte mir vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht. Stand: 2026.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo">AURA</div>
+      <p>Nagelstudio in Augsburg. Maniküre, Gel-Modellage und Nail Art mit Liebe zum Detail.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a href="tel:+49821445566">0821 / 44 55 66</a>
+      <a href="mailto:hello@auranails.de">hello@auranails.de</a>
+      <p>Fuggerstraße 5, 86150 Augsburg</p>
+    </div>
+    <div class="footer-col">
+      <h4>Seite</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('ubermich')">Über mich</a>
+      <a onclick="showPage('leistungen')">Leistungen</a>
+      <a onclick="showPage('studio')">Studio</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AURA Nails</span>
+    <div class="footer-legal">
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY>40);
+  });
+  function toggleNav(){document.getElementById('mainNav').classList.toggle('open');}
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    document.querySelectorAll('nav.mainnav a[data-page]').forEach(a=>{
+      a.classList.toggle('active', a.dataset.page===name);
+    });
+    document.getElementById('mainNav').classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant'});
+    initReveal();
+  }
+
+  function initReveal(){
+    const els = document.querySelectorAll('.reveal:not(.in)');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} });
+    },{threshold:.15});
+    els.forEach(el=>obs.observe(el));
+  }
+  initReveal();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WEITBLICK — Versicherungs- &amp; Finanzberatung, Ingolstadt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#132420;
+    --ink-2:#1C332C;
+    --paper:#F4F2EA;
+    --paper-deep:#E9E4D4;
+    --steel:#5B7C8D;
+    --steel-deep:#3F5A68;
+    --ink-soft:#8C9A93;
+    --line:rgba(244,242,234,.14);
+    --line-dark:rgba(19,36,32,.12);
+    --white:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);color:var(--paper);
+    font-family:'Public Sans',sans-serif;font-weight:300;line-height:1.7;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit;}
+  img{display:block;max-width:100%;}
+  h1,h2,h3,h4{font-family:'Lora',serif;font-weight:600;line-height:1.2;color:var(--paper);}
+  .on-paper h1,.on-paper h2,.on-paper h3,.on-paper h4{color:var(--ink);}
+  .kicker{
+    font-family:'Public Sans',sans-serif;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--steel);font-weight:600;display:inline-block;margin-bottom:1.3rem;
+  }
+  .on-paper .kicker{color:var(--steel-deep);}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;padding:1.6rem 3rem;
+    transition:background .3s ease, padding .3s ease, box-shadow .3s ease;
+  }
+  header.scrolled{background:rgba(19,36,32,.94);backdrop-filter:blur(10px);padding:1.1rem 3rem;box-shadow:0 2px 24px rgba(0,0,0,.3);}
+  .logo{font-family:'Lora',serif;font-weight:600;font-size:1.4rem;letter-spacing:.01em;cursor:pointer;color:var(--paper);display:inline-flex;align-items:center;gap:.6rem;}
+  .logo .mark{width:20px;height:20px;flex-shrink:0;}
+  nav.mainnav{display:flex;gap:2.2rem;align-items:center;}
+  nav.mainnav a{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;position:relative;padding-bottom:3px;}
+  nav.mainnav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--steel);transition:width .3s ease;}
+  nav.mainnav a:hover::after,nav.mainnav a.active::after{width:100%;}
+  nav.mainnav a:hover,nav.mainnav a.active{color:var(--paper);}
+  .nav-cta{background:var(--steel);color:var(--white)!important;padding:.65rem 1.4rem;border-radius:2px;font-weight:600!important;letter-spacing:.05em!important;}
+  .nav-cta:hover{background:var(--steel-deep);}
+  .nav-cta::after{display:none;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .burger span{width:24px;height:1px;background:var(--paper);display:block;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2rem;border-radius:2px;
+    font-family:'Public Sans',sans-serif;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;cursor:pointer;border:none;
+    transition:transform .3s ease, box-shadow .3s ease, background .3s ease;
+  }
+  .btn-solid{background:var(--steel);color:var(--white);}
+  .btn-solid:hover{transform:translateY(-3px);box-shadow:0 16px 30px -14px rgba(91,124,141,.55);background:var(--steel-deep);}
+  .btn-outline{background:transparent;border:1px solid var(--line);color:var(--paper);}
+  .btn-outline:hover{background:rgba(244,242,234,.06);transform:translateY(-3px);}
+  .on-paper .btn-outline{border:1px solid var(--line-dark);color:var(--ink);}
+  .on-paper .btn-outline:hover{background:rgba(19,36,32,.05);}
+
+  /* ================= HERO ================= */
+  .hero{position:relative;padding:11.5rem 3rem 3.5rem;overflow:hidden;text-align:center;}
+  .hero::before{
+    content:'';position:absolute;inset:0;z-index:0;
+    background:radial-gradient(ellipse 55% 45% at 50% 0%, rgba(91,124,141,.18), transparent 70%);
+  }
+  .hero-content{position:relative;z-index:2;max-width:720px;margin:0 auto;}
+  .hero-content h1{font-size:clamp(2.5rem,5.6vw,4.2rem);margin-bottom:1.5rem;}
+  .hero-content h1 em{font-style:italic;color:var(--steel);}
+  .hero-content p{color:var(--ink-soft);font-size:1.03rem;max-width:520px;margin:0 auto 2.3rem;}
+  .hero-btnrow{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;}
+
+  /* ================= HORIZONT (signature) ================= */
+  .horizon-wrap{position:relative;z-index:2;max-width:820px;margin:0 auto;}
+  .horizon-svg{width:100%;height:auto;display:block;}
+  .horizon-line{
+    stroke:var(--steel);stroke-width:2;fill:none;
+    stroke-dasharray:600;stroke-dashoffset:600;
+    animation:draw 2.4s ease-out forwards .3s;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  .horizon-dot{fill:var(--paper);}
+  .horizon-label{font-family:'Public Sans',sans-serif;font-size:11px;letter-spacing:.04em;fill:var(--ink-soft);text-transform:uppercase;}
+  .horizon-label.now{fill:var(--steel);font-weight:600;}
+
+  /* ================= SECTION GENERIC ================= */
+  section{padding:6.5rem 3rem;}
+  .section-inner{max-width:1180px;margin:0 auto;}
+  .sec-head{max-width:600px;margin-bottom:3.4rem;}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .sec-head h2{font-size:clamp(2rem,3.6vw,2.7rem);}
+  .sec-head p{color:var(--ink-soft);margin-top:1rem;}
+  .on-paper .sec-head p{color:#5C6863;}
+  .on-paper{background:var(--paper);color:var(--ink);}
+
+  /* ================= TRUST STRIP ================= */
+  .trust-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+  .trust-item{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.8rem;text-align:center;}
+  .trust-item .tval{font-family:'Lora',serif;font-weight:600;font-size:1.5rem;color:var(--steel-deep);margin-bottom:.4rem;}
+  .trust-item p{color:#5C6863;font-size:.84rem;}
+
+  /* ================= SERVICES ================= */
+  .service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;}
+  .service-card{
+    background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:2.2rem 1.6rem;
+    transition:transform .35s ease, border-color .35s ease;
+  }
+  .service-card:hover{transform:translateY(-6px);border-color:var(--steel);}
+  .service-card .sdot{width:14px;height:14px;background:var(--steel);margin-bottom:1.3rem;}
+  .service-card h3{font-size:1.05rem;margin-bottom:.6rem;}
+  .service-card p{color:#5C6863;font-size:.85rem;}
+
+  /* ================= GALLERY ================= */
+  .grid-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem;}
+  .shine-card{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:16/11;}
+  .shine-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease, filter .5s ease;filter:grayscale(35%) contrast(1.03);}
+  .shine-card:hover img{transform:scale(1.05);filter:grayscale(0%) contrast(1.03);}
+  .shine-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.5));z-index:1;pointer-events:none;}
+  .shine-card .tag{position:absolute;left:.9rem;bottom:.8rem;z-index:2;font-family:'Public Sans',sans-serif;font-size:.72rem;color:var(--paper);letter-spacing:.04em;text-transform:uppercase;}
+
+  /* ================= TESTIMONIAL ================= */
+  .testimonial{text-align:center;background:var(--ink-2);}
+  .testimonial-inner{max-width:700px;margin:0 auto;}
+  .testimonial blockquote{
+    font-family:'Lora',serif;font-style:italic;font-weight:500;font-size:clamp(1.25rem,2.3vw,1.7rem);
+    margin-bottom:1.3rem;line-height:1.45;
+  }
+  .testimonial .cite{font-family:'Public Sans',sans-serif;font-size:.76rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;}
+
+  /* ================= CTA ================= */
+  .cta-band{background:var(--steel);color:var(--white);text-align:center;padding:5.5rem 2rem;}
+  .cta-band .kicker{color:rgba(255,255,255,.75);}
+  .cta-band h2{color:var(--white);font-size:clamp(1.9rem,3.6vw,2.6rem);max-width:620px;margin:0 auto 2rem;}
+  .cta-band .btn-solid{background:var(--white);color:var(--steel-deep);}
+  .cta-band .btn-solid:hover{background:var(--paper-deep);}
+  .cta-band .btn-outline{border-color:rgba(255,255,255,.5);color:var(--white);}
+
+  /* ================= FOOTER ================= */
+  footer{background:var(--ink);border-top:1px solid var(--line);padding:3.8rem 3rem 2rem;}
+  .footer-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:2.4rem;padding-bottom:2.4rem;border-bottom:1px solid var(--line);}
+  .footer-grid .logo{margin-bottom:1rem;font-size:1.25rem;}
+  .footer-grid p{color:var(--ink-soft);font-size:.86rem;max-width:260px;}
+  .footer-col h4{font-family:'Public Sans',sans-serif;font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--steel);margin-bottom:1rem;}
+  .footer-col a,.footer-col p{display:block;color:var(--ink-soft);font-size:.86rem;margin-bottom:.55rem;}
+  .footer-col a:hover{color:var(--paper);}
+  .footer-bottom{max-width:1180px;margin:0 auto;padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.76rem;color:var(--ink-soft);font-family:'Public Sans',sans-serif;}
+  .footer-legal{display:flex;gap:1.4rem;flex-wrap:wrap;}
+  .footer-bottom a:hover{color:var(--paper);}
+
+  /* ================= PAGE HERO ================= */
+  .page-hero{padding:11rem 3rem 4.5rem;text-align:center;position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 55% 50% at 50% 0%, rgba(91,124,141,.18), transparent 70%);}
+  .page-hero h1{font-size:clamp(2.3rem,5vw,3.4rem);position:relative;z-index:2;}
+  .page-hero .kicker{position:relative;z-index:2;}
+
+  /* ================= ÜBER MICH ================= */
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:center;}
+  .about-img{border-radius:4px;overflow:hidden;aspect-ratio:4/5;}
+  .about-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%);}
+  .about-text p{color:#5C6863;margin-bottom:1.1rem;max-width:520px;}
+  .cred-list{margin-top:1.8rem;border-top:1px solid var(--line-dark);padding-top:1.4rem;}
+  .cred-row{display:flex;gap:1.2rem;padding:.8rem 0;border-bottom:1px solid var(--line-dark);}
+  .cred-row .yr{font-family:'Public Sans',sans-serif;font-weight:700;color:var(--steel-deep);min-width:60px;font-size:.82rem;}
+  .cred-row .desc{color:#5C6863;font-size:.9rem;}
+
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:4.5rem;}
+  .value-item{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.8rem;}
+  .value-item h4{font-size:1.02rem;margin-bottom:.5rem;}
+  .value-item p{color:#5C6863;font-size:.86rem;}
+
+  /* ================= LEISTUNGEN — price list ================= */
+  .price-group{margin-bottom:3.2rem;}
+  .price-group-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;border-bottom:2px solid var(--steel);padding-bottom:.7rem;}
+  .price-group-head h3{font-size:1.3rem;flex:1;}
+  .price-group-head span{font-family:'Public Sans',sans-serif;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--steel-deep);}
+  .price-row{display:flex;align-items:baseline;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line-dark);}
+  .price-row:last-child{border-bottom:none;}
+  .price-row .pname{font-weight:600;font-size:1rem;color:var(--ink);}
+  .price-row .pdesc{color:#5C6863;font-size:.82rem;margin-top:.2rem;}
+  .price-row .dots{flex:1;border-bottom:1px dotted var(--line-dark);transform:translateY(-.4rem);}
+  .price-row .pval{font-family:'Public Sans',sans-serif;font-weight:700;color:var(--ink);font-size:.92rem;white-space:nowrap;}
+  .price-note{color:#5C6863;font-size:.85rem;text-align:center;margin-top:1rem;}
+
+  /* ================= ABLAUF — process steps ================= */
+  .steps{max-width:760px;margin:0 auto;position:relative;}
+  .steps::before{content:'';position:absolute;left:27px;top:8px;bottom:8px;width:1px;background:var(--line-dark);}
+  .step{display:flex;gap:1.8rem;padding-bottom:2.8rem;position:relative;}
+  .step:last-child{padding-bottom:0;}
+  .step .snum{
+    width:56px;height:56px;border-radius:50%;background:var(--white);border:1px solid var(--steel);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Public Sans',sans-serif;
+    font-weight:700;color:var(--steel-deep);position:relative;z-index:1;
+  }
+  .step .scontent h3{font-size:1.15rem;margin-bottom:.5rem;margin-top:.6rem;}
+  .step .scontent p{color:#5C6863;font-size:.92rem;max-width:520px;}
+  .step .stag{font-family:'Public Sans',sans-serif;font-size:.68rem;color:var(--steel-deep);letter-spacing:.06em;text-transform:uppercase;}
+
+  /* ================= LEGAL ================= */
+  .legal-body{max-width:750px;margin:0 auto;padding:0 3rem 6rem;}
+  .legal-body h2{font-size:1.3rem;margin:2.3rem 0 .9rem;}
+  .legal-body h2:first-child{margin-top:0;}
+  .legal-body h3{font-family:'Public Sans',sans-serif;font-weight:700;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;margin:1.5rem 0 .6rem;color:var(--steel-deep);}
+  .legal-body p,.legal-body li{color:#5C6863;font-size:.95rem;margin-bottom:.9rem;}
+  .legal-body ul{padding-left:1.3rem;margin-bottom:1rem;}
+  .legal-body a.inline-link{color:var(--steel-deep);text-decoration:underline;}
+  .legal-note{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.3rem 1.5rem;font-size:.85rem;color:#5C6863;margin-bottom:2rem;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  @media(max-width:980px){
+    .trust-strip{grid-template-columns:1fr;}
+    .service-grid{grid-template-columns:repeat(2,1fr);}
+    .grid-gallery{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .values{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:768px){
+    header{padding:1.1rem 1.5rem;}
+    nav.mainnav{
+      position:fixed;top:0;right:0;height:100vh;width:80%;max-width:300px;
+      background:var(--ink-2);flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:1.8rem;padding:3rem;transform:translateX(100%);transition:transform .35s ease;
+      box-shadow:-10px 0 40px rgba(0,0,0,.3);
+    }
+    nav.mainnav.open{transform:translateX(0);}
+    .burger{display:flex;}
+    section{padding:4rem 1.5rem;}
+    .hero{padding:8.5rem 1.5rem 3rem;}
+    .page-hero{padding:8.5rem 1.5rem 3.5rem;}
+    .service-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .legal-body{padding:0 1.5rem 4rem;}
+    .step{gap:1.1rem;}
+    .step .snum{width:44px;height:44px;font-size:.85rem;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo" onclick="showPage('home')">
+    <svg class="mark" viewBox="0 0 24 24" fill="none"><path d="M3 18L9 11L13 15L21 6" stroke="var(--steel)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    WEITBLICK
+  </div>
+  <nav class="mainnav" id="mainNav">
+    <a href="../" style="opacity:.7;">← Portfolio</a>
+    <a onclick="showPage('home')" data-page="home">Home</a>
+    <a onclick="showPage('ubermich')" data-page="ubermich">Über mich</a>
+    <a onclick="showPage('leistungen')" data-page="leistungen">Leistungen</a>
+    <a onclick="showPage('ablauf')" data-page="ablauf">Ablauf</a>
+    <a class="nav-cta" href="tel:+498417890120">Erstgespräch</a>
+  </nav>
+  <div class="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="kicker">Versicherungs- &amp; Finanzberatung · Ingolstadt</span>
+      <h1>Absicherung mit <em>Weitblick</em>.</h1>
+      <p>Unabhängige Beratung zu Versicherungen und Vermögensaufbau — ohne Verkaufsdruck, mit ehrlichem Marktvergleich über alle Anbieter hinweg.</p>
+      <div class="hero-btnrow">
+        <a class="btn btn-solid" href="tel:+498417890120">Kostenloses Erstgespräch</a>
+        <a class="btn btn-outline" onclick="showPage('leistungen')">Leistungen ansehen</a>
+      </div>
+    </div>
+
+    <div class="horizon-wrap reveal">
+      <svg class="horizon-svg" viewBox="0 0 780 180">
+        <path class="horizon-line" d="M40,140 C180,140 220,120 320,95 C420,70 480,50 620,30 C670,24 710,20 740,18"/>
+        <circle class="horizon-dot" cx="40" cy="140" r="5"/>
+        <circle class="horizon-dot" cx="320" cy="95" r="5"/>
+        <circle class="horizon-dot" cx="740" cy="18" r="5"/>
+        <text class="horizon-label now" x="40" y="165" text-anchor="middle">HEUTE</text>
+        <text class="horizon-label" x="320" y="120" text-anchor="middle">VERMÖGENSAUFBAU</text>
+        <text class="horizon-label" x="740" y="45" text-anchor="middle">RUHESTAND</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="on-paper">
+    <div class="section-inner">
+      <div class="trust-strip">
+        <div class="trust-item reveal">
+          <div class="tval">§34d &amp; §34f</div>
+          <p>Zugelassen nach GewO, unabhängiger Versicherungsmakler und Honorar-Anlageberater</p>
+        </div>
+        <div class="trust-item reveal">
+          <div class="tval">Über 60</div>
+          <p>Vertragspartner am Markt, kein Bindung an einen einzelnen Versicherer</p>
+        </div>
+        <div class="trust-item reveal">
+          <div class="tval">14 Jahre</div>
+          <p>Erfahrung in Versicherungs- und Finanzberatung</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Leistungen</span>
+        <h2>Absicherung und Aufbau, aus einer Hand.</h2>
+        <p>Vom Berufsunfähigkeitsschutz bis zur Baufinanzierung — abgestimmt aufeinander, nicht isoliert betrachtet.</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Berufsunfähigkeit</h3>
+          <p>Absicherung deiner Arbeitskraft — meist die wichtigste Versicherung überhaupt.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Altersvorsorge</h3>
+          <p>Private und betriebliche Vorsorge, staatlich gefördert oder frei gewählt.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Baufinanzierung</h3>
+          <p>Konditionenvergleich über mehr als 400 Banken und Bausparkassen.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Sachversicherungen</h3>
+          <p>Haftpflicht, Hausrat, KFZ und Rechtsschutz — regelmäßig geprüft.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-paper">
+    <div class="section-inner">
+      <div class="sec-head">
+        <span class="kicker">Vor Ort</span>
+        <h2>Beratung, die sich Zeit nimmt.</h2>
+      </div>
+      <div class="grid-gallery">
+        <div class="shine-card reveal">
+          <img src="https://images.unsplash.com/photo-1549923746-c502d488b3ea?auto=format&fit=crop&w=800&q=80" alt="Beratungsgespräch und Vertragsabschluss">
+          <span class="tag">Erstgespräch</span>
+        </div>
+        <div class="shine-card reveal">
+          <img src="https://images.unsplash.com/photo-1758518729058-b158e71c5a9b?auto=format&fit=crop&w=800&q=80" alt="Stefan Brandner im Büro">
+          <span class="tag">Büro Ingolstadt</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonial">
+    <div class="testimonial-inner">
+      <blockquote class="reveal">„Ich hatte drei verschiedene Versicherungen, die sich teilweise überschnitten haben. Herr Brandner hat das aufgeräumt und mir am Ende sogar Geld gespart.“</blockquote>
+      <div class="cite reveal">— Mandant, Ingolstadt</div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Erstgespräch</span>
+    <h2 class="reveal">30 Minuten, unverbindlich und kostenlos.</h2>
+    <div class="hero-btnrow" style="margin-bottom:0;">
+      <a class="btn btn-solid" href="tel:+498417890120">0841 / 78 90 12</a>
+      <a class="btn btn-outline" href="mailto:kontakt@weitblick-finanzen.de">kontakt@weitblick-finanzen.de</a>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ ÜBER MICH ============ -->
+<div class="page" id="page-ubermich">
+  <div class="page-hero"><span class="kicker">Über mich</span><h1>Stefan Brandner</h1></div>
+  <section class="on-paper" style="padding-top:1rem;">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-img reveal">
+          <img src="https://images.unsplash.com/photo-1758518729058-b158e71c5a9b?auto=format&fit=crop&w=800&q=80" alt="Stefan Brandner, Versicherungs- und Finanzberater">
+        </div>
+        <div class="about-text">
+          <p class="reveal">Ich habe zwölf Jahre für einen großen Versicherungskonzern gearbeitet, bevor ich mich 2018 selbstständig gemacht habe — als unabhängiger Makler, ohne Bindung an einen bestimmten Anbieter.</p>
+          <p class="reveal">Mir ist wichtig, dass meine Kunden verstehen, was sie unterschreiben. Ich erkläre lieber einmal zu viel, als dass am Ende jemand eine Police hat, die er nicht braucht.</p>
+          <div class="cred-list">
+            <div class="cred-row reveal"><span class="yr">2018</span><span class="desc">Gründung von WEITBLICK, Zulassung als unabhängiger Makler</span></div>
+            <div class="cred-row reveal"><span class="yr">2017</span><span class="desc">Zulassung nach §34d &amp; §34f GewO, IHK München</span></div>
+            <div class="cred-row reveal"><span class="yr">2006</span><span class="desc">Ausbildung zum Versicherungskaufmann, Beginn der Laufbahn</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="values">
+        <div class="value-item reveal">
+          <h4>Unabhängig beraten</h4>
+          <p>Ich verdiene an der Beratung, nicht am Verkauf eines bestimmten Produkts.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Verständlich erklärt</h4>
+          <p>Keine Fachbegriffe ohne Erklärung — auch bei komplexen Verträgen.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Langfristig begleitet</h4>
+          <p>Verträge werden regelmäßig geprüft, nicht nur beim Abschluss.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ LEISTUNGEN ============ -->
+<div class="page" id="page-leistungen">
+  <div class="page-hero"><span class="kicker">Leistungen</span><h1>Versicherungen &amp; Finanzberatung</h1></div>
+  <section class="on-paper" style="padding-top:1rem;">
+    <div class="section-inner">
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Versicherungen</h3>
+          <span>Absicherung</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Berufsunfähigkeitsversicherung</span><div class="pdesc">Analyse &amp; Marktvergleich über alle Anbieter</div></div>
+          <div class="dots"></div><div class="pval">Beratung kostenlos*</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Privathaftpflicht &amp; Hausrat</span><div class="pdesc">Prüfung bestehender Verträge inklusive</div></div>
+          <div class="dots"></div><div class="pval">Beratung kostenlos*</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">KFZ- &amp; Rechtsschutzversicherung</span><div class="pdesc">Vergleich zum nächsten Stichtag</div></div>
+          <div class="dots"></div><div class="pval">Beratung kostenlos*</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Finanzberatung</h3>
+          <span>Vermögensaufbau</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Altersvorsorge-Check</span><div class="pdesc">Bestandsaufnahme &amp; Rentenlückenberechnung</div></div>
+          <div class="dots"></div><div class="pval">Beratung kostenlos*</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Baufinanzierung</span><div class="pdesc">Konditionenvergleich über 400+ Banken</div></div>
+          <div class="dots"></div><div class="pval">Beratung kostenlos*</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pname">Honorarberatung</span><div class="pdesc">Auf Wunsch: unabhängige Beratung gegen Stundenhonorar</div></div>
+          <div class="dots"></div><div class="pval">120 €/Std.</div>
+        </div>
+      </div>
+
+      <p class="price-note">*Vergütung für Versicherungsvermittlung erfolgt über Courtage vom Versicherer, nicht vom Kunden. Für die Honorarberatung gilt der separate Stundensatz.</p>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============ ABLAUF ============ -->
+<div class="page" id="page-ablauf">
+  <div class="page-hero"><span class="kicker">Ablauf</span><h1>So läuft die Beratung ab</h1></div>
+  <section style="padding-top:1rem;">
+    <div class="section-inner">
+      <div class="steps">
+        <div class="step reveal">
+          <div class="snum">01</div>
+          <div class="scontent">
+            <span class="stag">Kostenlos</span>
+            <h3>Erstgespräch</h3>
+            <p>30 Minuten, telefonisch, per Video oder vor Ort — wir klären deine Situation und was dich beschäftigt.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="snum">02</div>
+          <div class="scontent">
+            <span class="stag">Analyse</span>
+            <h3>Bedarfsanalyse</h3>
+            <p>Ich sehe mir bestehende Verträge an und zeige, wo Lücken oder Doppelungen bestehen.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="snum">03</div>
+          <div class="scontent">
+            <span class="stag">Vergleich</span>
+            <h3>Marktvergleich</h3>
+            <p>Ich vergleiche Angebote über mein gesamtes Netzwerk an Versicherern und Banken.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="snum">04</div>
+          <div class="scontent">
+            <span class="stag">Entscheidung</span>
+            <h3>Empfehlung</h3>
+            <p>Du bekommst eine schriftliche Empfehlung mit Vor- und Nachteilen — die Entscheidung bleibt bei dir.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="snum">05</div>
+          <div class="scontent">
+            <span class="stag">Laufend</span>
+            <h3>Begleitung</h3>
+            <p>Ich prüfe deine Verträge regelmäßig und melde mich, wenn sich am Markt etwas ändert.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ IMPRESSUM ============ -->
+<div class="page" id="page-impressum">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Impressum</h1></div>
+  <section class="on-paper" style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Name, Adresse, Telefonnummer und Registrierungsnummern sind Platzhalter-Beispiele für dieses Portfolio-Demo. Bitte vor echter Veröffentlichung durch reale Geschäftsdaten ersetzen.</div>
+
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>WEITBLICK Versicherungs- &amp; Finanzberatung<br>Stefan Brandner<br>Theresienstraße 22<br>85049 Ingolstadt<br>Deutschland</p>
+
+      <h3>Kontakt</h3>
+      <p>Telefon: <a class="inline-link" href="tel:+498417890120">0841 / 78 90 12</a><br>E-Mail: <a class="inline-link" href="mailto:kontakt@weitblick-finanzen.de">kontakt@weitblick-finanzen.de</a></p>
+
+      <h3>Umsatzsteuer-ID</h3>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE389012456</p>
+
+      <h3>Berufsrechtliche Angaben</h3>
+      <p>Erlaubnis nach § 34d Abs. 1 GewO (Versicherungsmakler) und § 34f Abs. 1 Nr. 1 GewO (Honorar-Finanzanlagenberater), erteilt durch die IHK München und Oberbayern. Eingetragen im Vermittlerregister unter der Registrierungsnummer D-XXXX-XXXXX-XX (Platzhalter), einsehbar unter <a class="inline-link" href="https://www.vermittlerregister.info" target="_blank" rel="noopener">www.vermittlerregister.info</a>.</p>
+      <p>Zuständige Aufsichtsbehörde: IHK München und Oberbayern, Max-Joseph-Straße 2, 80333 München.</p>
+
+      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+      <p>Stefan Brandner, Anschrift wie oben.</p>
+
+      <h3>Streitschlichtung</h3>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="inline-link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Meine E-Mail-Adresse findest du oben. Für Streitigkeiten aus Versicherungsvermittlung besteht zudem die Möglichkeit, den Versicherungsombudsmann e.V. anzurufen.</p>
+
+      <h3>Haftung für Inhalte</h3>
+      <p>Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+      <h3>Haftung für Links</h3>
+      <p>Dieses Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+      <h3>Urheberrecht</h3>
+      <p>Die durch mich erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DATENSCHUTZ ============ -->
+<div class="page" id="page-datenschutz">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Datenschutz</h1></div>
+  <section class="on-paper" style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Diese Vorlage deckt gängige Punkte für einen kleinen Versicherungs- und Finanzberatungsbetrieb mit Kontaktformular und Google Analytics ab. Bitte fachlich prüfen lassen, bevor sie live geht — insbesondere wegen der besonderen Kategorien personenbezogener Daten, die bei Versicherungsvermittlung anfallen können.</div>
+
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>WEITBLICK Versicherungs- &amp; Finanzberatung<br>Stefan Brandner<br>Theresienstraße 22, 85049 Ingolstadt<br>Telefon: 0841 / 78 90 12<br>E-Mail: kontakt@weitblick-finanzen.de</p>
+
+      <h2>2. Allgemeines zur Datenverarbeitung</h2>
+      <p>Ich verarbeite personenbezogene Daten meiner Nutzer:innen grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie meiner Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt nach Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).</p>
+
+      <h2>3. Hosting</h2>
+      <p>Diese Website wird bei einem externen Hosting-Anbieter gehostet. Personenbezogene Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Der Hoster verarbeitet Daten in meinem Auftrag gemäß Art. 28 DSGVO.</p>
+
+      <h2>4. Kontaktaufnahme</h2>
+      <p>Wenn du mich per Telefon, E-Mail oder Kontaktformular kontaktierst, werden deine Angaben zum Zweck der Bearbeitung deiner Anfrage bei mir gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung). Die Daten werden gelöscht, sobald sie für die Bearbeitung nicht mehr erforderlich sind.</p>
+
+      <h2>5. Beratung &amp; Vertragsvermittlung</h2>
+      <p>Im Rahmen der Versicherungs- und Finanzberatung verarbeite ich teils sensible Angaben (z. B. Gesundheits- oder Einkommensdaten), soweit dies für die Vermittlung passender Verträge erforderlich ist. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO sowie, bei Gesundheitsdaten, deine ausdrückliche Einwilligung nach Art. 9 Abs. 2 lit. a DSGVO. Diese Daten werden nicht ohne deine Zustimmung an Dritte weitergegeben, außer an den jeweiligen Versicherer zur Antragsstellung.</p>
+
+      <h2>6. Google Analytics</h2>
+      <p>Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google"). Google Analytics verwendet Cookies bzw. vergleichbare Technologien, die eine Analyse der Benutzung der Website ermöglichen.</p>
+      <p>Die dabei erzeugten Informationen (z. B. Zugriffszeit, Ort des Zugriffs, Häufigkeit des Seitenbesuchs, gekürzte IP-Adresse) werden an Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert, sodass deine IP-Adresse vor der Übertragung innerhalb der EU/EWR gekürzt wird.</p>
+      <p>Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die du über das Cookie-Banner erteilen oder ablehnen kannst. Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+      <p>Google verarbeitet Daten auch in den USA; hierfür bestehen Standardvertragsklauseln der EU-Kommission als Garantie für ein angemessenes Datenschutzniveau. Weitere Infos: <a class="inline-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.</p>
+      <p>Du kannst die Erfassung verhindern, indem du das Browser-Add-on installierst: <a class="inline-link" href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h2>7. Cookies</h2>
+      <p>Diese Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, alle anderen (z. B. Google Analytics) nur mit deiner Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO.</p>
+
+      <h2>8. Deine Rechte</h2>
+      <ul>
+        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
+        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
+        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
+        <li>Recht auf Widerruf erteilter Einwilligungen</li>
+      </ul>
+      <p>Zudem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, z. B. beim Bayerischen Landesamt für Datenschutzaufsicht.</p>
+
+      <h2>9. Änderungen dieser Datenschutzerklärung</h2>
+      <p>Ich behalte mir vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht. Stand: 2026.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo">
+        <svg class="mark" viewBox="0 0 24 24" fill="none"><path d="M3 18L9 11L13 15L21 6" stroke="var(--steel)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        WEITBLICK
+      </div>
+      <p>Unabhängige Versicherungs- und Finanzberatung in Ingolstadt — nach Terminvereinbarung, vor Ort oder online.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a href="tel:+498417890120">0841 / 78 90 12</a>
+      <a href="mailto:kontakt@weitblick-finanzen.de">kontakt@weitblick-finanzen.de</a>
+      <p>Theresienstraße 22, 85049 Ingolstadt</p>
+    </div>
+    <div class="footer-col">
+      <h4>Seite</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('ubermich')">Über mich</a>
+      <a onclick="showPage('leistungen')">Leistungen</a>
+      <a onclick="showPage('ablauf')">Ablauf</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 WEITBLICK Versicherungs- &amp; Finanzberatung</span>
+    <div class="footer-legal">
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY>40);
+  });
+  function toggleNav(){document.getElementById('mainNav').classList.toggle('open');}
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    document.querySelectorAll('nav.mainnav a[data-page]').forEach(a=>{
+      a.classList.toggle('active', a.dataset.page===name);
+    });
+    document.getElementById('mainNav').classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant'});
+    initReveal();
+  }
+
+  function initReveal(){
+    const els = document.querySelectorAll('.reveal:not(.in)');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} });
+    },{threshold:.15});
+    els.forEach(el=>obs.observe(el));
+  }
+  initReveal();
+</script>
+
+</body>
+</html>

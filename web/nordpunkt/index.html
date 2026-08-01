@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NORDPUNKT — Coaching für persönliche Entwicklung, Regensburg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,500&family=Work+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16232B;
+    --ink-2:#1E2F38;
+    --paper:#EDE6D3;
+    --paper-deep:#E2D8BE;
+    --brass:#B08D4E;
+    --brass-deep:#8C6D33;
+    --rust:#A64B2A;
+    --ink-soft:#8496A0;
+    --line:rgba(237,230,211,.16);
+    --line-dark:rgba(22,35,43,.14);
+    --white:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);color:var(--paper);
+    font-family:'Work Sans',sans-serif;font-weight:300;line-height:1.7;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit;}
+  img{display:block;max-width:100%;}
+  h1,h2,h3,h4{font-family:'Spectral',serif;font-weight:600;line-height:1.15;color:var(--paper);}
+  .on-paper h1,.on-paper h2,.on-paper h3,.on-paper h4{color:var(--ink);}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .kicker{
+    font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--brass);font-weight:600;display:inline-block;margin-bottom:1.3rem;
+  }
+  .on-paper .kicker{color:var(--brass-deep);}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;padding:1.6rem 3rem;
+    transition:background .3s ease, padding .3s ease, box-shadow .3s ease;
+  }
+  header.scrolled{background:rgba(22,35,43,.92);backdrop-filter:blur(10px);padding:1.1rem 3rem;box-shadow:0 2px 24px rgba(0,0,0,.3);}
+  .logo{font-family:'Spectral',serif;font-weight:600;font-size:1.4rem;letter-spacing:.03em;cursor:pointer;color:var(--paper);display:inline-flex;align-items:center;gap:.55rem;}
+  .logo .mark{width:18px;height:18px;flex-shrink:0;}
+  nav.mainnav{display:flex;gap:2.2rem;align-items:center;}
+  nav.mainnav a{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;position:relative;padding-bottom:3px;}
+  nav.mainnav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--brass);transition:width .3s ease;}
+  nav.mainnav a:hover::after,nav.mainnav a.active::after{width:100%;}
+  nav.mainnav a:hover,nav.mainnav a.active{color:var(--paper);}
+  .nav-cta{background:var(--brass);color:var(--ink)!important;padding:.65rem 1.4rem;border-radius:2px;font-weight:600!important;letter-spacing:.05em!important;}
+  .nav-cta:hover{background:var(--brass-deep);color:var(--white)!important;}
+  .nav-cta::after{display:none;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .burger span{width:24px;height:1px;background:var(--paper);display:block;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2rem;border-radius:2px;
+    font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;cursor:pointer;border:none;
+    transition:transform .3s ease, box-shadow .3s ease, background .3s ease;
+  }
+  .btn-solid{background:var(--brass);color:var(--ink);}
+  .btn-solid:hover{transform:translateY(-3px);box-shadow:0 16px 30px -14px rgba(176,141,78,.5);background:var(--brass-deep);color:var(--white);}
+  .btn-outline{background:transparent;border:1px solid var(--line);color:var(--paper);}
+  .btn-outline:hover{background:rgba(237,230,211,.06);transform:translateY(-3px);}
+  .on-paper .btn-outline{border:1px solid var(--line-dark);color:var(--ink);}
+  .on-paper .btn-outline:hover{background:rgba(22,35,43,.05);}
+
+  /* ================= HERO ================= */
+  .hero{position:relative;padding:11.5rem 3rem 4rem;overflow:hidden;text-align:center;}
+  .hero::before{
+    content:'';position:absolute;inset:0;z-index:0;
+    background:radial-gradient(ellipse 55% 45% at 50% 0%, rgba(176,141,78,.14), transparent 70%);
+  }
+  .hero-content{position:relative;z-index:2;max-width:740px;margin:0 auto;}
+  .hero-content h1{font-size:clamp(2.5rem,5.6vw,4.2rem);margin-bottom:1.5rem;}
+  .hero-content h1 em{font-style:italic;color:var(--brass);}
+  .hero-content p{color:var(--ink-soft);font-size:1.03rem;max-width:480px;margin:0 auto 2.3rem;}
+  .hero-btnrow{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;}
+
+  /* ================= COMPASS (signature) ================= */
+  .compass-wrap{position:relative;z-index:2;display:flex;justify-content:center;padding-bottom:1rem;}
+  .compass{width:min(340px,80vw);height:min(340px,80vw);}
+  .compass .ring{fill:none;stroke:rgba(237,230,211,.22);stroke-width:1;}
+  .compass .ticks line{stroke:rgba(237,230,211,.3);stroke-width:1;}
+  .compass .ticks line.major{stroke:var(--brass);stroke-width:1.6;}
+  .compass .needle{transform-origin:170px 170px;animation:needleDrift 26s ease-in-out infinite;}
+  @keyframes needleDrift{
+    0%{transform:rotate(-6deg);}
+    50%{transform:rotate(9deg);}
+    100%{transform:rotate(-6deg);}
+  }
+  .compass .cap{fill:var(--brass);}
+  .compass text.dir{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--ink-soft);}
+  .compass text.dir.major{fill:var(--brass);font-weight:600;}
+  .compass-labels{
+    position:absolute;inset:0;pointer-events:none;
+  }
+
+  /* ================= SECTION GENERIC ================= */
+  section{padding:6.5rem 3rem;}
+  .section-inner{max-width:1180px;margin:0 auto;}
+  .sec-head{max-width:600px;margin-bottom:3.4rem;}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .sec-head h2{font-size:clamp(2rem,3.6vw,2.7rem);}
+  .sec-head p{color:var(--ink-soft);margin-top:1rem;}
+  .on-paper .sec-head p{color:#5C6B72;}
+  .on-paper{background:var(--paper);color:var(--ink);}
+
+  /* ================= FOUR PILLARS (compass points as theme cards) ================= */
+  .pillar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;}
+  .pillar-card{
+    background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:2.1rem 1.5rem;
+    transition:transform .35s ease, border-color .35s ease;
+  }
+  .pillar-card:hover{transform:translateY(-6px);border-color:var(--brass);}
+  .pillar-card .pdir{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;color:var(--brass-deep);margin-bottom:.9rem;display:block;}
+  .pillar-card h3{font-size:1.05rem;margin-bottom:.6rem;}
+  .pillar-card p{color:#5C6B72;font-size:.85rem;}
+
+  /* ================= SERVICES PREVIEW ================= */
+  .service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;}
+  .service-card{
+    background:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:2.2rem 1.6rem;
+    transition:transform .35s ease, border-color .35s ease;
+  }
+  .service-card:hover{transform:translateY(-6px);border-color:var(--brass);}
+  .service-card .sdot{width:14px;height:14px;border-radius:50%;margin-bottom:1.3rem;background:var(--brass);}
+  .service-card h3{font-size:1.05rem;margin-bottom:.6rem;}
+  .service-card p{color:var(--ink-soft);font-size:.85rem;}
+
+  /* ================= TESTIMONIAL ================= */
+  .testimonial{text-align:center;background:var(--ink-2);}
+  .testimonial-inner{max-width:700px;margin:0 auto;}
+  .testimonial blockquote{
+    font-family:'Spectral',serif;font-style:italic;font-weight:500;font-size:clamp(1.3rem,2.4vw,1.9rem);
+    margin-bottom:1.3rem;line-height:1.4;
+  }
+  .testimonial .cite{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;}
+
+  /* ================= CTA ================= */
+  .cta-band{background:var(--brass);color:var(--ink);text-align:center;padding:5.5rem 2rem;}
+  .cta-band .kicker{color:rgba(22,35,43,.65);}
+  .cta-band h2{color:var(--ink);font-size:clamp(1.9rem,3.6vw,2.6rem);max-width:620px;margin:0 auto 2rem;}
+  .cta-band .btn-solid{background:var(--ink);color:var(--paper);}
+  .cta-band .btn-solid:hover{background:var(--ink-2);}
+  .cta-band .btn-outline{border-color:rgba(22,35,43,.4);color:var(--ink);}
+
+  /* ================= FOOTER ================= */
+  footer{background:var(--ink);border-top:1px solid var(--line);padding:3.8rem 3rem 2rem;}
+  .footer-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:2.4rem;padding-bottom:2.4rem;border-bottom:1px solid var(--line);}
+  .footer-grid .logo{margin-bottom:1rem;font-size:1.3rem;}
+  .footer-grid p{color:var(--ink-soft);font-size:.86rem;max-width:260px;}
+  .footer-col h4{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--brass);margin-bottom:1rem;}
+  .footer-col a,.footer-col p{display:block;color:var(--ink-soft);font-size:.86rem;margin-bottom:.55rem;}
+  .footer-col a:hover{color:var(--paper);}
+  .footer-bottom{max-width:1180px;margin:0 auto;padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.76rem;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;}
+  .footer-legal{display:flex;gap:1.4rem;flex-wrap:wrap;}
+  .footer-bottom a:hover{color:var(--paper);}
+
+  /* ================= PAGE HERO ================= */
+  .page-hero{padding:11rem 3rem 4.5rem;text-align:center;position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 55% 50% at 50% 0%, rgba(176,141,78,.14), transparent 70%);}
+  .page-hero h1{font-size:clamp(2.3rem,5vw,3.4rem);position:relative;z-index:2;}
+  .page-hero .kicker{position:relative;z-index:2;}
+
+  /* ================= ÜBER MICH ================= */
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:center;}
+  .about-img{border-radius:4px;overflow:hidden;aspect-ratio:4/5;}
+  .about-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(15%);}
+  .about-text p{color:#5C6B72;margin-bottom:1.1rem;max-width:520px;}
+  .cred-list{margin-top:1.8rem;border-top:1px solid var(--line-dark);padding-top:1.4rem;}
+  .cred-row{display:flex;gap:1.2rem;padding:.8rem 0;border-bottom:1px solid var(--line-dark);}
+  .cred-row .yr{font-family:'JetBrains Mono',monospace;color:var(--brass-deep);min-width:60px;font-size:.82rem;}
+  .cred-row .desc{color:#5C6B72;font-size:.9rem;}
+
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:4.5rem;}
+  .value-item{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.8rem;}
+  .value-item h4{font-size:1.02rem;margin-bottom:.5rem;}
+  .value-item p{color:#5C6B72;font-size:.86rem;}
+
+  /* ================= ANGEBOTE — price list ================= */
+  .price-group{margin-bottom:3.2rem;}
+  .price-group-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;border-bottom:2px solid var(--brass);padding-bottom:.7rem;}
+  .price-group-head h3{font-size:1.3rem;flex:1;}
+  .price-group-head span{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--brass-deep);}
+  .price-row{display:flex;align-items:baseline;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line-dark);}
+  .price-row:last-child{border-bottom:none;}
+  .price-row .pname{font-weight:500;font-size:1rem;color:var(--ink);}
+  .price-row .pcode{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--brass-deep);margin-right:.5rem;}
+  .price-row .pdesc{color:#5C6B72;font-size:.82rem;margin-top:.2rem;}
+  .price-row .dots{flex:1;border-bottom:1px dotted var(--line-dark);transform:translateY(-.4rem);}
+  .price-row .pval{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--ink);font-size:1rem;white-space:nowrap;}
+  .price-note{color:#5C6B72;font-size:.85rem;text-align:center;margin-top:1rem;}
+
+  .salon-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:4.5rem;}
+  .strip-item{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.8rem;}
+  .strip-item h4{font-size:1.02rem;margin-bottom:.5rem;}
+  .strip-item p{color:#5C6B72;font-size:.86rem;}
+
+  /* ================= ABLAUF — process steps ================= */
+  .steps{max-width:760px;margin:0 auto;position:relative;}
+  .steps::before{content:'';position:absolute;left:27px;top:8px;bottom:8px;width:1px;background:var(--line-dark);}
+  .step{display:flex;gap:1.8rem;padding-bottom:2.8rem;position:relative;}
+  .step:last-child{padding-bottom:0;}
+  .step .snum{
+    width:56px;height:56px;border-radius:50%;background:var(--white);border:1px solid var(--brass);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'JetBrains Mono',monospace;
+    font-weight:600;color:var(--brass-deep);position:relative;z-index:1;
+  }
+  .step .scontent h3{font-size:1.15rem;margin-bottom:.5rem;margin-top:.6rem;}
+  .step .scontent p{color:#5C6B72;font-size:.92rem;max-width:520px;}
+  .step .stag{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--brass-deep);letter-spacing:.06em;text-transform:uppercase;}
+
+  /* ================= LEGAL ================= */
+  .legal-body{max-width:750px;margin:0 auto;padding:0 3rem 6rem;}
+  .legal-body h2{font-size:1.3rem;margin:2.3rem 0 .9rem;}
+  .legal-body h2:first-child{margin-top:0;}
+  .legal-body h3{font-family:'JetBrains Mono',monospace;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;margin:1.5rem 0 .6rem;color:var(--brass-deep);}
+  .legal-body p,.legal-body li{color:#5C6B72;font-size:.95rem;margin-bottom:.9rem;}
+  .legal-body ul{padding-left:1.3rem;margin-bottom:1rem;}
+  .legal-body a.inline-link{color:var(--brass-deep);text-decoration:underline;}
+  .legal-note{background:var(--white);border:1px solid var(--line-dark);border-radius:4px;padding:1.3rem 1.5rem;font-size:.85rem;color:#5C6B72;margin-bottom:2rem;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  @media(max-width:980px){
+    .pillar-grid{grid-template-columns:repeat(2,1fr);}
+    .service-grid{grid-template-columns:repeat(2,1fr);}
+    .about-grid{grid-template-columns:1fr;}
+    .values{grid-template-columns:1fr;}
+    .salon-strip{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:768px){
+    header{padding:1.1rem 1.5rem;}
+    nav.mainnav{
+      position:fixed;top:0;right:0;height:100vh;width:80%;max-width:300px;
+      background:var(--ink-2);flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:1.8rem;padding:3rem;transform:translateX(100%);transition:transform .35s ease;
+      box-shadow:-10px 0 40px rgba(0,0,0,.3);
+    }
+    nav.mainnav.open{transform:translateX(0);}
+    .burger{display:flex;}
+    section{padding:4rem 1.5rem;}
+    .hero{padding:8.5rem 1.5rem 3rem;}
+    .page-hero{padding:8.5rem 1.5rem 3.5rem;}
+    .pillar-grid{grid-template-columns:1fr;}
+    .service-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .legal-body{padding:0 1.5rem 4rem;}
+    .step{gap:1.1rem;}
+    .step .snum{width:44px;height:44px;font-size:.85rem;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo" onclick="showPage('home')">
+    <svg class="mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10.5" stroke="var(--brass)" stroke-width="1.2"/><path d="M12 6L14 12L12 18L10 12Z" fill="var(--brass)"/></svg>
+    NORDPUNKT
+  </div>
+  <nav class="mainnav" id="mainNav">
+    <a href="../" style="opacity:.7;">← Portfolio</a>
+    <a onclick="showPage('home')" data-page="home">Home</a>
+    <a onclick="showPage('ubermich')" data-page="ubermich">Über mich</a>
+    <a onclick="showPage('angebote')" data-page="angebote">Angebote</a>
+    <a onclick="showPage('ablauf')" data-page="ablauf">Ablauf</a>
+    <a class="nav-cta" href="tel:+499417890120">Termin</a>
+  </nav>
+  <div class="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="kicker">Coaching für persönliche Entwicklung · Regensburg</span>
+      <h1>Du kennst dein Ziel.<br>Ich zeige dir <em>den Weg.</em></h1>
+      <p>Systemisches Coaching für Menschen im Umbruch — beruflich, privat, in dir selbst. Klar strukturiert, ohne Floskeln.</p>
+      <div class="hero-btnrow">
+        <a class="btn btn-solid" href="tel:+499417890120">Kennenlerngespräch buchen</a>
+        <a class="btn btn-outline" onclick="showPage('angebote')">Angebote ansehen</a>
+      </div>
+    </div>
+
+    <div class="compass-wrap reveal">
+      <svg class="compass" viewBox="0 0 340 340">
+        <circle class="ring" cx="170" cy="170" r="150"/>
+        <circle class="ring" cx="170" cy="170" r="118"/>
+        <g class="ticks">
+          <g id="tickGroup"></g>
+        </g>
+        <g class="needle">
+          <path d="M170 40 L179 170 L170 178 L161 170 Z" fill="var(--rust)"/>
+          <path d="M170 300 L179 170 L170 162 L161 170 Z" fill="var(--ink-soft)" opacity=".5"/>
+        </g>
+        <circle class="cap" cx="170" cy="170" r="7"/>
+        <text class="dir major" x="170" y="30" text-anchor="middle">N · KLARHEIT</text>
+        <text class="dir major" x="318" y="174" text-anchor="middle">O · WACHSTUM</text>
+        <text class="dir major" x="170" y="320" text-anchor="middle">S · MUT</text>
+        <text class="dir major" x="22" y="174" text-anchor="middle">W · BALANCE</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="on-paper">
+    <div class="section-inner">
+      <div class="sec-head center">
+        <span class="kicker">Vier Richtungen</span>
+        <h2>Jede Sitzung hat einen Kompasspunkt.</h2>
+        <p>Wir arbeiten dort, wo es gerade zieht — manchmal an mehreren Punkten gleichzeitig.</p>
+      </div>
+      <div class="pillar-grid">
+        <div class="pillar-card reveal">
+          <span class="pdir">N — Klarheit</span>
+          <h3>Wissen, wo du stehst</h3>
+          <p>Standortbestimmung, bevor du den nächsten Schritt planst.</p>
+        </div>
+        <div class="pillar-card reveal">
+          <span class="pdir">O — Wachstum</span>
+          <h3>Neue Fähigkeiten</h3>
+          <p>Muster erkennen, Routinen verändern, dranbleiben.</p>
+        </div>
+        <div class="pillar-card reveal">
+          <span class="pdir">S — Mut</span>
+          <h3>Entscheidungen treffen</h3>
+          <p>Von der Absicht zur Handlung — ohne dich zu überfordern.</p>
+        </div>
+        <div class="pillar-card reveal">
+          <span class="pdir">W — Balance</span>
+          <h3>Im Gleichgewicht bleiben</h3>
+          <p>Belastbarkeit aufbauen, statt sich zu verausgaben.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="sec-head">
+        <span class="kicker">Angebote</span>
+        <h2>Drei Formate, ein Ziel: Klarheit.</h2>
+      </div>
+      <div class="service-grid">
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>1:1 Coaching</h3>
+          <p>Wöchentlich oder im eigenen Rhythmus, vor Ort oder online.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Standortbestimmung</h3>
+          <p>Eine einzelne Sitzung, um Klarheit über die aktuelle Lage zu gewinnen.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Gruppenformat</h3>
+          <p>Kleine Gruppen (4–6 Personen), sechs Termine, ein gemeinsames Thema.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="sdot"></div>
+          <h3>Online-Coaching</h3>
+          <p>Per Video, gleiche Struktur, ohne Anfahrt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonial">
+    <div class="testimonial-inner">
+      <blockquote class="reveal">„Ich bin mit einem diffusen Gefühl reingegangen und mit einem echten Plan rausgekommen. Julia lässt keine Ausrede durchgehen — auf eine gute Art.“</blockquote>
+      <div class="cite reveal">— Coaching-Klientin, Regensburg</div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="kicker">Termin</span>
+    <h2 class="reveal">Ein kostenloses Kennenlerngespräch, 30 Minuten.</h2>
+    <div class="hero-btnrow" style="margin-bottom:0;">
+      <a class="btn btn-solid" href="tel:+499417890120">0941 / 78 90 12</a>
+      <a class="btn btn-outline" href="mailto:hallo@nordpunkt-coaching.de">hallo@nordpunkt-coaching.de</a>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ ÜBER MICH ============ -->
+<div class="page" id="page-ubermich">
+  <div class="page-hero"><span class="kicker">Über mich</span><h1>Julia Berg</h1></div>
+  <section class="on-paper" style="padding-top:1rem;">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-img reveal">
+          <img src="https://images.unsplash.com/photo-1772306105241-fc51849ab40d?auto=format&fit=crop&w=800&q=80" alt="Julia Berg, Blick aufs Meer">
+        </div>
+        <div class="about-text">
+          <p class="reveal">Ich habe zehn Jahre im Personalbereich eines Konzerns gearbeitet, bevor ich 2020 die Ausbildung zur systemischen Coachin begonnen habe. Seit 2022 begleite ich Menschen hauptberuflich — meist in beruflichen oder privaten Umbruchphasen.</p>
+          <p class="reveal">Mein Ansatz ist strukturiert, nicht esoterisch: Wir arbeiten mit klaren Fragen, konkreten Schritten und ehrlichem Feedback. Kein Coaching-Sprech, keine Motivationsfloskeln.</p>
+          <div class="cred-list">
+            <div class="cred-row reveal"><span class="yr">2022</span><span class="desc">Gründung von NORDPUNKT, Vollzeit-Coaching</span></div>
+            <div class="cred-row reveal"><span class="yr">2021</span><span class="desc">Zertifizierung Systemisches Coaching (ICF-akkreditiert)</span></div>
+            <div class="cred-row reveal"><span class="yr">2011</span><span class="desc">Beginn der Laufbahn im Personalbereich, München</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="values">
+        <div class="value-item reveal">
+          <h4>Ehrlich, nicht bequem</h4>
+          <p>Ich stimme dir nicht einfach zu — ich frage nach.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Struktur statt Bauchgefühl</h4>
+          <p>Jede Sitzung hat ein Thema, jede Phase ein Ergebnis.</p>
+        </div>
+        <div class="value-item reveal">
+          <h4>Vertraulich</h4>
+          <p>Was in der Sitzung besprochen wird, bleibt dort.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ ANGEBOTE ============ -->
+<div class="page" id="page-angebote">
+  <div class="page-hero"><span class="kicker">Angebote</span><h1>Formate &amp; Preise</h1></div>
+  <section class="on-paper" style="padding-top:1rem;">
+    <div class="section-inner">
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>1:1 Coaching</h3>
+          <span>Einzeln</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">01</span><span class="pname">Kennenlerngespräch</span><div class="pdesc">30 Minuten, unverbindlich</div></div>
+          <div class="dots"></div><div class="pval">kostenlos</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">02</span><span class="pname">Einzelsitzung</span><div class="pdesc">60 Minuten, vor Ort oder online</div></div>
+          <div class="dots"></div><div class="pval">95 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">03</span><span class="pname">Paket · 6 Sitzungen</span><div class="pdesc">Über 8–12 Wochen, inkl. Fahrplan</div></div>
+          <div class="dots"></div><div class="pval">510 €</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Gruppen &amp; Sonderformate</h3>
+          <span>Gruppe</span>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">04</span><span class="pname">Gruppenformat</span><div class="pdesc">6 Termine, 4–6 Personen, ein Thema</div></div>
+          <div class="dots"></div><div class="pval">340 €</div>
+        </div>
+        <div class="price-row">
+          <div><span class="pcode">05</span><span class="pname">Standortbestimmung</span><div class="pdesc">Einzelne 90-Minuten-Sitzung ohne Paket</div></div>
+          <div class="dots"></div><div class="pval">130 €</div>
+        </div>
+      </div>
+
+      <p class="price-note">Alle Preise inkl. USt. Terminanfragen telefonisch oder per E-Mail. Coaching ersetzt keine psychotherapeutische oder medizinische Behandlung.</p>
+
+      <div class="salon-strip">
+        <div class="strip-item reveal">
+          <h4>24 h Absagefrist</h4>
+          <p>Kurzfristige Absagen unter 24 h werden anteilig berechnet.</p>
+        </div>
+        <div class="strip-item reveal">
+          <h4>Vor Ort oder online</h4>
+          <p>Praxis in der Regensburger Altstadt oder per Video.</p>
+        </div>
+        <div class="strip-item reveal">
+          <h4>Rechnung auf Wunsch</h4>
+          <p>Für Selbstzahler oder Weiterberechnung an Arbeitgeber.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============ ABLAUF ============ -->
+<div class="page" id="page-ablauf">
+  <div class="page-hero"><span class="kicker">Ablauf</span><h1>Vier Schritte zum Fahrplan</h1></div>
+  <section style="padding-top:1rem;">
+    <div class="section-inner">
+      <div class="steps">
+        <div class="step reveal">
+          <div class="snum">01</div>
+          <div class="scontent">
+            <span class="stag">Unverbindlich</span>
+            <h3>Kennenlerngespräch</h3>
+            <p>30 Minuten am Telefon oder per Video. Wir klären, ob die Chemie stimmt und was dich beschäftigt.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="snum">02</div>
+          <div class="scontent">
+            <span class="stag">Sitzung 1</span>
+            <h3>Standortbestimmung</h3>
+            <p>Wo stehst du wirklich — beruflich, privat, mit dir selbst? Wir arbeiten mit konkreten Fragen, nicht mit Bauchgefühl.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="snum">03</div>
+          <div class="scontent">
+            <span class="stag">Sitzung 2</span>
+            <h3>Fahrplan</h3>
+            <p>Gemeinsam legen wir Ziel, Meilensteine und den Rhythmus der weiteren Sitzungen fest.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="snum">04</div>
+          <div class="scontent">
+            <span class="stag">Laufend</span>
+            <h3>Begleitung</h3>
+            <p>Regelmäßige Sitzungen, in denen wir Fortschritt reflektieren und nachjustieren, wo nötig.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ IMPRESSUM ============ -->
+<div class="page" id="page-impressum">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Impressum</h1></div>
+  <section class="on-paper" style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Name, Adresse, Telefonnummer und USt-IdNr. sind Platzhalter-Beispiele für dieses Portfolio-Demo. Bitte vor echter Veröffentlichung durch reale Geschäftsdaten ersetzen.</div>
+
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>NORDPUNKT Coaching<br>Julia Berg<br>Fischmarkt 8<br>93047 Regensburg<br>Deutschland</p>
+
+      <h3>Kontakt</h3>
+      <p>Telefon: <a class="inline-link" href="tel:+499417890120">0941 / 78 90 12</a><br>E-Mail: <a class="inline-link" href="mailto:hallo@nordpunkt-coaching.de">hallo@nordpunkt-coaching.de</a></p>
+
+      <h3>Umsatzsteuer-ID</h3>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE312456789</p>
+
+      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+      <p>Julia Berg, Anschrift wie oben.</p>
+
+      <h3>Berufsbezeichnung</h3>
+      <p>Coaching ist in Deutschland eine nicht geschützte Berufsbezeichnung. Coaching ersetzt keine Heilkunde, Psychotherapie oder ärztliche Behandlung. Bei psychischen Erkrankungen wende dich bitte an eine:n Ärztin/Arzt oder Psychotherapeut:in.</p>
+
+      <h3>Streitschlichtung</h3>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="inline-link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Meine E-Mail-Adresse findest du oben. Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+      <h3>Haftung für Inhalte</h3>
+      <p>Als Diensteanbieterin bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieterin jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+      <h3>Haftung für Links</h3>
+      <p>Dieses Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+      <h3>Urheberrecht</h3>
+      <p>Die durch mich erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DATENSCHUTZ ============ -->
+<div class="page" id="page-datenschutz">
+  <div class="page-hero"><span class="kicker">Rechtliches</span><h1>Datenschutz</h1></div>
+  <section class="on-paper" style="padding-top:2rem;">
+    <div class="legal-body">
+      <div class="legal-note">Diese Vorlage deckt gängige Punkte für ein kleines Coaching-Business mit Kontaktformular und Google Analytics ab. Bitte fachlich prüfen lassen, bevor sie live geht.</div>
+
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>NORDPUNKT Coaching<br>Julia Berg<br>Fischmarkt 8, 93047 Regensburg<br>Telefon: 0941 / 78 90 12<br>E-Mail: hallo@nordpunkt-coaching.de</p>
+
+      <h2>2. Allgemeines zur Datenverarbeitung</h2>
+      <p>Ich verarbeite personenbezogene Daten meiner Nutzer:innen grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie meiner Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt nach Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).</p>
+
+      <h2>3. Hosting</h2>
+      <p>Diese Website wird bei einem externen Hosting-Anbieter gehostet. Personenbezogene Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Der Hoster verarbeitet Daten in meinem Auftrag gemäß Art. 28 DSGVO.</p>
+
+      <h2>4. Kontaktaufnahme</h2>
+      <p>Wenn du mich per Telefon, E-Mail oder Kontaktformular kontaktierst, werden deine Angaben zum Zweck der Bearbeitung deiner Anfrage bei mir gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung). Die Daten werden gelöscht, sobald sie für die Bearbeitung nicht mehr erforderlich sind.</p>
+
+      <h2>5. Coaching-Sitzungen</h2>
+      <p>Im Rahmen der Sitzungen können sensible persönliche Angaben besprochen werden. Diese werden nicht aufgezeichnet und nur in dem Umfang schriftlich festgehalten, der für die gemeinsame Arbeit notwendig ist. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).</p>
+
+      <h2>6. Google Analytics</h2>
+      <p>Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google"). Google Analytics verwendet Cookies bzw. vergleichbare Technologien, die eine Analyse der Benutzung der Website ermöglichen.</p>
+      <p>Die dabei erzeugten Informationen (z. B. Zugriffszeit, Ort des Zugriffs, Häufigkeit des Seitenbesuchs, gekürzte IP-Adresse) werden an Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert, sodass deine IP-Adresse vor der Übertragung innerhalb der EU/EWR gekürzt wird.</p>
+      <p>Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die du über das Cookie-Banner erteilen oder ablehnen kannst. Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+      <p>Google verarbeitet Daten auch in den USA; hierfür bestehen Standardvertragsklauseln der EU-Kommission als Garantie für ein angemessenes Datenschutzniveau. Weitere Infos: <a class="inline-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.</p>
+      <p>Du kannst die Erfassung verhindern, indem du das Browser-Add-on installierst: <a class="inline-link" href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h2>7. Cookies</h2>
+      <p>Diese Website verwendet Cookies. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, alle anderen (z. B. Google Analytics) nur mit deiner Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO.</p>
+
+      <h2>8. Deine Rechte</h2>
+      <ul>
+        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
+        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
+        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
+        <li>Recht auf Widerruf erteilter Einwilligungen</li>
+      </ul>
+      <p>Zudem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, z. B. beim Bayerischen Landesamt für Datenschutzaufsicht.</p>
+
+      <h2>9. Änderungen dieser Datenschutzerklärung</h2>
+      <p>Ich behalte mir vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht. Stand: 2026.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo">
+        <svg class="mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10.5" stroke="var(--brass)" stroke-width="1.2"/><path d="M12 6L14 12L12 18L10 12Z" fill="var(--brass)"/></svg>
+        NORDPUNKT
+      </div>
+      <p>Coaching für persönliche Entwicklung in Regensburg — vor Ort und online, nach Termin.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a href="tel:+499417890120">0941 / 78 90 12</a>
+      <a href="mailto:hallo@nordpunkt-coaching.de">hallo@nordpunkt-coaching.de</a>
+      <p>Fischmarkt 8, 93047 Regensburg</p>
+    </div>
+    <div class="footer-col">
+      <h4>Seite</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('ubermich')">Über mich</a>
+      <a onclick="showPage('angebote')">Angebote</a>
+      <a onclick="showPage('ablauf')">Ablauf</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 NORDPUNKT Coaching</span>
+    <div class="footer-legal">
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // build compass tick marks (every 6°, major every 30°)
+  (function(){
+    const g = document.getElementById('tickGroup');
+    if(!g) return;
+    const cx=170, cy=170, rOuter=150, rInner=142, rInnerMajor=136;
+    for(let deg=0; deg<360; deg+=6){
+      const isMajor = deg % 30 === 0;
+      const rad = (deg-90) * Math.PI/180;
+      const x1 = cx + rOuter*Math.cos(rad), y1 = cy + rOuter*Math.sin(rad);
+      const x2 = cx + (isMajor?rInnerMajor:rInner)*Math.cos(rad), y2 = cy + (isMajor?rInnerMajor:rInner)*Math.sin(rad);
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1',x1);line.setAttribute('y1',y1);
+      line.setAttribute('x2',x2);line.setAttribute('y2',y2);
+      if(isMajor) line.classList.add('major');
+      g.appendChild(line);
+    }
+  })();
+
+  window.addEventListener('scroll',()=>{
+    document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY>40);
+  });
+  function toggleNav(){document.getElementById('mainNav').classList.toggle('open');}
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    document.querySelectorAll('nav.mainnav a[data-page]').forEach(a=>{
+      a.classList.toggle('active', a.dataset.page===name);
+    });
+    document.getElementById('mainNav').classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant'});
+    initReveal();
+  }
+
+  function initReveal(){
+    const els = document.querySelectorAll('.reveal:not(.in)');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} });
+    },{threshold:.15});
+    els.forEach(el=>obs.observe(el));
+  }
+  initReveal();
+</script>
+
+</body>
+</html>

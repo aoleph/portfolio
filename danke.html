@@ -10,28 +10,40 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&family=Inter:wght@300;400;500&family=Oswald:wght@300;400&family=Noto+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&family=Inter:wght@300;400;500&family=Oswald:wght@100;200;300;400&family=Noto+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        #floating-header .logo { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 300; letter-spacing: 1.6px; white-space: nowrap; transition: color .35s ease, letter-spacing .35s ease; }
+        #floating-header .logo:hover { color: #d4a820; letter-spacing: 2.4px; }
+        #floating-header nav ul { display: flex; gap: 26px; align-items: center; list-style: none; padding: 0; margin: 0; }
+        #floating-header nav a { font-family: 'Oswald', sans-serif; font-size: 21.6px; font-weight: 100; letter-spacing: 1.2px; text-transform: lowercase; color: #ffffff; cursor: pointer; transition: color .3s ease; }
+        #floating-header nav > ul > li > a:hover { color: #d4a820; }
+        #floating-header .dropdown { position: relative; }
+        #floating-header .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #141412; box-shadow: 0 8px 16px rgba(0,0,0,.65); padding: 15px 0; min-width: 320px; z-index: 100; border: 1px solid #262624; }
+        #floating-header .dropdown-menu li a { display: block; padding: 10px 25px; font-family: 'Jost', sans-serif; font-size: 20px; font-weight: 200; letter-spacing: 2px; text-transform: lowercase; color: #bebebe; }
+        #floating-header .dropdown-menu li a:hover { background: #222220; color: #fff; }
+        #floating-header .dropdown:hover .dropdown-menu { display: block; }
+    </style>
 </head>
 <body>
     <header id="floating-header">
-        <div class="logo"><a href="index.html">ADAM OLENDZKI PHOTOGRAPHER</a></div>
+        <div class="logo"><a href="/">ADAM OLENDZKI PHOTOGRAPHER</a></div>
         <nav>
             <ul>
-                <li><a href="index.html#about">about</a></li>
+                <li><a href="/#about">about</a></li>
                 <li class="dropdown">
                     <a>portfolio &#9662;</a>
                     <ul class="dropdown-menu">
-                        <li><a href="family.html">familie & kinder fotografie</a></li>
-                        <li><a href="schwangerschaft.html">schwangerschaftsfotografie</a></li>
-                        <li><a href="couples.html">paare / couples</a></li>
-                        <li><a href="business.html">business & image</a></li>
-                        <li><a href="women-zone.html">women zone</a></li>
+                        <li><a href="/family/">familie & kinder fotografie</a></li>
+                        <li><a href="/schwangerschaft/">schwangerschaftsfotografie</a></li>
+                        <li><a href="/couples/">paare / couples</a></li>
+                        <li><a href="/business/">business & image</a></li>
+                        <li><a href="/women-zone/">women zone</a></li>
                     </ul>
                 </li>
-                <li><a href="index.html#projects">projekte</a></li>
-                <li><a href="blog.html">blog</a></li>
-                <li><a href="index.html#contact">kontakt</a></li>
+                <li><a href="/#projects">kooperation</a></li>
+                <li><a href="/blog/">blog</a></li>
+                <li><a href="/#contact">kontakt</a></li>
             </ul>
         </nav>
     </header>
@@ -42,7 +54,7 @@
             <p style="color: #bbbbbb; font-size: 17px; line-height: 1.9; margin-top: 10px;">
                 Deine Nachricht ist bei mir angekommen. Ich freue mich darüber und melde mich so schnell wie möglich bei Dir – in der Regel innerhalb von 24–48 Stunden.
             </p>
-            <a href="index.html" style="display: inline-block; margin-top: 50px; color: #888; text-decoration: underline; cursor: pointer;">&#8592; Zurück zur Startseite</a>
+            <a href="/" style="display: inline-block; margin-top: 50px; color: #888; text-decoration: underline; cursor: pointer;">&#8592; Zurück zur Startseite</a>
         </div>
     </div>
 
@@ -53,11 +65,9 @@
         <button class="cookie-banner-btn" onclick="acceptCookies()">verstanden</button>
     </div>
 
-    <footer style="background: transparent; padding: 0; border-top: none;">
-        <div style="background-color: #1a1a1a; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; font-size: 12px; color: #666; letter-spacing: 0.5px; padding: 40px;">
+    <footer id="kontakt" style="position: relative; display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap; padding: 38px; background: #1a1a18; color: #8f8f89; text-align: center; font-size: 12px; letter-spacing: 1px;">
         <span>© 2026 Adam Olendzki. All rights reserved.</span>
-        <a href="datenschutz.html" target="_blank" rel="noopener" style="color: #888; cursor: pointer; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#ccc'" onmouseout="this.style.color='#888'">Datenschutz</a>
-    </div>
+        <a href="datenschutz.html" style="color: #8f8f89;">Datenschutz</a>
     </footer>
 
     <script src="script.js"></script>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Einfühlsame Paarfotografie von Adam Olendzki in Rottenburg an der Laaber und Umgebung.">
+  <title>Paare / Couples Fotografie | Adam Olendzki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;1,300&family=Jost:ital,wght@0,300;0,400;1,300;1,400&family=Oswald:wght@100;200;300;400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #f7f7f5; color: #242422; font-family: 'Inter', sans-serif; font-weight: 300; }
+    a { color: inherit; text-decoration: none; }
+
+    /* HEADER */
+    header { position: fixed; inset: 0 0 auto; z-index: 10; min-height: 78px; display: flex; align-items: center; justify-content: space-between; padding: 22px 42px; background: rgba(20,20,18,.92); backdrop-filter: blur(10px); color: #fff; }
+    .logo { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 300; letter-spacing: 1.6px; white-space: nowrap; transition: color .35s ease, letter-spacing .35s ease; }
+    .logo:hover { color: #d4a820; letter-spacing: 2.4px; }
+    nav ul { display: flex; gap: 26px; align-items: center; list-style: none; padding: 0; margin: 0; }
+    nav a { font-family: 'Oswald', sans-serif; font-size: 21.6px; font-weight: 100; letter-spacing: 1.2px; text-transform: lowercase; cursor: pointer; transition: color .3s ease; }
+    nav > ul > li > a:hover { color: #d4a820; }
+    .dropdown { position: relative; }
+    .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #141412; box-shadow: 0 8px 16px rgba(0,0,0,.65); padding: 15px 0; min-width: 320px; z-index: 100; border: 1px solid #262624; }
+    .dropdown-menu li a { display: block; padding: 10px 25px; font-family: 'Jost', sans-serif; font-size: 20px; font-weight: 200; letter-spacing: 2px; text-transform: lowercase; color: #bebebe; }
+    .dropdown-menu li a:hover { background: #222220; color: #fff; }
+    .dropdown:hover .dropdown-menu { display: block; }
+
+    /* HERO */
+    .hero { height: 100svh; min-height: 620px; position: relative; display: flex; align-items: flex-end; justify-content: flex-start; overflow: hidden; background: #141412; }
+    .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.6) grayscale(100%); transform: scale(1.08); will-change: transform, filter; transition: filter 2.4s ease; }
+    .hero.hero-colored img { filter: brightness(.6) grayscale(0%); }
+    .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.14), rgba(0,0,0,.6)); }
+    .hero-text { position: relative; z-index: 1; padding: 0 0 clamp(40px, 6vw, 70px) clamp(24px, 6vw, 90px); opacity: 0; transform: translateX(-40px); transition: opacity .9s ease, transform .9s cubic-bezier(.16,1,.3,1); will-change: transform, opacity; }
+    .hero-text.hero-text-visible { opacity: 1; transform: translateX(0); }
+    .hero h1 { margin: 0; display: flex; flex-direction: column; }
+    .hero h1 span { color: #fff; font-family: 'Oswald', sans-serif; font-size: clamp(48px, 9vw, 128px); font-weight: 300; letter-spacing: 1px; text-transform: uppercase; text-align: left; line-height: .95; }
+    .hero-sub { margin: 22px 0 0; color: #d4a820; font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; }
+
+    /* STORY */
+    .story { max-width: 1300px; margin: 0 auto; padding: 70px 60px; display: grid; grid-template-columns: minmax(260px, .8fr) 1.2fr; gap: clamp(46px, 8vw, 120px); background: #141412; }
+    .story-img-wrap { align-self: start; }
+    .story-img-wrap img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; }
+    .story-copy { align-self: stretch; }
+    .story-copy-inner { position: sticky; top: 110px; }
+    .story-copy-inner h2 { margin: 0 0 28px; color: #f2f1ec; font-family: 'Oswald', sans-serif; font-size: clamp(32px, 3.6vw, 50px); font-weight: 300; line-height: 1.15; }
+    .story-copy-inner p { margin: 0; max-width: 600px; color: #cfcdc4; font-family: 'Jost', sans-serif; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.75; }
+    .label { margin: 0 0 14px; color: #d4a820; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; }
+
+    figure img { display: block; width: 100%; height: 100%; object-fit: cover; filter: brightness(1); transition: transform .8s cubic-bezier(.2,.8,.2,1), filter .5s ease; }
+    figure:hover img { filter: brightness(.85); transform: scale(1.05); }
+
+    /* MASONRY — kompaktowa siatka, mniej scrollowania */
+    .combo-section { background: #f7f7f5; padding: 60px 0 80px; }
+    .combo-columns { max-width: 1300px; margin: 0 auto; padding: 0 60px; column-count: 3; column-gap: 14px; }
+    .combo-columns figure { position: relative; break-inside: avoid; margin: 0 0 14px; overflow: hidden; background: #d7d7d2; }
+    .combo-columns figure.r-tall { aspect-ratio: 3 / 4; }
+    .combo-columns figure.r-mid { aspect-ratio: 4 / 5; }
+    .combo-columns figure.r-square { aspect-ratio: 1 / 1; }
+    .combo-columns figure.breakout { column-span: all; aspect-ratio: 21 / 9; margin: 4px 0 16px; }
+    .combo-columns figure.captioned figcaption { position: absolute; left: 14px; bottom: 12px; z-index: 1; color: #fff; font-family: 'Jost', sans-serif; font-style: italic; font-size: 13px; }
+    .combo-columns figure.captioned::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,.6)); pointer-events: none; }
+
+    .combo-intro { column-span: all; background: #e8e8e6; display: grid; grid-template-columns: 1.15fr .85fr; gap: 50px; align-items: center; padding: 50px; margin: 0 0 16px; }
+    .combo-intro-text h3 { margin: 0 0 18px; font-family: 'Oswald', sans-serif; font-size: clamp(24px, 2.6vw, 34px); font-weight: 300; line-height: 1.25; color: #242422; }
+    .combo-intro-text p { margin: 0; font-family: 'Jost', sans-serif; font-size: 16px; line-height: 1.7; color: #4e4e49; max-width: 520px; }
+    .combo-intro-photo { position: relative; aspect-ratio: 2 / 3; overflow: hidden; background: #141412; }
+    .combo-intro-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); opacity: 0; transition: opacity 1.4s ease; }
+    .combo-intro-photo img.active { opacity: 1; }
+
+    /* TESTIMONIAL */
+    /* TESTIMONIAL section usunięta */
+
+    /* QUOTE */
+    .quote { margin: 0; padding: 100px 28px 70px; background: transparent; text-align: center; }
+    .quote p { max-width: 900px; margin: 0 auto 18px; color: #242422; font-family: 'Jost', sans-serif; font-size: clamp(19px, 2.7vw, 35px); font-weight: 300; font-style: italic; line-height: 1.25; }
+    .quote span { color: #686862; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    footer { padding: 38px; background: #1a1a18; color: #8f8f89; text-align: center; font-size: 12px; letter-spacing: 1px; }
+
+    @media (max-width: 760px) {
+      header { padding: 18px 20px; min-height: 64px; }
+      .logo { font-size: 17px; }
+      nav { display: none; }
+      .story { grid-template-columns: 1fr; padding: 50px 24px; gap: 36px; }
+      .story-img-wrap img { max-height: 500px; }
+      .story-copy-inner { position: static; }
+      .combo-section { padding: 40px 0 54px; }
+      .combo-columns { column-count: 2; column-gap: 8px; padding: 0 24px; }
+      .combo-columns figure { margin-bottom: 8px; }
+      .combo-columns figure.breakout { aspect-ratio: 4 / 5; }
+      .combo-intro { grid-template-columns: 1fr; padding: 32px 24px; gap: 24px; margin-bottom: 8px; }
+      .combo-intro-photo { aspect-ratio: 3 / 4; }
+      .quote { margin-top: 40px; padding: 72px 24px 40px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><a href="/">ADAM OLENDZKI PHOTOGRAPHER</a></div>
+    <nav>
+      <ul>
+        <li><a href="/#about">about</a></li>
+        <li class="dropdown">
+          <a>portfolio &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="/schwangerschaft/">schwangerschaftsfotografie</a></li>
+            <li><a href="/business/">business & image</a></li>
+            <li><a href="/family/">familie & kinder fotografie</a></li>
+            <li><a href="/couples/">paare / couples</a></li>
+            <li><a href="/women-zone/">women zone</a></li>
+          </ul>
+        </li>
+        <li><a href="/#projects">kooperation</a></li>
+        <li><a href="/blog/">blog</a></li>
+        <li><a href="/#contact">kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img src="images/couples/couples-cover.webp" alt="Paarfotografie">
+      <div class="hero-text">
+        <h1><span>Eure</span><span>liebes</span><span>geschichte</span></h1>
+        <p class="hero-sub">Adam Olendzki – Rottenburg an der Laaber &amp; Landshut</p>
+      </div>
+    </section>
+
+    <section class="story">
+      <div class="story-img-wrap"><img src="images/couples/couples-vertical-01.webp" alt="Paarportrait"></div>
+      <div class="story-copy">
+        <div class="story-copy-inner">
+          <div class="label">Nah dran</div>
+          <h2>So sieht eure Liebe aus.</h2>
+          <p>Es sind selten die großen Gesten, die eine Beziehung ausmachen. Viel öfter sind es die kleinen Dinge: ein Blick über die Schulter, ein Lachen mitten im Satz, eine Hand, die sich wie von selbst findet. Genau diese Momente – unaufgeregt, echt, manchmal ein bisschen albern – ergeben am Ende die schönsten Bilder. Ob Verlobung, Jahrestag oder einfach, weil ihr euch gerade verliebt fühlt: ein Paar-Shooting hält fest, wie sich eure Beziehung gerade anfühlt, jenseits von gestellten Posen.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="combo-section">
+      <div class="combo-columns">
+        <div class="combo-intro">
+          <div class="combo-intro-text">
+            <h3>Die Magie Eurer Gemeinsamen Momente Einfangen</h3>
+            <p>Jedes Paar hat seine einzigartige Geschichte, voller gemeinsamer Erlebnisse, Emotionen und unvergesslicher Momente. Paarfotos sind mehr als nur Bilder; sie sind eingefangene Augenblicke, die die Magie Eurer Beziehung festhalten.</p>
+          </div>
+          <div class="combo-intro-photo" id="introSlideshow">
+            <img src="images/couples/couples-vertical-02.webp" alt="Paarfotografie" class="active">
+            <img src="images/couples/couples-vertical-03.webp" alt="Paarfotografie">
+            <img src="images/couples/couples-vertical-04.webp" alt="Paarfotografie">
+          </div>
+        </div>
+        <figure class="breakout"><img src="images/couples/couples-vertical-05.webp" alt="Paarfotografie" loading="lazy"></figure>
+        <figure class="r-mid"><img src="images/couples/couples-vertical-06.webp" alt="Paarfotografie" loading="lazy"></figure>
+        <figure class="r-tall"><img src="images/couples/couples-vertical-07.webp" alt="Paarfotografie" loading="lazy"></figure>
+        <figure class="r-square captioned"><img src="images/couples/couples-vertical-08.webp" alt="Paarfotografie" loading="lazy"><figcaption>Nähe, die keine Worte braucht.</figcaption></figure>
+        <figure class="r-tall"><img src="images/couples/couples-vertical-09.webp" alt="Paarfotografie" loading="lazy"></figure>
+        <figure class="r-mid"><img src="images/couples/couples-vertical-10.webp" alt="Paarfotografie" loading="lazy"></figure>
+        <figure class="r-tall"><img src="images/couples/couples-vertical-11.webp" alt="Paarfotografie" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <section class="visually-hidden">
+      <h2>Paarfotografie in der Region Landshut</h2>
+      <p>Als Fotograf für einfühlsame Paarfotografie bin ich vor allem in Rottenburg an der Laaber und im gesamten Landkreis Landshut unterwegs. Auch Paare in Schierling, Abensberg, Kelheim, Straubing, Ingolstadt und Regensburg begleite ich gerne zu einem entspannten Couples-Shooting, ob als Verlobungsfotos, Jahrestagsgeschenk oder einfach so.</p>
+    </section>
+
+    <section class="quote"><p>“Being deeply loved by someone gives you strength, while loving someone deeply gives you courage.”</p><span>Lao Tzu</span></section>
+  </main>
+
+  <footer id="kontakt" style="display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap;">
+    <span>© 2026 Adam Olendzki. All rights reserved.</span>
+    <a href="datenschutz.html" style="color: #8f8f89;">Datenschutz</a>
+  </footer>
+
+  <script>
+    (function () {
+      const hero = document.querySelector('.hero');
+      const heroImg = hero ? hero.querySelector('img') : null;
+      const heroText = hero ? hero.querySelector('.hero-text') : null;
+      if (!hero || !heroImg) return;
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const finePointer = window.matchMedia('(pointer: fine)').matches;
+
+      if (reduceMotion) {
+        hero.classList.add('hero-colored');
+        if (heroText) heroText.classList.add('hero-text-visible');
+        return;
+      }
+
+      // Czerń-biel → kolor + reveal tekstu
+      requestAnimationFrame(() => {
+        setTimeout(() => { hero.classList.add('hero-colored'); }, 150);
+        setTimeout(() => { if (heroText) heroText.classList.add('hero-text-visible'); }, 500);
+      });
+
+      // Po zakończeniu wejścia: oddech + scroll-paralaksa + paralaksa kursora, razem
+      let introDone = false;
+      setTimeout(() => { introDone = true; }, 2600);
+
+      let mx = 0, my = 0;
+
+      function loop(now) {
+        const rect = hero.getBoundingClientRect();
+        const scrolled = Math.max(0, -rect.top);
+        const scrollShiftImg = scrolled * 0.32;
+        const curX = finePointer ? mx * -18 : 0;
+        const curY = finePointer ? my * -12 : 0;
+        const breathe = introDone ? 1.09 + Math.sin(now / 4000) * 0.035 : 1.08;
+        heroImg.style.transform = `scale(${breathe}) translate(${curX}px, ${scrollShiftImg + curY}px)`;
+
+        if (heroText && introDone) {
+          const fade = Math.max(0, 1 - scrolled / (hero.offsetHeight * 0.7));
+          const scrollShiftText = scrolled * -0.18;
+          const textCurX = finePointer ? mx * 8 : 0;
+          const textCurY = finePointer ? my * 6 : 0;
+          heroText.style.opacity = fade;
+          heroText.style.transform = `translate(${textCurX}px, ${scrollShiftText + textCurY}px)`;
+        }
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+
+      if (finePointer) {
+        hero.addEventListener('mousemove', function (e) {
+          const rect = hero.getBoundingClientRect();
+          mx = (e.clientX - rect.left) / rect.width - 0.5;
+          my = (e.clientY - rect.top) / rect.height - 0.5;
+        });
+        hero.addEventListener('mouseleave', function () { mx = 0; my = 0; });
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const slideshow = document.getElementById('introSlideshow');
+      if (!slideshow) return;
+      const imgs = slideshow.querySelectorAll('img');
+      let i = 0;
+      setInterval(() => {
+        imgs[i].classList.remove('active');
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add('active');
+      }, 3800);
+    })();
+  </script>
+</body>
+</html>

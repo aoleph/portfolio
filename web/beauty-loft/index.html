@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beauty Loft Kosmetikstudio — Falkenberg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6F2;
+    --cream-deep:#F3E8E1;
+    --blush:#E9CFC6;
+    --blush-deep:#D9AEA1;
+    --rose:#AD7061;
+    --rose-deep:#8F5646;
+    --sea:#3C6E64;
+    --sea-dark:#294F47;
+    --sea-light:#5C8A7F;
+    --ink:#2A2723;
+    --ink-soft:#5C554C;
+    --white:#FFFFFF;
+    --blob: 63% 37% 54% 46% / 43% 47% 53% 57%;
+    --blob2: 42% 58% 63% 37% / 54% 42% 58% 46%;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Manrope',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:500;line-height:1.15;color:var(--ink);}
+  a{text-decoration:none;color:inherit;}
+  img{display:block;max-width:100%;}
+  .eyebrow{
+    font-family:'Manrope',sans-serif;
+    font-size:.72rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--rose);
+    font-weight:600;
+    margin-bottom:.9rem;
+    display:inline-block;
+  }
+  .italic{font-style:italic;font-weight:400;color:var(--rose);}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.4rem 3rem;
+    background:rgba(251,246,242,0.0);
+    transition:background .4s ease, box-shadow .4s ease, padding .4s ease;
+  }
+  header.scrolled{
+    background:rgba(251,246,242,0.92);
+    backdrop-filter:blur(10px);
+    box-shadow:0 2px 24px rgba(42,39,35,0.06);
+    padding:1rem 3rem;
+  }
+  .logo{
+    font-family:'Fraunces',serif;
+    font-size:1.5rem;
+    letter-spacing:.02em;
+    font-weight:500;
+    cursor:pointer;
+  }
+  .logo span{font-style:italic;color:var(--rose);font-weight:400;}
+  nav.mainnav{display:flex;gap:2.4rem;align-items:center;}
+  nav.mainnav a{
+    font-size:.85rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--ink);
+    cursor:pointer;
+    position:relative;
+    padding-bottom:4px;
+  }
+  nav.mainnav a::after{
+    content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--rose);
+    transition:width .3s ease;
+  }
+  nav.mainnav a:hover::after,nav.mainnav a.active::after{width:100%;}
+  .nav-cta{
+    background:var(--sea);color:var(--white)!important;
+    padding:.65rem 1.5rem;border-radius:40px;
+    font-size:.78rem!important;
+  }
+  .nav-cta::after{display:none;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1100;}
+  .burger span{width:26px;height:2px;background:var(--ink);display:block;transition:.3s;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    height:100vh;
+    min-height:640px;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+  }
+  .hero-bg img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;
+    transition:opacity 2.2s ease;
+    transform:scale(1.08);
+    animation:slowzoom 14s ease-in-out infinite alternate;
+  }
+  .hero-bg img.active{opacity:1;}
+  @keyframes slowzoom{from{transform:scale(1.0);}to{transform:scale(1.1);}}
+  .hero-bg::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(41,79,71,.4) 0%, rgba(42,39,35,.15) 40%, rgba(41,79,71,.6) 100%);
+  }
+  .hero-content{
+    position:relative;z-index:2;text-align:center;color:var(--white);
+    padding:0 1.5rem;
+    max-width:780px;
+  }
+  .hero-content .eyebrow{color:var(--blush);}
+  .hero-content h1{
+    font-size:clamp(2.6rem,6vw,4.6rem);
+    color:var(--white);
+    margin-bottom:1.2rem;
+  }
+  .hero-content h1 em{font-style:italic;color:var(--blush);font-weight:400;}
+  .hero-content p{
+    font-size:1.05rem;
+    color:rgba(255,255,255,.88);
+    max-width:520px;
+    margin:0 auto 2.2rem;
+    font-weight:300;
+  }
+  .btn{
+    display:inline-block;
+    background:var(--white);
+    color:var(--ink);
+    padding:1rem 2.4rem;
+    border-radius:40px;
+    font-size:.82rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    font-weight:700;
+    cursor:pointer;
+    border:none;
+    transition:transform .3s ease, background .3s ease;
+  }
+  .btn:hover{transform:translateY(-3px);background:var(--blush);}
+  .btn-outline{
+    background:transparent;
+    border:1.5px solid var(--ink);
+    color:var(--ink);
+  }
+  .btn-outline:hover{background:var(--ink);color:var(--white);}
+  .scroll-cue{
+    position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+    z-index:2;color:var(--white);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+    display:flex;flex-direction:column;align-items:center;gap:.6rem;opacity:.8;
+  }
+  .scroll-cue::after{
+    content:'';width:1px;height:38px;background:rgba(255,255,255,.6);
+    animation:scrolldown 1.8s ease-in-out infinite;
+  }
+  @keyframes scrolldown{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:7rem 3rem;}
+  .section-inner{max-width:1180px;margin:0 auto;}
+  .section-head{max-width:640px;margin-bottom:3.5rem;}
+  .section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .section-head h2{font-size:clamp(2rem,3.6vw,2.9rem);}
+
+  /* ---------- INTRO / ABOUT TEASER ---------- */
+  .intro{
+    background:var(--cream);
+    display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:center;
+  }
+  .intro-img{
+    position:relative;
+    border-radius:var(--blob);
+    overflow:hidden;
+    aspect-ratio:4/5;
+    box-shadow:0 30px 60px -20px rgba(42,39,35,.25);
+  }
+  .intro-img img{width:100%;height:100%;object-fit:cover;}
+  .intro-img .tag{
+    position:absolute;bottom:1.5rem;left:1.5rem;
+    background:var(--white);
+    padding:.9rem 1.3rem;border-radius:16px;
+    font-family:'Fraunces',serif;font-style:italic;
+    font-size:.95rem;color:var(--rose-deep);
+    box-shadow:0 12px 30px rgba(42,39,35,.15);
+  }
+  .intro-text h2{margin-bottom:1.4rem;}
+  .intro-text p{color:var(--ink-soft);margin-bottom:1rem;max-width:480px;}
+  .intro-text .btn{margin-top:1.4rem;}
+
+  /* ---------- SERVICES ---------- */
+  .services{background:var(--cream-deep);}
+  .service-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:2.2rem;
+  }
+  .service-card{
+    background:var(--white);
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow:0 20px 50px -25px rgba(42,39,35,.2);
+    transition:transform .4s ease, box-shadow .4s ease;
+  }
+  .service-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px -20px rgba(42,39,35,.28);}
+  .service-card .img-wrap{height:230px;overflow:hidden;}
+  .service-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+  .service-card:hover img{transform:scale(1.08);}
+  .service-card .card-body{padding:1.8rem 1.7rem 2.1rem;}
+  .service-card h3{font-size:1.35rem;margin-bottom:.6rem;}
+  .service-card p{color:var(--ink-soft);font-size:.92rem;}
+  .service-num{
+    font-family:'Fraunces',serif;font-style:italic;color:var(--sea);
+    font-size:.85rem;display:block;margin-bottom:.5rem;
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-section{background:var(--cream);}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    grid-auto-rows:130px;
+    gap:1.1rem;
+  }
+  .gallery-grid figure{
+    overflow:hidden;position:relative;margin:0;
+  }
+  .gallery-grid figure img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+  .gallery-grid figure:hover img{transform:scale(1.06);}
+  .g1{grid-column:1/4;grid-row:1/4;border-radius:var(--blob);}
+  .g2{grid-column:4/7;grid-row:1/3;border-radius:24px;}
+  .g3{grid-column:4/5;grid-row:3/5;border-radius:24px;}
+  .g4{grid-column:5/7;grid-row:3/5;border-radius:var(--blob2);}
+  .g5{grid-column:1/4;grid-row:4/6;border-radius:24px;}
+  .g6{grid-column:4/7;grid-row:5/7;border-radius:24px;}
+  .g5b{grid-column:1/4;grid-row:6/7;border-radius:24px;}
+  .gallery-caption{
+    position:absolute;bottom:1rem;left:1rem;color:var(--white);
+    font-family:'Fraunces',serif;font-style:italic;font-size:.9rem;
+    text-shadow:0 2px 10px rgba(0,0,0,.4);
+  }
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{
+    background:var(--sea-dark);
+    color:var(--white);
+    text-align:center;
+    padding:5.5rem 2rem;
+  }
+  .cta-band .eyebrow{color:var(--blush);}
+  .cta-band h2{color:var(--white);font-size:clamp(1.9rem,3.6vw,2.6rem);margin-bottom:1.6rem;max-width:640px;margin-left:auto;margin-right:auto;}
+  .cta-band .btn{background:var(--white);color:var(--sea-dark);}
+  .cta-band .btn:hover{background:var(--blush);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--sea);
+    color:var(--white);
+    padding:4.5rem 3rem 2rem;
+  }
+  .footer-grid{
+    max-width:1180px;margin:0 auto;
+    display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:3rem;
+    padding-bottom:3rem;
+    border-bottom:1px solid rgba(255,255,255,.2);
+  }
+  .footer-grid .logo{color:var(--white);margin-bottom:1rem;}
+  .footer-grid .logo span{color:var(--blush);}
+  .footer-grid p{color:rgba(255,255,255,.8);font-size:.9rem;max-width:280px;}
+  .footer-col h4{color:var(--white);font-size:1rem;margin-bottom:1.1rem;font-weight:500;}
+  .footer-col a, .footer-col p{
+    display:block;color:rgba(255,255,255,.82);font-size:.9rem;margin-bottom:.6rem;
+    font-family:'Manrope',sans-serif;
+  }
+  .footer-col a:hover{color:var(--blush);}
+  .footer-bottom{
+    max-width:1180px;margin:0 auto;padding-top:1.8rem;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+    font-size:.8rem;color:rgba(255,255,255,.65);
+  }
+  .footer-bottom a{color:rgba(255,255,255,.75);}
+  .footer-bottom a:hover{color:var(--blush);}
+  .footer-legal{display:flex;gap:1.4rem;flex-wrap:wrap;}
+
+  /* ---------- PAGE HEADER (subpages) ---------- */
+  .page-hero{
+    padding:11rem 3rem 5rem;
+    background:var(--cream-deep);
+    text-align:center;
+  }
+  .page-hero h1{font-size:clamp(2.4rem,5vw,3.6rem);}
+
+  /* ---------- O NAS PAGE ---------- */
+  .about-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+  }
+  .about-img{
+    border-radius:var(--blob2);overflow:hidden;aspect-ratio:3/4;
+    box-shadow:0 30px 60px -20px rgba(42,39,35,.25);
+  }
+  .about-img img{width:100%;height:100%;object-fit:cover;}
+  .values{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2rem;
+  }
+  .value-item{padding:2rem;background:var(--white);border-radius:22px;}
+  .value-item .num{font-family:'Fraunces',serif;font-style:italic;color:var(--sea);font-size:1.6rem;}
+  .value-item h4{margin:.6rem 0 .5rem;font-size:1.1rem;}
+  .value-item p{color:var(--ink-soft);font-size:.88rem;}
+
+  /* ---------- TEAM ---------- */
+  .team-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:2.6rem;margin-top:2rem;
+  }
+  .team-card{
+    background:var(--white);border-radius:26px;overflow:hidden;
+    box-shadow:0 20px 50px -25px rgba(42,39,35,.2);
+  }
+  .team-card .team-img{height:280px;overflow:hidden;}
+  .team-card .team-img img{width:100%;height:100%;object-fit:cover;}
+  .team-card .team-body{padding:1.8rem 1.9rem 2.1rem;}
+  .team-card h4{font-size:1.35rem;margin-bottom:.2rem;}
+  .team-role{
+    font-family:'Manrope',sans-serif;font-size:.78rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--sea);font-weight:700;margin-bottom:1rem;display:block;
+  }
+  .team-card p{color:var(--ink-soft);font-size:.9rem;margin-bottom:.9rem;}
+  .team-card ul{padding-left:1.1rem;margin-bottom:0;}
+  .team-card li{color:var(--ink-soft);font-size:.85rem;margin-bottom:.35rem;}
+
+  /* ---------- SALON PAGE ---------- */
+  .salon-intro{text-align:center;max-width:680px;margin:0 auto 4rem;}
+  .salon-masonry{
+    columns:3 260px;column-gap:1.2rem;
+  }
+  .salon-masonry figure{
+    margin:0 0 1.2rem;border-radius:20px;overflow:hidden;break-inside:avoid;
+    position:relative;
+  }
+  .salon-masonry img{width:100%;display:block;}
+  .salon-strip{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:5rem;
+  }
+  .strip-item{text-align:center;}
+  .strip-item .icon-circle{
+    width:64px;height:64px;border-radius:50%;background:var(--blush);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;
+    font-family:'Fraunces',serif;font-style:italic;color:var(--rose-deep);font-size:1.4rem;
+  }
+  .strip-item h4{margin-bottom:.5rem;}
+  .strip-item p{color:var(--ink-soft);font-size:.9rem;max-width:260px;margin:0 auto;}
+
+  /* ---------- LEISTUNGEN / PREISE ---------- */
+  .price-group{margin-bottom:3.6rem;}
+  .price-group-head{
+    display:flex;align-items:baseline;gap:1rem;margin-bottom:1.6rem;
+    padding-bottom:.8rem;border-bottom:1px solid var(--blush-deep);
+  }
+  .price-group-head h3{font-size:1.5rem;color:var(--rose-deep);}
+  .price-group-head span{
+    font-family:'Manrope',sans-serif;font-size:.75rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--sea);font-weight:600;
+  }
+  .price-row{
+    display:flex;justify-content:space-between;align-items:flex-start;gap:1.5rem;
+    padding:1.1rem 0;border-bottom:1px dashed rgba(42,39,35,.12);
+  }
+  .price-row:last-child{border-bottom:none;}
+  .price-row .pname{font-weight:600;font-size:1.02rem;margin-bottom:.25rem;}
+  .price-row .pdesc{color:var(--ink-soft);font-size:.85rem;max-width:440px;}
+  .price-row .pval{
+    font-family:'Fraunces',serif;font-style:italic;font-size:1.15rem;
+    color:var(--sea-dark);white-space:nowrap;padding-top:.1rem;
+  }
+  .price-note{
+    text-align:center;color:var(--ink-soft);font-size:.85rem;
+    margin-top:1rem;
+  }
+
+  /* ---------- LEGAL PAGES ---------- */
+  .legal-body{
+    max-width:760px;margin:0 auto;padding:0 3rem 6rem;
+  }
+  .legal-body h2{font-size:1.5rem;margin:2.6rem 0 .9rem;}
+  .legal-body h2:first-child{margin-top:0;}
+  .legal-body h3{font-size:1.1rem;margin:1.6rem 0 .6rem;color:var(--rose-deep);}
+  .legal-body p, .legal-body li{color:var(--ink-soft);font-size:.96rem;margin-bottom:.9rem;}
+  .legal-body ul{padding-left:1.3rem;margin-bottom:1rem;}
+  .legal-body a.inline-link{color:var(--sea);text-decoration:underline;}
+  .legal-note{
+    background:var(--cream-deep);border-radius:16px;padding:1.3rem 1.5rem;
+    font-size:.85rem;color:var(--ink-soft);margin-bottom:2rem;
+  }
+
+  /* ---------- PAGES SWITCH ---------- */
+  .page{display:none;}
+  .page.active{display:block;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:980px){
+    .intro{grid-template-columns:1fr;gap:3rem;}
+    .about-grid{grid-template-columns:1fr;gap:3rem;}
+    .service-grid{grid-template-columns:1fr 1fr;}
+    .values{grid-template-columns:1fr;}
+    .salon-strip{grid-template-columns:1fr;gap:2.5rem;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px;}
+    .g1,.g2,.g3,.g4,.g5,.g6,.g5b{grid-column:auto;grid-row:auto;border-radius:20px!important;}
+  }
+  @media(max-width:768px){
+    header{padding:1.1rem 1.5rem;}
+    nav.mainnav{
+      position:fixed;top:0;right:0;height:100vh;width:78%;max-width:340px;
+      background:var(--cream);flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:2rem;padding:3rem;transform:translateX(100%);transition:transform .4s ease;
+      box-shadow:-10px 0 40px rgba(0,0,0,.1);
+    }
+    nav.mainnav.open{transform:translateX(0);}
+    .burger{display:flex;}
+    section{padding:4.5rem 1.5rem;}
+    .service-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:2.4rem;}
+    .page-hero{padding:9rem 1.5rem 3.5rem;}
+    .salon-masonry{columns:2 160px;}
+    .legal-body{padding:0 1.5rem 4rem;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo" onclick="showPage('home')">beauty<span>loft.</span></div>
+  <nav class="mainnav" id="mainNav">
+    <a href="../" style="opacity:.75;">← Portfolio</a>
+    <a onclick="showPage('home')" data-page="home">Home</a>
+    <a onclick="showPage('ueberuns')" data-page="ueberuns">Über uns</a>
+    <a onclick="showPage('leistungen')" data-page="leistungen">Leistungen</a>
+    <a onclick="showPage('studio')" data-page="studio">Studio</a>
+    <a class="nav-cta" onclick="showPage('home');setTimeout(()=>document.getElementById('kontakt').scrollIntoView({behavior:'smooth'}),50)">Termin buchen</a>
+  </nav>
+  <div class="burger" id="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+  <section class="hero" style="padding:0;">
+    <div class="hero-bg" id="heroBg">
+      <img src="https://images.pexels.com/photos/36170536/pexels-photo-36170536/free-photo-of-portrait-of-a-woman-in-front-of-monstera-plant.jpeg?auto=compress&cs=tinysrgb&w=1600" class="active" alt="Frau mit gepflegter Haut vor Monstera-Blättern">
+      <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=1600&q=80" alt="Gesichtsbehandlung im Kosmetikstudio">
+      <img src="https://images.unsplash.com/photo-1531299204812-e6d44d9a185c?auto=format&fit=crop&w=1600&q=80" alt="Entspannung im Behandlungsraum">
+    </div>
+    <div class="hero-content">
+      <span class="eyebrow">Kosmetikstudio · Falkenberg</span>
+      <h1>Deine Schönheit<br><em>ganz natürlich</em></h1>
+      <p>Augenbrauen, Wimpern, Gesichtspflege und ein Moment nur für dich — in einem ruhigen, hellen Studio, das für dich gemacht ist.</p>
+      <a class="btn" onclick="showPage('studio')">Studio entdecken</a>
+    </div>
+    <div class="scroll-cue">Scrollen</div>
+  </section>
+
+  <section class="intro">
+    <div class="section-inner" style="display:contents;">
+      <div class="intro-img">
+        <img src="https://images.unsplash.com/photo-1740350631565-6a5081a2f841?auto=format&fit=crop&w=900&q=80" alt="Ruhiger Moment im Beauty Loft Studio">
+        <div class="tag">Ruhe, die man sieht</div>
+      </div>
+      <div class="intro-text">
+        <span class="eyebrow">Lerne uns kennen</span>
+        <h2>Ein Ort, an dem du<br>durchatmen kannst</h2>
+        <p>Beauty Loft ist ein kleines, persönliches Kosmetikstudio, in dem jede Behandlung mit einem Gespräch beginnt — über deine Haut, deinen Alltag und wie du dich fühlen möchtest, wenn du gehst.</p>
+        <p>Wir setzen auf ein natürliches Ergebnis: betonte Augenbrauen, einen offenen Blick nach dem Wimpernlifting, erholte Haut. Ohne Übertreibung, dafür mit Liebe zum Detail.</p>
+        <a class="btn btn-outline" onclick="showPage('ueberuns')">Unsere Geschichte →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="section-inner">
+      <div class="section-head center">
+        <span class="eyebrow">Angebot</span>
+        <h2>Behandlungen, die wir lieben</h2>
+      </div>
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="img-wrap">
+            <img src="https://images.unsplash.com/photo-1519415387722-a1c3bbef716c?auto=format&fit=crop&w=700&q=80" alt="Augenbrauen Styling">
+          </div>
+          <div class="card-body">
+            <span class="service-num">01</span>
+            <h3>Brow Styling</h3>
+            <p>Zupfen, Henna und Lamination — Augenbrauen, die zu deinem Gesicht passen. Ausdrucksstark, aber nie überladen.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="img-wrap">
+            <img src="https://images.unsplash.com/photo-1592999177797-0f96d5617ed3?auto=format&fit=crop&w=700&q=80" alt="Wimpernlifting">
+          </div>
+          <div class="card-body">
+            <span class="service-num">02</span>
+            <h3>Wimpernlifting</h3>
+            <p>Die natürliche Alternative zu Wimpernverlängerungen. Geschwungene, dunklere Wimpern für bis zu 8 Wochen.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="img-wrap">
+            <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=700&q=80" alt="Gesichtspflege">
+          </div>
+          <div class="card-body">
+            <span class="service-num">03</span>
+            <h3>Gesichtspflege</h3>
+            <p>Tiefenreinigung und Feuchtigkeitspflege — strahlende Haut schon nach dem ersten Termin.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-section">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="eyebrow">Galerie</span>
+        <h2>Momente aus unserem Studio</h2>
+      </div>
+      <div class="gallery-grid">
+        <figure class="g1"><img src="https://images.unsplash.com/photo-1493673272479-a20888bcee10?auto=format&fit=crop&w=800&q=80" alt="Monstera im Studio"></figure>
+        <figure class="g2"><img src="https://images.unsplash.com/photo-1519415387722-a1c3bbef716c?auto=format&fit=crop&w=800&q=80" alt="Augenbrauen nach der Behandlung"></figure>
+        <figure class="g3"><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=500&q=80" alt="Beauty Kosmetik"></figure>
+        <figure class="g4"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=700&q=80" alt="Pflegeprodukte und Blumen"></figure>
+        <figure class="g5"><img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?auto=format&fit=crop&w=800&q=80" alt="Innenansicht des Studios"></figure>
+        <figure class="g6"><img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=800&q=80" alt="Kosmetikpinsel"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="kontakt">
+    <span class="eyebrow">Termin buchen</span>
+    <h2>Reserviere dir einen Moment nur für dich</h2>
+    <a class="btn" href="tel:+498724123456">Anrufen: +49 8724 123456</a>
+  </section>
+
+</div>
+
+<!-- ============ ÜBER UNS ============ -->
+<div class="page" id="page-ueberuns">
+  <div class="page-hero">
+    <span class="eyebrow">Über uns</span>
+    <h1>Die Menschen und Werte<br>hinter Beauty Loft</h1>
+  </div>
+
+  <section>
+    <div class="section-inner about-grid">
+      <div class="about-img">
+        <img src="https://images.unsplash.com/photo-1531299204812-e6d44d9a185c?auto=format&fit=crop&w=800&q=80" alt="Behandlung bei Beauty Loft">
+      </div>
+      <div>
+        <span class="eyebrow">Unsere Geschichte</span>
+        <h2>Entstanden aus dem Wunsch,<br>langsamer zu machen</h2>
+        <p style="color:var(--ink-soft);margin:1.2rem 0;">Beauty Loft ist aus der Überzeugung entstanden, dass Pflege kein Programmpunkt zwischen zwei Terminen sein sollte, sondern ein Moment, der dir zusteht. In unserem Studio in Falkenberg verbinden wir bewährte kosmetische Techniken mit einer ruhigen, persönlichen Atmosphäre.</p>
+        <p style="color:var(--ink-soft);margin-bottom:1.2rem;">Jede Behandlung stimmen wir individuell ab — auf den Rhythmus deiner Haut, nicht auf den Trend der Saison. Das Ergebnis soll sichtbar sein, vor allem aber natürlich.</p>
+        <a class="btn btn-outline" onclick="showPage('studio')">Unser Studio entdecken →</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-bottom:2rem;">
+    <div class="section-inner">
+      <div class="section-head center">
+        <span class="eyebrow">Unser Team</span>
+        <h2>Die Hände hinter<br>deiner Behandlung</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-img">
+            <img src="https://images.unsplash.com/photo-1761718210055-e83ca7e2c9ad?auto=format&fit=crop&w=700&q=80" alt="Lena Hofmann bei der Arbeit">
+          </div>
+          <div class="team-body">
+            <h4>Lena Hofmann</h4>
+            <span class="team-role">Gründerin &amp; Kosmetikerin</span>
+            <p>Lena hat ihre Ausbildung zur staatlich geprüften Kosmetikerin in München abgeschlossen und danach sieben Jahre in renommierten Studios in Salzburg und Regensburg gesammelt, bevor sie 2021 Beauty Loft eröffnet hat.</p>
+            <ul>
+              <li>Zertifizierte Fachkraft für medizinische Gesichtsbehandlungen (IHK)</li>
+              <li>Fortbildung in Anti-Aging- und Wirkstoffkosmetik, Wien 2022</li>
+              <li>Über 1.200 zufriedene Stammkundinnen seit der Eröffnung</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-img">
+            <img src="https://images.unsplash.com/photo-1761718209852-54ca4210183e?auto=format&fit=crop&w=700&q=80" alt="Marie Lindner bei der Arbeit">
+          </div>
+          <div class="team-body">
+            <h4>Marie Lindner</h4>
+            <span class="team-role">Kosmetikerin &amp; Wimpernspezialistin</span>
+            <p>Marie ist seit 2023 Teil des Teams und hat sich auf Augenbrauen- und Wimpernstyling spezialisiert. Ihre Ausbildung absolvierte sie in Nürnberg, ergänzt durch zahlreiche Zertifikate internationaler Trainerinnen.</p>
+            <ul>
+              <li>Zertifizierte Wimpernlifting- &amp; Browlamination-Spezialistin</li>
+              <li>Diplom in Permanent Make-up, Nürnberg 2023</li>
+              <li>Regelmäßige Workshops zu neuen Brow-Trends in Berlin und Mailand</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--cream-deep);padding-top:5rem;">
+    <div class="section-inner">
+      <div class="section-head center">
+        <span class="eyebrow">Wonach wir uns richten</span>
+        <h2>Drei Grundsätze unserer Arbeit</h2>
+      </div>
+      <div class="values">
+        <div class="value-item">
+          <span class="num">01</span>
+          <h4>Individuelle Beratung</h4>
+          <p>Jeder Termin beginnt mit einem Gespräch über deine Wünsche — ohne Schema.</p>
+        </div>
+        <div class="value-item">
+          <span class="num">02</span>
+          <h4>Natürliches Ergebnis</h4>
+          <p>Wir betonen, was du mitbringst, statt dir einen einzigen, immer gleichen Look aufzudrängen.</p>
+        </div>
+        <div class="value-item">
+          <span class="num">03</span>
+          <h4>Ruhige Atmosphäre</h4>
+          <p>Ein helles, leises Studio, in dem du während der Behandlung wirklich zur Ruhe kommst.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="eyebrow">Wir freuen uns auf dich</span>
+    <h2>Lerne uns beim ersten Termin kennen</h2>
+    <a class="btn" href="tel:+498724123456">Termin vereinbaren</a>
+  </section>
+</div>
+
+<!-- ============ STUDIO ============ -->
+<div class="page" id="page-studio">
+  <div class="page-hero">
+    <span class="eyebrow">So sieht unser Studio aus</span>
+    <h1>Ein Blick in<br>unsere Räume</h1>
+  </div>
+
+  <section>
+    <div class="section-inner">
+      <p class="salon-intro" style="color:var(--ink-soft);">Helle Räume, viel Grün und natürliches Licht — ein Ort, an dem es leichtfällt, für eine Stunde innezuhalten. Wirf einen Blick in das Studio, in dem wir arbeiten.</p>
+
+      <div class="salon-masonry">
+        <figure><img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?auto=format&fit=crop&w=600&q=80" alt="Studio-Innenansicht 1"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=600&q=80" alt="Studio-Innenansicht 2"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1493673272479-a20888bcee10?auto=format&fit=crop&w=600&q=80" alt="Pflanzen im Studio"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1633681926035-ec1ac984418a?auto=format&fit=crop&w=600&q=80" alt="Studio-Innenansicht 3"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80" alt="Kosmetikprodukte im Studio"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" alt="Details im Studio"></figure>
+      </div>
+
+      <div class="salon-strip">
+        <div class="strip-item">
+          <div class="icon-circle">1</div>
+          <h4>Privater Behandlungsraum</h4>
+          <p>Wir arbeiten in Ruhe, ohne Hektik und ohne fremde Blicke.</p>
+        </div>
+        <div class="strip-item">
+          <div class="icon-circle">2</div>
+          <h4>Natürliches Licht</h4>
+          <p>Große Fenster und ein helles Studio — so siehst du das Ergebnis jeder Behandlung genau.</p>
+        </div>
+        <div class="strip-item">
+          <div class="icon-circle">3</div>
+          <h4>Ruhezone</h4>
+          <p>Ein Ort, an dem du vor oder nach deinem Termin kurz zur Ruhe kommen kannst.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="eyebrow">Besuch uns</span>
+    <h2>Erlebe das Studio live</h2>
+    <a class="btn" href="tel:+498724123456">Termin buchen</a>
+  </section>
+</div>
+
+<!-- ============ LEISTUNGEN ============ -->
+<div class="page" id="page-leistungen">
+  <div class="page-hero">
+    <span class="eyebrow">Preise &amp; Leistungen</span>
+    <h1>Unsere Behandlungen<br>im Überblick</h1>
+  </div>
+
+  <section style="padding-top:4rem;">
+    <div class="legal-body" style="max-width:820px;">
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Augenbrauen</h3>
+          <span>Brows</span>
+        </div>
+        <div class="price-row">
+          <div><div class="pname">Brow Styling</div><div class="pdesc">Zupfen, Form und Färben nach deinem Gesichtstyp.</div></div>
+          <div class="pval">ab 28 €</div>
+        </div>
+        <div class="price-row">
+          <div><div class="pname">Browlamination</div><div class="pdesc">Gebürstete, volle Brauen — Effekt hält bis zu 6 Wochen.</div></div>
+          <div class="pval">45 €</div>
+        </div>
+        <div class="price-row">
+          <div><div class="pname">Henna Brows</div><div class="pdesc">Natürliche Farbtiefe für Brauen und Haut, inkl. Styling.</div></div>
+          <div class="pval">38 €</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Wimpern</h3>
+          <span>Lashes</span>
+        </div>
+        <div class="price-row">
+          <div><div class="pname">Wimpernlifting</div><div class="pdesc">Geschwungene Wimpern ganz ohne Extensions.</div></div>
+          <div class="pval">55 €</div>
+        </div>
+        <div class="price-row">
+          <div><div class="pname">Wimpernfärben</div><div class="pdesc">Intensive Farbe für einen wachen, offenen Blick.</div></div>
+          <div class="pval">22 €</div>
+        </div>
+        <div class="price-row">
+          <div><div class="pname">Lifting + Färben Kombi</div><div class="pdesc">Unsere beliebteste Kombination in einem Termin.</div></div>
+          <div class="pval">68 €</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Gesichtspflege</h3>
+          <span>Facial</span>
+        </div>
+        <div class="price-row">
+          <div><div class="pname">Klassische Gesichtsbehandlung</div><div class="pdesc">Reinigung, Peeling, Maske und Pflege — 60 Minuten.</div></div>
+          <div class="pval">65 €</div>
+        </div>
+        <div class="price-row">
+          <div><div class="pname">Tiefenreinigung</div><div class="pdesc">Intensive Reinigung inkl. Ausreinigung und Beruhigung.</div></div>
+          <div class="pval">78 €</div>
+        </div>
+        <div class="price-row">
+          <div><div class="pname">Anti-Aging Behandlung</div><div class="pdesc">Straffende Massage und hochwertige Wirkstoffmaske.</div></div>
+          <div class="pval">89 €</div>
+        </div>
+      </div>
+
+      <div class="price-group">
+        <div class="price-group-head">
+          <h3>Make-up</h3>
+          <span>Extras</span>
+        </div>
+        <div class="price-row">
+          <div><div class="pname">Tages-Make-up</div><div class="pdesc">Natürliches Make-up für den Alltag oder ein Fotoshooting.</div></div>
+          <div class="pval">40 €</div>
+        </div>
+        <div class="price-row">
+          <div><div class="pname">Braut- &amp; Event-Make-up</div><div class="pdesc">Inklusive Beratung und Probe-Termin.</div></div>
+          <div class="pval">ab 120 €</div>
+        </div>
+      </div>
+
+      <p class="price-note">Alle Preise inkl. MwSt. Endpreise können je nach Haar- und Hautbeschaffenheit leicht variieren — wir beraten dich gerne vorab.</p>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <span class="eyebrow">Bereit?</span>
+    <h2>Wähle deine Behandlung und buche direkt</h2>
+    <a class="btn" href="tel:+498724123456">Termin buchen</a>
+  </section>
+</div>
+
+<!-- ============ IMPRESSUM ============ -->
+<div class="page" id="page-impressum">
+  <div class="page-hero">
+    <span class="eyebrow">Rechtliches</span>
+    <h1>Impressum</h1>
+  </div>
+  <section style="padding-top:4rem;">
+    <div class="legal-body">
+      <div class="legal-note">Name, Adresse, Telefonnummer und USt-IdNr. sind hier Platzhalter-Beispiele. Bitte vor Veröffentlichung durch deine echten Geschäftsdaten ersetzen.</div>
+
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>
+        Beauty Loft Kosmetikstudio<br>
+        Lena Hofmann<br>
+        Lindenweg 9<br>
+        84326 Falkenberg<br>
+        Deutschland
+      </p>
+
+      <h3>Kontakt</h3>
+      <p>
+        Telefon: <a class="inline-link" href="tel:+498724123456">+49 8724 123456</a><br>
+        E-Mail: <a class="inline-link" href="mailto:kontakt@beautyloft-kosmetik.de">kontakt@beautyloft-kosmetik.de</a>
+      </p>
+
+      <h3>Umsatzsteuer-ID</h3>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE324567891</p>
+
+      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+      <p>Lena Hofmann, Anschrift wie oben.</p>
+
+      <h3>Streitschlichtung</h3>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="inline-link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Unsere E-Mail-Adresse findest du oben im Impressum. Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+      <h3>Haftung für Inhalte</h3>
+      <p>Als Diensteanbieterin sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieterin jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+      <h3>Haftung für Links</h3>
+      <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+      <h3>Urheberrecht</h3>
+      <p>Die durch die Betreiberin erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DATENSCHUTZ ============ -->
+<div class="page" id="page-datenschutz">
+  <div class="page-hero">
+    <span class="eyebrow">Rechtliches</span>
+    <h1>Datenschutzerklärung</h1>
+  </div>
+  <section style="padding-top:4rem;">
+    <div class="legal-body">
+      <div class="legal-note">Diese Vorlage deckt gängige Punkte für ein kleines Kosmetikstudio mit Kontaktformular und Google Analytics ab. Bitte fachlich prüfen lassen (z. B. durch eine:n Datenschutzbeauftragte:n oder Anwält:in), bevor sie live geht.</div>
+
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>
+        Beauty Loft Kosmetikstudio<br>
+        Lena Hofmann<br>
+        Lindenweg 9, 84326 Falkenberg<br>
+        Telefon: +49 8724 123456<br>
+        E-Mail: kontakt@beautyloft-kosmetik.de
+      </p>
+
+      <h2>2. Allgemeines zur Datenverarbeitung</h2>
+      <p>Wir verarbeiten personenbezogene Daten unserer Nutzer:innen grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie unserer Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt regelmäßig nur nach Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).</p>
+
+      <h2>3. Hosting</h2>
+      <p>Diese Website wird bei einem externen Hosting-Anbieter gehostet. Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Der Hoster verarbeitet Daten in unserem Auftrag auf Grundlage eines Auftragsverarbeitungsvertrags gemäß Art. 28 DSGVO.</p>
+
+      <h2>4. Kontaktaufnahme</h2>
+      <p>Wenn du uns per Telefon, E-Mail oder über ein Kontaktformular kontaktierst, werden deine Angaben (Name, Kontaktdaten, Nachricht) zum Zweck der Bearbeitung deiner Anfrage bei uns gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung). Die Daten werden gelöscht, sobald sie für die Bearbeitung nicht mehr erforderlich sind.</p>
+
+      <h2>5. Terminbuchung</h2>
+      <p>Bei einer Terminanfrage per Telefon oder E-Mail verarbeiten wir die von dir mitgeteilten Daten (Name, Kontaktdaten, gewünschte Behandlung, Terminwunsch) zur Vorbereitung und Durchführung des Behandlungsvertrags gemäß Art. 6 Abs. 1 lit. b DSGVO.</p>
+
+      <h2>6. Google Analytics</h2>
+      <p>Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google"). Google Analytics verwendet Cookies bzw. vergleichbare Technologien, die eine Analyse der Benutzung der Website durch dich ermöglichen.</p>
+      <p>Die dabei erzeugten Informationen (z. B. Zugriffszeit, Ort des Zugriffs, Häufigkeit des Seitenbesuchs, gekürzte IP-Adresse) werden in der Regel an einen Server von Google in der EU bzw. den USA übertragen und dort gespeichert. Wir haben die IP-Anonymisierung aktiviert, sodass deine IP-Adresse vor der Übertragung innerhalb der EU/EWR gekürzt wird.</p>
+      <p>Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die du beim Besuch unserer Website über unser Cookie-Banner erteilen oder ablehnen kannst. Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+      <p>Google verarbeitet Daten auch in den USA; hierfür bestehen Standardvertragsklauseln der EU-Kommission als Garantie für ein angemessenes Datenschutzniveau. Weitere Informationen findest du in den Datenschutzhinweisen von Google: <a class="inline-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.</p>
+      <p>Du kannst die Erfassung durch Google Analytics verhindern, indem du das Browser-Add-on zur Deaktivierung von Google Analytics installierst: <a class="inline-link" href="https://tools.google.com/dlpage/gaoptout?hl=de" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h2>7. Cookies</h2>
+      <p>Unsere Website verwendet Cookies. Das sind kleine Textdateien, die dein Browser auf deinem Endgerät speichert. Cookies richten auf deinem Endgerät keinen Schaden an und enthalten keine Viren. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, alle anderen Cookies (z. B. für Google Analytics) nur mit deiner Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO.</p>
+
+      <h2>8. Deine Rechte</h2>
+      <ul>
+        <li>Recht auf Auskunft über deine gespeicherten personenbezogenen Daten (Art. 15 DSGVO)</li>
+        <li>Recht auf Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
+        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerspruchsrecht gegen die Verarbeitung (Art. 21 DSGVO)</li>
+        <li>Recht auf Widerruf erteilter Einwilligungen mit Wirkung für die Zukunft</li>
+      </ul>
+      <p>Zudem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, z. B. beim Bayerischen Landesamt für Datenschutzaufsicht.</p>
+
+      <h2>9. Änderungen dieser Datenschutzerklärung</h2>
+      <p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht. Stand: 2026.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo">beauty<span>loft.</span></div>
+      <p>Kosmetikstudio in Falkenberg. Augenbrauen, Wimpern, Gesichtspflege — ruhig und natürlich.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a href="tel:+498724123456">+49 8724 123456</a>
+      <a href="mailto:kontakt@beautyloft-kosmetik.de">kontakt@beautyloft-kosmetik.de</a>
+      <p>Lindenweg 9, 84326 Falkenberg</p>
+    </div>
+    <div class="footer-col">
+      <h4>Seite</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('ueberuns')">Über uns</a>
+      <a onclick="showPage('leistungen')">Leistungen</a>
+      <a onclick="showPage('studio')">Studio</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Beauty Loft Kosmetikstudio</span>
+    <div class="footer-legal">
+      <a onclick="showPage('impressum')">Impressum</a>
+      <a onclick="showPage('datenschutz')">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- nav scroll style ----
+  window.addEventListener('scroll',()=>{
+    document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY>40);
+  });
+
+  // ---- mobile nav ----
+  function toggleNav(){
+    document.getElementById('mainNav').classList.toggle('open');
+  }
+
+  // ---- page switching ----
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+name).classList.add('active');
+    document.querySelectorAll('nav.mainnav a[data-page]').forEach(a=>{
+      a.classList.toggle('active', a.dataset.page===name);
+    });
+    document.getElementById('mainNav').classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+
+  // ---- hero background crossfade ----
+  (function(){
+    const imgs = document.querySelectorAll('#heroBg img');
+    let idx = 0;
+    setInterval(()=>{
+      imgs[idx].classList.remove('active');
+      idx = (idx+1) % imgs.length;
+      imgs[idx].classList.add('active');
+    }, 5000);
+  })();
+</script>
+
+</body>
+</html>
