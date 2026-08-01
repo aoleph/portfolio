@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://adamolendzki.com/sitemap.xml
